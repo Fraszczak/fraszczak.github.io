@@ -1,4 +1,4 @@
-import { Authors, Config } from 'src/models/config';
+import { Authors, Config } from '../../app/models';
 
 const AUTHORS: Authors = {
   pf: {
