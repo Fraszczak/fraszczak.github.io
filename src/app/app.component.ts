@@ -1,30 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './components/header';
+import { FooterComponent } from './components/footer';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <nav>
-      <a href="/">Home</a>
-    </nav>
-    <router-outlet></router-outlet>
+    <app-header class="w-full mx-auto max-w-screen-xl" />
+    <div class="flex-1 px-4 sm:px-8 mt-9">
+      <div class="mx-auto max-w-screen-lg lg:px-8">
+        <router-outlet />
+      </div>
+    </div>
+    <app-footer class="w-full mx-auto max-w-screen-xl" />
   `,
-  styles: [
-    `
-      :host {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 2rem;
-        text-align: center;
-      }
-
-      nav {
-        text-align: left;
-        padding: 0 0 2rem 0;
-      }
-    `,
-  ],
 })
-export class AppComponent {}
+export class AppComponent {
+  @HostBinding('class') hostClass = 'flex flex-col w-full h-full';
+}

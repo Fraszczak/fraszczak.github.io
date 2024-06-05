@@ -20,9 +20,11 @@
           "defaultConfiguration": "production",
           "configurations": {
             "development": {
+              "assets": ["src/assets"],
               "mode": "development"
             },
             "production": {
+              "assets": ["src/assets"],
               "sourcemap": false,
               "mode": "production"
             }

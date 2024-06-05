@@ -1,0 +1,8 @@
+<section
+  class="text-gray-600 dark:text-gray-400 font-black flex justify-center mt-8 space-x-6"
+>
+  <span>Share:</span>
+  @for (item of getAuthorSocialMediaKeys; track $index) {
+    <blog-button [author]="author" label="item" [icon]="item"></blog-button>
+  }
+</section>
