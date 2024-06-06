@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="flex justify-center items-center">
       <img
-        src="assets/images/home/avatar.png"
+        src="/images/home/avatar.png"
         alt="Avatar"
         class="h-64 object-cover rounded-lg"
       />
