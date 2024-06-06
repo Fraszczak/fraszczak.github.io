@@ -2,7 +2,7 @@
 title: JavaScript design patterns - module pattern / singleton pattern
 author: pf
 publishDate: 2024-05-21
-slug: 2024-05-21-by-pFraszczak
+slug: 2024-05-21-javaScript-module-singleton-pattern
 description: You can read about design patterns in JavaScript. This article will concertrate on module patter and singleton pattern.
 coverImage: /images/posts/type-script/type-safety.jpg
 tags:
