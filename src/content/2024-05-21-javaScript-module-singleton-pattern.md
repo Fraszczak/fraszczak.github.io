@@ -10,23 +10,15 @@ tags:
   - design-patterns
 ---
 
-# TL;DR
+## TL;DR
 
 JavaScript offers design patterns to organize code. The module pattern groups related functions and variables, hiding unnecessary details. The singleton pattern ensures only one instance of a class exists. Both patterns promote clean and maintainable code.
-
-## Table of Contents
-
-- TL;DR
-- Introduction
-- Module Pattern [link to module pattern](#module-pattern)
-- Singleton Pattern [link to module pattern](#singleton-pattern)
-- Summary
 
 ## Introduction
 
 JavaScript offers a variety of design patterns that help developers create organized, modular, and maintainable code. Two common patterns are the module pattern and the singleton pattern. Although they serve different purposes, they share some similarities. In fact, the singleton pattern can be seen as a specialized version of the module pattern. Let's take a closer look at both patterns.
 
-### Module Pattern [link to module pattern](#module-pattern)
+### Module Pattern
 
 The module pattern is a design pattern that allows you to organize your code into modules. Modules help encapsulate code, manage dependencies, and keep the global namespace clean. This means you can hide private variables and functions, exposing only what is necessary.
 
@@ -54,7 +46,7 @@ console.log(myModule.publicVariable); // Logs "World"
 
 _In the example above, privateVariable and privateFunction are not accessible outside the module. Only the publicMethod and publicVariable are exposed._
 
-#### Module Pattern Nuances [link to module pattern](#module-pattern-nuances)
+#### Module Pattern Nuances
 
 The module pattern offers a powerful approach to code organization, but it's also worth considering some nuances:
 
@@ -95,7 +87,7 @@ While the basic concept of using closures to create private variables and functi
 
 This transition acknowledges that the code structure might appear similar but emphasizes the importance of the nuances for tailoring the module pattern to your project. It then smoothly introduces the singleton pattern as a related concept that builds upon modules.
 
-### Singleton Pattern [link to module pattern](#singleton-pattern)
+### Singleton Pattern
 
 The singleton pattern is a design pattern that ensures a class has only one instance and provides a global point of access to it. This pattern is useful when you need to guarantee that only one object of a particular class exists throughout the application's lifecycle. You can implement the singleton pattern using the module pattern.
 
@@ -139,7 +131,7 @@ console.log(db2.connection); // Logs "Database connection established"
 
 _In the example above, the singleton pattern ensures there is only one instance of DatabaseConnection. Trying to create a new instance with new DatabaseConnection() throws an error, while getInstance() always returns the same instance._
 
-#### Singleton Drawbacks [link to module pattern](#singleton-drawbacks)
+#### Singleton Drawbacks
 
 While singletons offer a convenient way to ensure a single instance of a class, they also come with some drawbacks to consider:
 
