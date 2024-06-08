@@ -9,14 +9,20 @@ import { Component } from '@angular/core';
       <h1 class="text-center text-2xl mt-10 mb-10 font-bold">
         Hi there! I'm Piotr, nice to meet you
       </h1>
-      <h2 class="text-center  mt-10 mb-10">
-        I am a dedicated software engineer specializing in web development,
-        currently employed within a prominent Nordic banking institution. My
-        primary focus lies in crafting innovative solutions for our esteemed
-        clientele through the utilization of Angular. Possessing a profound
-        comprehension of software engineering principles and methodologies, I am
-        unwaveringly committed to ongoing skill enhancement and the assimilation
-        of emerging technologies.
+      <h2 class="text-center mt-10">
+        By day, I tackle challenges and craft solutions for a prominent Nordic
+        banking institution, using my expertise to make their digital experience
+        top-notch. By night (well, maybe more like evenings and weekends!), I
+        turn my attention to this blog.
+      </h2>
+      <h2 class="text-center mt-4">
+        Here, you'll find me sharing my knowledge and experiences in the
+        ever-evolving world of web development. Whether you're a seasoned
+        developer or just starting out, I'm here to help you navigate the
+        exciting world of code. I believe in clear explanations, practical
+        examples, and the power of a supportive community. So, feel free to dive
+        into the blog posts, ask questions in the comments, and let's learn and
+        grow together!
       </h2>
     </section>
   `,
