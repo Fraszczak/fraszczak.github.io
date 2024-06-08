@@ -1,8 +1,8 @@
-import { Authors, Config } from '../../app/models';
+import { Authors, Config } from '../../app/core/models';
 
 const AUTHORS: Authors = {
   pf: {
-    name: 'Piotr Fraszczak',
+    name: 'Piotr Frąszczak',
     imgSrc: '/images/authors/pfraszczak.jpg',
     socialMedia: {
       Facebook: 'https://www.facebook.com/sharer/sharer.php?u=',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Author, Authors } from '../../models';
-import { blogConfig } from '../../../assets/config/config';
+import { blogConfig } from '../../../../assets/config';
 
 @Injectable({
   providedIn: 'root',

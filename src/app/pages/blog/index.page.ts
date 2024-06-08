@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { injectContentFiles } from '@analogjs/content';
-import { PreviewComponent } from '../../components/post';
-import PostAttributes from '../../models/post-attributes';
+import PostAttributes from './../../core/models/post-attributes';
+import { PreviewComponent } from './../../core/components/post';
 
 @Component({
   standalone: true,

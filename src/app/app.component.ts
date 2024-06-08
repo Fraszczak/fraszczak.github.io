@@ -1,7 +1,7 @@
-import { Component, HostBinding, afterNextRender, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header';
-import { FooterComponent } from './components/footer';
+import { Component, HostBinding } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './core/components/header';
+import { FooterComponent } from './core/components/footer';
 
 @Component({
   selector: 'app-root',
