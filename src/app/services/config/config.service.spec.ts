@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ConfigService } from './config.service';
 import { Authors } from '../../models';
-import { blogConfig } from '../../assets/config';
+import { blogConfig } from '../../../assets/config';
 
 describe('ConfigService', () => {
   let service: ConfigService;

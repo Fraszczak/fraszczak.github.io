@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, HostBinding, afterNextRender, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header';
 import { FooterComponent } from './components/footer';
@@ -19,14 +19,4 @@ import { FooterComponent } from './components/footer';
 })
 export class AppComponent {
   @HostBinding('class') hostClass = 'flex flex-col w-full h-full';
-
-  #router = inject(Router);
-
-  constructor() {
-    let path = localStorage.getItem('path');
-    if (path) {
-      localStorage.removeItem('path');
-      this.#router.navigate([path]);
-    }
-  }
 }
