@@ -2,7 +2,7 @@
 title: "Angular Signals: Streamlining Change Detection"
 author: pf
 publishDate: 2024-06-19
-slug: 2024-06-09-angular-signals-streamlining-change-detection
+slug: 2024-06-19-angular-signals-streamlining-change-detection
 description: "<b>Ever felt frustrated with complex change detection in your Angular applications?</b><br>
 This article dives into Angular Signals, a new approach that simplifies how components react to data changes. Learn how Signals improve performance, streamline code, and offer a more granular way to manage updates in your Angular apps."
 coverImage: /images/posts/angular-signals.png
