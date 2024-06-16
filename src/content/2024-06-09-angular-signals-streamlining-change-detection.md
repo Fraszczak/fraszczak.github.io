@@ -1,7 +1,7 @@
 ---
 title: "Angular Signals: Streamlining Change Detection"
 author: pf
-publishDate: 2024-06-09
+publishDate: 2024-06-19
 slug: 2024-06-09-angular-signals-streamlining-change-detection
 description: "<b>Ever felt frustrated with complex change detection in your Angular applications?</b><br>
 This article dives into Angular Signals, a new approach that simplifies how components react to data changes. Learn how Signals improve performance, streamline code, and offer a more granular way to manage updates in your Angular apps."
@@ -115,22 +115,22 @@ export class AppComponent {
 }
 ```
 
-**You cannot directly assign values to a computed signal. increseComputedSignals will produce compilation errors**
+_You cannot directly assign values to a computed signal. increseComputedSignals will produce compilation errors_
 
 ### Computed signals are both lazily evaluated and memoized
 
 Imagine computed signals as efficient chefs. They only cook (evaluate) when there are hungry diners (your component needs the data). But they're also smart - they remember what they've cooked before (memoization).
 
-Lazy evaluation: The chef only starts cooking when someone orders (requests the data). They don't waste effort pre-calculating things that might not be needed.
-Memoization: If someone orders the same dish again (the same dependencies haven't changed), the chef simply pulls it out from their memory (cached value) instead of starting all over again.
+**Lazy evaluation:** The chef only starts cooking when someone orders (requests the data). They don't waste effort pre-calculating things that might not be needed.<br>
+**Memoization:** If someone orders the same dish again (the same dependencies haven't changed), the chef simply pulls it out from their memory (cached value) instead of starting all over again.
 This way, computed signals ensure your components only get the freshest data (updated when needed) while avoiding unnecessary work (recalculating the same thing repeatedly).
 
 ### Computed signal dependencies are dynamic
 
 Imagine computed signals as detectives piecing together a case. They don't rely on a fixed set of clues (dependencies).
 
-Dynamic: The detective can follow new leads (dependencies) as they become available. This allows the computed signal to consider additional information that might influence its value.
-Not pre-defined: You don't have to specify all the dependencies upfront. The computed signal can adapt to what it "sees" within its code block.
+**Dynamic:** The detective can follow new leads (dependencies) as they become available. This allows the computed signal to consider additional information that might influence its value. <br>
+**Not pre-defined:** You don't have to specify all the dependencies upfront. The computed signal can adapt to what it "sees" within its code block.
 This dynamic nature makes computed signals flexible and responsive. They can react to changes in the data landscape without needing constant reconfiguration.
 
 ```typescript
@@ -151,16 +151,12 @@ const case = computed(() => {
 
 Imagine OnPush components as fuel-efficient cars. They only update their engines (re-render) when they absolutely need to conserve energy (performance).
 
-Fuel-efficient: OnPush components avoid unnecessary re-renders, saving on processing power.
-Reading signals: To know when to refuel (update), the car listens closely to the gas gauge (signal).
-Here's the connection:
-
-When a signal you're "listening to" (reading from) within an OnPush component changes (gas gauge reading drops), Angular recognizes this as a need for more fuel (data).
-The component then gets flagged for a refresh (engine starts) to display the updated information based on the new signal value (refueled with fresh data).
-This analogy emphasizes the key points:
-
-OnPush components are performance-focused, minimizing unnecessary updates.
-Reading signals allows them to stay informed about data changes and trigger updates only when necessary.
+**Fuel-efficient:** OnPush components avoid unnecessary re-renders, saving on processing power. <br>
+**Reading signals:** To know when to refuel (update), the car listens closely to the gas gauge (signal). <br>
+**Here's the connection:** When a signal you're "listening to" (reading from) within an OnPush component changes (gas gauge reading drops), Angular recognizes this as a need for more fuel (data).
+The component then gets flagged for a refresh (engine starts) to display the updated information based on the new signal value (refueled with fresh data).<br>
+**This analogy emphasizes the key points:** OnPush components are performance-focused, minimizing unnecessary updates.
+Reading signals allows them to stay informed about data changes and trigger updates only when necessary.<br>
 
 ## Effects
 
@@ -175,29 +171,29 @@ effect(() => {
 
 Effects are like watchers that listen for updates on the notice board (signals). They spring into action at least once when first set up. Here's how they work:
 
-- Initial Run: When an effect starts, it takes note of all the updates it checks on the board (reads signal values).
-- Triggered by Changes: If anything on the board changes (any signal value it's tracking is updated), the effect jumps back into action.
-- Smart Tracking: Just like reminders that update automatically, effects only keep track of the latest updates they've checked. They don't waste time watching things they already know about.
-- Behind the Scenes: These updates happen smoothly in the background (asynchronously) while the system keeps track of changes.
+- **Initial Run:** When an effect starts, it takes note of all the updates it checks on the board (reads signal values).
+- **Triggered by Changes:** If anything on the board changes (any signal value it's tracking is updated), the effect jumps back into action.
+- **Smart Tracking:** Just like reminders that update automatically, effects only keep track of the latest updates they've checked. They don't waste time watching things they already know about.
+- **Behind the Scenes:** These updates happen smoothly in the background (asynchronously) while the system keeps track of changes.
   This ensures effects react efficiently to what matters and only re-run when necessary.
 
 ### Use cases for effects
 
 While effects might seem like a niche tool, they actually shine in some key situations where you want more control over how your application reacts to changes. Here are some examples:
 
-- Data Fetching: Imagine you have a product list that needs to update whenever new products are added. An effect can be triggered by a "new product added" signal, fetching the latest data and refreshing the list automatically.
-- Side Effects: Effects are handy for handling actions that cause changes outside your program's main logic. This could be saving data to a database, sending notifications, or interacting with external APIs – all triggered by relevant signals.
-- User Interaction: Effects can be used to respond to user actions. For example, clicking a "like" button could trigger an effect that updates the like count and sends a notification to the user being liked.
-- Long-Running Processes: Effects are great for managing tasks that take time, like uploading a large file. The effect can handle the upload progress and update the UI accordingly, without blocking the main program.
+- **Data Fetching:** Imagine you have a product list that needs to update whenever new products are added. An effect can be triggered by a "new product added" signal, fetching the latest data and refreshing the list automatically.
+- **Side Effects:** Effects are handy for handling actions that cause changes outside your program's main logic. This could be saving data to a database, sending notifications, or interacting with external APIs – all triggered by relevant signals.
+- **User Interaction:** Effects can be used to respond to user actions. For example, clicking a "like" button could trigger an effect that updates the like count and sends a notification to the user being liked.
+- **Long-Running Processes:** Effects are great for managing tasks that take time, like uploading a large file. The effect can handle the upload progress and update the UI accordingly, without blocking the main program.
   <br>
 
 **In these scenarios, effects provide a clean way to separate the "what" (updating the list, saving data, etc.) from the "when" (triggered by a signal change), making your code more organized and easier to reason about.**
 
 Here are some situations where you might not want to use effects:
 
-- Simple Data Transformations: If you're just manipulating data within your program without any external interactions, effects might be overkill. Use simpler functions for these tasks as they can be easier to understand and test.
-- Frequent Updates with No Side Effects: Effects re-run whenever their dependencies change. If you have a piece of code that updates frequently based on signals but doesn't actually cause any side effects (like saving data or user interactions), using a pure function that recalculates the value on each change might be more efficient.
-- Unnecessary Complexity: Effects can add complexity to your code. If the logic you're trying to achieve can be implemented clearly without them, it's better to avoid the extra layer of abstraction.
+- **Simple Data Transformations:** If you're just manipulating data within your program without any external interactions, effects might be overkill. Use simpler functions for these tasks as they can be easier to understand and test.
+- **Frequent Updates with No Side Effects:** Effects re-run whenever their dependencies change. If you have a piece of code that updates frequently based on signals but doesn't actually cause any side effects (like saving data or user interactions), using a pure function that recalculates the value on each change might be more efficient.
+- **Unnecessary Complexity:** Effects can add complexity to your code. If the logic you're trying to achieve can be implemented clearly without them, it's better to avoid the extra layer of abstraction.
   <br>
 
 **Remember, effects are a powerful tool, but use them judiciously. When in doubt, a simpler approach might be better for readability and maintainability.**
@@ -256,8 +252,8 @@ export class Component {
 
 ## Effects: Keeping Things Clean
 
-- Automatic Cleanup: Effects are like rented apartments in your code. They get cleaned up (destroyed) automatically when their "landlord" (the component, directive, or service) is gone.
-- Manual Control (optional): If you need an effect to stick around longer than its "landlord", you can give it a special instruction flag called manualCleanup. This lets you control its lifespan more precisely. But remember, with great power comes great responsibility! Make sure to manually clean up these effects using the .destroy() method when they're no longer needed. Leaving them hanging around can clutter your code.
+- **Automatic Cleanup:** Effects are like rented apartments in your code. They get cleaned up (destroyed) automatically when their "landlord" (the component, directive, or service) is gone.
+- **Manual Control (optional):** If you need an effect to stick around longer than its "landlord", you can give it a special instruction flag called manualCleanup. This lets you control its lifespan more precisely. But remember, with great power comes great responsibility! Make sure to manually clean up these effects using the .destroy() method when they're no longer needed. Leaving them hanging around can clutter your code.
 
 ## Smart Updates for Signals (optional)
 
