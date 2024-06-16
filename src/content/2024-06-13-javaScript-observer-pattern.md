@@ -71,21 +71,15 @@ subject.subscribe(observer2);
 subject.notify("1, 2, 3... Data has changed!");
 ```
 
-_In this example, the **Subject** class manages a list of subscribed **Observer** objects When the Subject's data changes, it calls the **notify** method, which iterates through the list and calls the **update** method on each Observer, passing the new data_
+> _In this example, the <mark>Subject</mark> class manages a list of subscribed <mark>Observer</mark> objects When the Subject's data changes, it calls the <mark>notify</mark> method, which iterates through the list and calls the <mark>update</mark> method on each Observer, passing the new data_
 
-#### Beyond the Basics:
+### Beyond the Basics:
 
 This is a basic implementation. In real-world applications, you might want to consider:
 
 - **Event Names:** Instead of a generic **notify** method, you could have specific methods for different events (e.g. **dataChanged**, **itemAdded**).
 - **Error Handling:** Implement error handling in the notification process.
 
-#### Conclusion:
+## Conclusion:
 
 The Observer Pattern is a powerful tool for building applications with loosely coupled components the need to stay in sync. It promotes code reusability, maintainability and scalability. By understanding and implementing this pattern, you can create more efficient and well-structured JavaScript applications.
-
-Źródła
-
-- enriqueoriol.com/blog/2019/04/aprende-rxjs-2.html
-- github.com/DGouron/Algo-Exo
-- github.com/nightendkumar/fundamental-jsna licencji (MIT)
