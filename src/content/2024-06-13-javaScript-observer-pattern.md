@@ -67,11 +67,10 @@ const observer2 = new Observer();
 
 subject.subscribe(observer1);
 subject.subscribe(observer2);
-
 subject.notify("1, 2, 3... Data has changed!");
 ```
 
-> _In this example, the <mark>Subject</mark> class manages a list of subscribed <mark>Observer</mark> objects When the Subject's data changes, it calls the <mark>notify</mark> method, which iterates through the list and calls the <mark>update</mark> method on each Observer, passing the new data_
+_In this example, the **Subject** class manages a list of subscribed **Observer** objects When the Subject's data changes, it calls the **notify** method, which iterates through the list and calls the **update** method on each Observer, passing the new data_
 
 ### Beyond the Basics:
 
