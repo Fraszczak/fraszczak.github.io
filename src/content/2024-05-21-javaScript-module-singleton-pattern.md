@@ -44,7 +44,7 @@ myModule.publicMethod(); // Logs "Hello"
 console.log(myModule.publicVariable); // Logs "World"
 ```
 
-> _In the example above, privateVariable and privateFunction are not accessible outside the module. Only the publicMethod and publicVariable are exposed._
+_In the example above, privateVariable and privateFunction are not accessible outside the module. Only the publicMethod and publicVariable are exposed._
 
 #### Module Pattern Nuances
 
@@ -81,7 +81,7 @@ const myModule = (() => {
 })();
 ```
 
-> _By understanding these considerations, you can effectively leverage the module pattern to write clean, maintainable, and scalable JavaScript code._
+_By understanding these considerations, you can effectively leverage the module pattern to write clean, maintainable, and scalable JavaScript code._
 
 While the basic concept of using closures to create private variables and functions remains consistent across module pattern implementations, the nuances we discussed (naming conventions, module revealing pattern, etc.) allow for customization based on your specific needs. Now, let's explore another design pattern that leverages the concept of modules in a unique way: the Singleton Pattern.
 
@@ -129,7 +129,7 @@ console.log(db1.connection); // Logs "Database connection established"
 console.log(db2.connection); // Logs "Database connection established"
 ```
 
-> _In the example above, the singleton pattern ensures there is only one instance of DatabaseConnection. Trying to create a new instance with new DatabaseConnection() throws an error, while getInstance() always returns the same instance._
+_In the example above, the singleton pattern ensures there is only one instance of DatabaseConnection. Trying to create a new instance with new DatabaseConnection() throws an error, while getInstance() always returns the same instance._
 
 #### Singleton Drawbacks
 
@@ -168,7 +168,7 @@ function someFunction() {
 }
 ```
 
-> _In this example, the someFunction function is tightly coupled to the Logger singleton. If we wanted to use a different logging mechanism in the future, we would need to modify someFunction to use the new approach.By considering these drawbacks, you can make informed decisions about when and how to use singletons in your JavaScript projects._
+_In this example, the someFunction function is tightly coupled to the Logger singleton. If we wanted to use a different logging mechanism in the future, we would need to modify someFunction to use the new approach.By considering these drawbacks, you can make informed decisions about when and how to use singletons in your JavaScript projects._
 
 ## Summary
 
