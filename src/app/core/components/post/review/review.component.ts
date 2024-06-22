@@ -4,13 +4,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  computed,
   inject,
+  input,
 } from '@angular/core';
 import PostAttributes from '../../../models/post-attributes';
 import { SharePostComponent } from './share-post/share-post.component';
 import { ConfigService } from '../../../services/config';
 import { ButtonComponent } from '../../button';
 import { TagComponent } from '../../tag';
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 @Component({
   selector: 'blog-review',
@@ -26,17 +29,14 @@ import { TagComponent } from '../../tag';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReviewComponent {
-  @Input({ required: true }) post!: ContentFile<
-    PostAttributes | Record<string, never>
-  >;
-
   #service = inject(ConfigService);
 
-  get getAuthor() {
-    return this.#service.getAuthor(this.post.attributes.author);
-  }
+  post = input.required<ContentFile<PostAttributes | Record<string, never>>>();
 
-  get socialMediaAvailable() {
-    return Object.keys(this.getAuthor.socialMedia).length > 0;
-  }
+  getAuthor = computed(() =>
+    this.#service.getAuthor(this.post().attributes.author)
+  );
+  socialMediaAvailable = computed(
+    () => Object.keys(this.getAuthor().socialMedia).length > 0
+  );
 }

@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   CUSTOM_ELEMENTS_SCHEMA,
+  input,
   Input,
 } from '@angular/core';
 import { ButtonComponent } from '../../../button';
@@ -18,10 +20,10 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SharePostComponent {
-  @Input() tags!: string[];
-  @Input({ required: true }) author!: Author;
+  tags = input<string[]>();
+  author = input.required<Author>();
 
-  get getAuthorSocialMediaKeys() {
-    return Object.keys(this.author.socialMedia) as (keyof SocialMedia)[];
-  }
+  getAuthorSocialMediaKeys = computed(
+    () => Object.keys(this.author().socialMedia) as (keyof SocialMedia)[]
+  );
 }
