@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 
 @Component({
   selector: 'blog-tag',
@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   templateUrl: './tag.component.html',
 })
 export class TagComponent {
-  @Input({ required: true }) tag!: string;
+  tag = input.required<string>();
 }
