@@ -8,7 +8,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 })
 export class ToggleMenuComponent {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onMenuToggle(e: any) {
+  protected onMenuToggle(e: any) {
     const navlinks = document.querySelector('.navLinks');
     e.name = e.name === 'menu' ? 'close' : 'menu';
     navlinks?.classList.toggle('left-[0%]');
