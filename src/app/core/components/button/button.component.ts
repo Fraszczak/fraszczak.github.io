@@ -4,6 +4,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   Input,
+  input,
 } from '@angular/core';
 import { Author, SocialMedia } from '../../models';
 
@@ -15,17 +16,20 @@ import { Author, SocialMedia } from '../../models';
   imports: [NgTemplateOutlet],
 })
 export class ButtonComponent implements AfterViewInit {
-  @Input({ required: true }) label!: string;
-  @Input({ required: true }) icon!: keyof SocialMedia;
-  @Input({ required: true }) author!: Author;
+  label = input.required<string>();
+  icon = input.required<keyof SocialMedia>();
+  author = input.required<Author>();
 
   ngAfterViewInit(): void {
-    document?.getElementById(this.icon)?.addEventListener('click', this.#share);
+    document
+      ?.getElementById(this.icon())
+      ?.addEventListener('click', this.#shareEvent);
   }
 
-  #share = (): void => {
-    if (this.author.socialMedia[this.icon]) {
-      const navUrl = this.author.socialMedia[this.icon] + window.location.href;
+  #shareEvent = (): void => {
+    if (this.author().socialMedia[this.icon()]) {
+      const navUrl =
+        this.author().socialMedia[this.icon()] + window.location.href;
       window.open(navUrl, '_blank');
     } else {
       window.history.back();
