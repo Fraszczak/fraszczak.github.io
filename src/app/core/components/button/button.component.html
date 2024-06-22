@@ -1,34 +1,25 @@
-@if (author.socialMedia) {
-  <button>
-    <a [id]="icon" class="text-gray-400 hover:text-gray-500">
-      @if (label) {
-        <span class="sr-only">{{ label }}</span>
-      }
-      @switch (icon) {
-        @case ("Facebook") {
-          <ng-container [ngTemplateOutlet]="Facebook"></ng-container>
-        }
-        @case ("Dribbble") {
-          <ng-container [ngTemplateOutlet]="Dribbble"></ng-container>
-        }
-        @case ("GitHub") {
-          <ng-container [ngTemplateOutlet]="GitHub"></ng-container>
-        }
-        @case ("Instagram") {
-          <ng-container [ngTemplateOutlet]="Instagram"></ng-container>
-        }
-        @case ("Twitter") {
-          <ng-container [ngTemplateOutlet]="Twitter"></ng-container>
-        }
-        @case ("Linkedin") {
-          <ng-container [ngTemplateOutlet]="Linkedin"></ng-container>
-        }
-        @case ("Back") {
-          <ng-container [ngTemplateOutlet]="Back"></ng-container>
-        }
-      }
-    </a>
-  </button>
+@if (author().socialMedia) {
+<button>
+  <a [id]="icon" class="text-gray-400 hover:text-gray-500">
+    @if (label()) {
+    <span class="sr-only">{{ label() }}</span>
+    } @switch (icon()) { @case ("Facebook") {
+    <ng-container [ngTemplateOutlet]="Facebook"></ng-container>
+    } @case ("Dribbble") {
+    <ng-container [ngTemplateOutlet]="Dribbble"></ng-container>
+    } @case ("GitHub") {
+    <ng-container [ngTemplateOutlet]="GitHub"></ng-container>
+    } @case ("Instagram") {
+    <ng-container [ngTemplateOutlet]="Instagram"></ng-container>
+    } @case ("Twitter") {
+    <ng-container [ngTemplateOutlet]="Twitter"></ng-container>
+    } @case ("Linkedin") {
+    <ng-container [ngTemplateOutlet]="Linkedin"></ng-container>
+    } @case ("Back") {
+    <ng-container [ngTemplateOutlet]="Back"></ng-container>
+    } }
+  </a>
+</button>
 }
 
 <ng-template #Facebook>

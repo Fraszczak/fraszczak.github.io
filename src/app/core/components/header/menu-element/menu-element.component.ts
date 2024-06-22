@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 
 @Component({
   selector: 'app-menu-element',
@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   standalone: true,
 })
 export class MenuElementComponent {
-  @Input({ required: true }) name!: string;
-  @Input({ required: true }) href!: string;
+  name = input.required<string>();
+  href = input.required<string>();
 }

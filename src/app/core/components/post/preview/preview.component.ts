@@ -3,17 +3,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
-  Input,
-  WritableSignal,
   computed,
   inject,
   input,
-  signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ConfigService } from '../../../services/config';
 import PostAttributes from '../../../models/post-attributes';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'blog-preview',
@@ -33,7 +30,7 @@ export class PreviewComponent {
     this.#sanitizer.bypassSecurityTrustHtml(this.post()?.description || '')
   );
 
-  get getAuthor() {
-    return this.#service.getAuthor(this.post()?.author || 'pf');
-  }
+  getAuthor = computed(() =>
+    this.#service.getAuthor(this.post()?.author || 'pf')
+  );
 }

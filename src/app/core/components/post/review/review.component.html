@@ -1,18 +1,18 @@
 <div class="container mx-auto md:px-6">
   <section class="mt-22">
     <h1 class="mb-6 text-3xl font-bold text-center text-black dark:text-white">
-      {{ post.attributes.title }}
+      {{ post().attributes.title }}
     </h1>
-    @if (post.attributes.coverImage) {
+    @if (post().attributes.coverImage) {
     <img
-      [src]="post.attributes.coverImage"
+      [src]="post().attributes.coverImage"
       class="mb-6 max-h-80 w-full rounded-lg shadow-lg dark:shadow-black/20"
       alt="image"
     />
-    } @if (getAuthor.name && post.attributes.publishDate) {
+    } @if (getAuthor.name && post().attributes.publishDate) {
     <div class="mb-6 flex items-center text-gray-600 dark:text-gray-400">
       <img
-        [src]="getAuthor.imgSrc"
+        [src]="getAuthor().imgSrc"
         class="mr-2 h-8 rounded-full"
         alt="avatar"
         loading="lazy"
@@ -20,7 +20,7 @@
       <div>
         <span>
           Published
-          <u>{{ post.attributes.publishDate | date : "longDate" }}</u> by
+          <u>{{ post().attributes.publishDate | date : "longDate" }}</u> by
         </span>
         <a href="#!" class="font-medium"> {{ getAuthor.name }}</a>
       </div>
@@ -30,27 +30,27 @@
     <p>
       <analog-markdown
         class="text-black dark:text-white"
-        [content]="post.content"
+        [content]="post().content"
       />
     </p>
 
     <section class="flex justify-center mx-auto px-6 sm:px-6 py-11 my-14">
-      <blog-button [author]="getAuthor" label="Back" icon="Back" />
+      <blog-button [author]="getAuthor()" label="Back" icon="Back" />
     </section>
 
     <section
       class="mx-auto px-6 sm:px-6 my-14 flex justify-between flex-col sm:flex-row"
     >
-      @if (post.attributes.tags) {
+      @if (post().attributes.tags) {
       <div class="flex justify-center mt-8 space-x-6">
-        @for (item of post.attributes.tags; track $index) {
+        @for (item of post().attributes.tags; track $index) {
         <blog-tag [tag]="item" />
         }
       </div>
-      } @if (socialMediaAvailable) {
+      } @if (socialMediaAvailable()) {
       <blog-share-post
-        [tags]="post.attributes.tags"
-        [author]="getAuthor"
+        [tags]="post().attributes.tags"
+        [author]="getAuthor()"
         class="pb-4"
       />
       }

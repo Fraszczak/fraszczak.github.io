@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   standalone: true,
 })
 export class ToggleThemeComponent {
-  onThemeToggle() {
+  protected onThemeToggle() {
     document.documentElement.classList.toggle('dark');
     if (localStorage.getItem('theme') === 'dark') {
       localStorage.setItem('theme', 'light');
