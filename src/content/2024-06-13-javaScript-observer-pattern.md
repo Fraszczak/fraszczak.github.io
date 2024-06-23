@@ -5,6 +5,7 @@ publishDate: 2024-06-13
 slug: 2024-06-13-javaScript-observer-pattern
 description: "<b>Stay in Sync: The Observer Pattern in JavaScript</b><br>Ever struggled to keep different parts of your web app updated? The Observer Pattern is here to help! It lets one object notify others when it changes, keeping everything in sync. Learn how it works and leverage it to build more efficient and scalable JavaScript applications."
 coverImage: /images/posts/observer-pattern.png
+next: 2024-06-19-angular-signals-streamlining-change-detection
 tags:
   - java-script
   - design-patterns

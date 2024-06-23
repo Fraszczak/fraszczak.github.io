@@ -22,7 +22,7 @@
           Published
           <u>{{ post().attributes.publishDate | date : "longDate" }}</u> by
         </span>
-        <a href="#!" class="font-medium"> {{ getAuthor.name }}</a>
+        <a href="#!" class="font-medium"> {{ getAuthor().name }}</a>
       </div>
     </div>
     }
@@ -34,9 +34,29 @@
       />
     </p>
 
+    @if (isMobile()) {
     <section class="flex justify-center mx-auto px-6 sm:px-6 py-11 my-14">
-      <blog-button [author]="getAuthor()" label="Back" icon="Back" />
+      <blog-button label="Back" icon="Back" />
     </section>
+    } @else {
+    <section
+      class="mx-auto px-6 sm:px-6 my-14 flex justify-between flex-col sm:flex-row"
+    >
+      <blog-button
+        [disabled]="!post().attributes.prev"
+        [eventUrl]="windowUrl() + post().attributes.prev"
+        label="Prev"
+        icon="Prev"
+      />
+      <blog-button label="Back" icon="Back" />
+      <blog-button
+        [disabled]="!post().attributes.next"
+        [eventUrl]="windowUrl() + post().attributes.next"
+        label="Next"
+        icon="Next"
+      />
+    </section>
+    }
 
     <section
       class="mx-auto px-6 sm:px-6 my-14 flex justify-between flex-col sm:flex-row"

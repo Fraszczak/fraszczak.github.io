@@ -7,5 +7,7 @@ export default interface PostAttributes {
   slug: string;
   description: string;
   coverImage: string;
+  prev: string;
+  next: string;
   tags: string[];
 }
