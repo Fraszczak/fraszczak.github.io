@@ -26,7 +26,9 @@ export class ButtonComponent implements AfterViewInit {
   }
 
   #shareEvent = (): void => {
-    if (this.disabled()) return;
+    if (this.disabled()) {
+      return;
+    }
     if (this.eventUrl()) {
       window.open(this.eventUrl(), '_self');
     } else {
