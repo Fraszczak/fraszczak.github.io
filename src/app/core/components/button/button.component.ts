@@ -3,10 +3,8 @@ import {
   AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  Input,
   input,
 } from '@angular/core';
-import { Author, SocialMedia } from '../../models';
 
 @Component({
   selector: 'blog-button',
@@ -17,8 +15,9 @@ import { Author, SocialMedia } from '../../models';
 })
 export class ButtonComponent implements AfterViewInit {
   label = input.required<string>();
-  icon = input.required<keyof SocialMedia>();
-  author = input.required<Author>();
+  icon = input.required<string>();
+  eventUrl = input<string>();
+  disabled = input<boolean>();
 
   ngAfterViewInit(): void {
     document
@@ -27,12 +26,15 @@ export class ButtonComponent implements AfterViewInit {
   }
 
   #shareEvent = (): void => {
-    if (this.author().socialMedia[this.icon()]) {
-      const navUrl =
-        this.author().socialMedia[this.icon()] + window.location.href;
-      window.open(navUrl, '_blank');
+    if (this.disabled()) {
+      return;
+    }
+    if (this.eventUrl()) {
+      window.open(this.eventUrl(), '_self');
     } else {
-      window.history.back();
+      const winUri = window.location.href.split('/');
+      winUri.pop();
+      window.open(winUri.join('/'), '_self');
     }
   };
 }

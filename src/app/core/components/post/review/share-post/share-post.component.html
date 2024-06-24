@@ -3,6 +3,10 @@
 >
   <span>Share:</span>
   @for (item of getAuthorSocialMediaKeys(); track $index) {
-  <blog-button [author]="author()" label="item" [icon]="item"></blog-button>
+  <blog-button
+    [label]="item"
+    [icon]="item"
+    [eventUrl]="author().socialMedia[item]"
+  ></blog-button>
   }
 </section>

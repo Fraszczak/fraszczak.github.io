@@ -4,7 +4,6 @@ import {
   computed,
   CUSTOM_ELEMENTS_SCHEMA,
   input,
-  Input,
 } from '@angular/core';
 import { ButtonComponent } from '../../../button';
 import { TagComponent } from '../../../tag';

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   computed,
   inject,
   input,
@@ -13,7 +12,7 @@ import { SharePostComponent } from './share-post/share-post.component';
 import { ConfigService } from '../../../services/config';
 import { ButtonComponent } from '../../button';
 import { TagComponent } from '../../tag';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
+import { WindowWidthService } from '../../../services/window-width';
 
 @Component({
   selector: 'blog-review',
@@ -29,14 +28,24 @@ import { c } from 'vite/dist/node/types.d-aGj9QkWt';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReviewComponent {
-  #service = inject(ConfigService);
+  #configService = inject(ConfigService);
+  #widthService = inject(WindowWidthService);
 
   post = input.required<ContentFile<PostAttributes | Record<string, never>>>();
 
+  isMobile = computed(() => this.#widthService.isMobile());
+
   getAuthor = computed(() =>
-    this.#service.getAuthor(this.post().attributes.author)
+    this.#configService.getAuthor(this.post().attributes.author)
   );
+
   socialMediaAvailable = computed(
     () => Object.keys(this.getAuthor().socialMedia).length > 0
   );
+
+  windowUrl = computed(() => {
+    const winUri = window.location.href.split('/');
+    winUri.pop();
+    return `${winUri.join('/')}/`;
+  });
 }

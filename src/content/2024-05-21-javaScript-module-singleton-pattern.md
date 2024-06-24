@@ -6,6 +6,7 @@ slug: 2024-05-21-javaScript-module-singleton-pattern
 description: "<b>Unleash the power of organized code!</b><br>
 This article delves into two fundamental JavaScript design patterns: the Module Pattern and the Singleton Pattern.  While serving distinct purposes, they share a focus on clean and maintainable code."
 coverImage: /images/posts/javaScript-module-singleton-pattern.jpg
+prev: 2024-06-19-angular-signals-streamlining-change-detection
 tags:
   - java-script
   - design-patterns

@@ -1,6 +1,9 @@
-@if (author().socialMedia) {
-<button>
-  <a [id]="icon" class="text-gray-400 hover:text-gray-500">
+<button
+  type="button"
+  [disabled]="disabled()"
+  class="disabled:opacity-25 text-gray-400 enabled:hover:text-gray-500"
+>
+  <a [id]="icon()">
     @if (label()) {
     <span class="sr-only">{{ label() }}</span>
     } @switch (icon()) { @case ("Facebook") {
@@ -17,10 +20,13 @@
     <ng-container [ngTemplateOutlet]="Linkedin"></ng-container>
     } @case ("Back") {
     <ng-container [ngTemplateOutlet]="Back"></ng-container>
+    } @case ("Prev") {
+    <ng-container [ngTemplateOutlet]="Prev"></ng-container>
+    } @case ("Next") {
+    <ng-container [ngTemplateOutlet]="Next"></ng-container>
     } }
   </a>
 </button>
-}
 
 <ng-template #Facebook>
   <svg
@@ -112,3 +118,5 @@
 </ng-template>
 
 <ng-template #Back>BACK</ng-template>
+<ng-template #Prev>PREV</ng-template>
+<ng-template #Next>NEXT</ng-template>

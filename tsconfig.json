@@ -21,8 +21,10 @@
     "lib": ["ES2022", "dom"],
     "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "checkJs": true
+    "checkJs": true,
+    "types": ["node", "jest"]
   },
+  "exclude": ["node_modules"],
   "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

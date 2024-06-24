@@ -5,7 +5,6 @@ export type SocialMedia = {
   GitHub: string;
   Dribbble: string;
   Linkedin: string;
-  Back: '../'; // I know...
 };
 
 export type Author = {
