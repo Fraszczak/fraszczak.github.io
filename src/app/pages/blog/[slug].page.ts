@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { injectContent } from '@analogjs/content';
 import { AsyncPipe } from '@angular/common';
-import { ReviewComponent } from '../../core/components/post';
-import PostAttributes from '../../core/models/post-attributes';
+import PostAttributes from '../../patterns/post/models/post-attributes';
+import { ReviewComponent } from '../../patterns/post/review/review.component';
 
 @Component({
   standalone: true,

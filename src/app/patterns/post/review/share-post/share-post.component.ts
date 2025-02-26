@@ -5,10 +5,10 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   input,
 } from '@angular/core';
-import { ButtonComponent } from '../../../button';
-import { TagComponent } from '../../../tag';
-import { Author, SocialMedia } from '../../../../models';
 import { CommonModule } from '@angular/common';
+import { Author, SocialMedia } from '../../../../core/models';
+import { ButtonComponent } from '../../../../ui/components/button/button.component';
+import { TagComponent } from '../../../../ui/components/tag/tag.component';
 
 @Component({
   selector: 'blog-share-post',

@@ -7,12 +7,12 @@ import {
   inject,
   input,
 } from '@angular/core';
-import PostAttributes from '../../../models/post-attributes';
+import { ButtonComponent } from '../../../ui/components/button/button.component';
 import { SharePostComponent } from './share-post/share-post.component';
-import { ConfigService } from '../../../services/config';
-import { ButtonComponent } from '../../button';
-import { TagComponent } from '../../tag';
-import { WindowWidthService } from '../../../services/window-width';
+import { TagComponent } from '../../../ui/components/tag/tag.component';
+import { ConfigService } from '../../../core/services/config/config.service';
+import { WindowWidthService } from '../../../core/services/window-width/window-width.service';
+import PostAttributes from '../models/post-attributes';
 
 @Component({
   selector: 'blog-review',

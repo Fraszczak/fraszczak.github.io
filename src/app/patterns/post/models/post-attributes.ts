@@ -1,4 +1,4 @@
-import { Authors } from './config';
+import { Authors } from '../../../core/models/config';
 
 export default interface PostAttributes {
   title: string;

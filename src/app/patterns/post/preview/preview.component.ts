@@ -8,9 +8,9 @@ import {
   input,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ConfigService } from '../../../services/config';
-import PostAttributes from '../../../models/post-attributes';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ConfigService } from '../../../core/services/config/config.service';
+import PostAttributes from '../models/post-attributes';
 
 @Component({
   selector: 'blog-preview',
