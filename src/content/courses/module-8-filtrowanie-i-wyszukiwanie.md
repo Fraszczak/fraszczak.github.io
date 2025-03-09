@@ -1,5 +1,5 @@
 ---
-title: Moduł 7
+title: Moduł 8
 author: pf
 publishDate: 2025-03-09
 slug: module-8-filtrowanie-i-wyszukiwanie
