@@ -4,11 +4,11 @@ import { Injectable, computed, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class WindowWidthService {
-  private width = signal(window.innerWidth);
+  private width = signal(window?.innerWidth);
 
   constructor() {
-    window.addEventListener('resize', () => {
-      this.width.set(window.innerWidth);
+    window?.addEventListener('resize', () => {
+      this.width.set(window?.innerWidth);
     });
   }
 
