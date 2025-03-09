@@ -21,6 +21,7 @@ import PostAttributes from '../models/post-attributes';
 })
 export class PreviewComponent {
   post = input<PostAttributes>();
+  routeType = input<'blog' | 'courses'>('blog'); // Default to 'blog' for backward compatibility
   @HostBinding('class') hostClass = 'flex flex-1';
 
   #service = inject(ConfigService);
