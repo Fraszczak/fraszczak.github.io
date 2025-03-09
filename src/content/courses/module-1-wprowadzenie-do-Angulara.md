@@ -2,10 +2,9 @@
 title: Moduł 1
 author: pf
 publishDate: 2025-03-09
-slug: 2025-03-09-module-1-wprowadzenie-do-Angulara
+slug: module-1-wprowadzenie-do-Angulara
 description: "<b>Wprowadzenie do Angulara</b><br> W tym module poznasz podstawy Angulara. Zainstalujemy Angular CLI, stworzymy pierwszy projekt i nauczymy się, jak budować proste komponenty, na przykład listę przepisów."
-coverImage: /images/posts/observer-pattern.png
-# next: 2025-03-09-module-2
+next: module-2-komponenty
 tags:
   - Angular
 ---
