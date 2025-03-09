@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => ({
           return [
             '/',
             '/blog',
+            '/courses',
             {
               contentDir: 'src/content/blog',
               transform: (file: PrerenderContentFile) => {
@@ -27,8 +28,22 @@ export default defineConfig(({ mode }) => ({
                   return false;
                 }
                 // use the slug from frontmatter if defined, otherwise use the files basename
-                const slug = file.attributes['slug'] || file.name;
+                const slug = file.attributes['slug'] || file.name;  
+                // do include files as blog post by default
                 return `/blog/${slug}`;
+              },
+            },
+            {
+              contentDir: 'src/content/courses',
+              transform: (file: PrerenderContentFile) => {
+                // do not include files marked as draft in frontmatter
+                if (file.attributes['draft']) {
+                  return false;
+                }
+                // use the slug from frontmatter if defined, otherwise use the files basename
+                const slug = file.attributes['slug'] || file.name;
+                // do include files as courses post by default
+                return `/courses/${slug}`;
               },
             },
           ];

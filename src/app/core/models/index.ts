@@ -1,2 +1,2 @@
 export * from './config';
-export * from './post-attributes';
+export * from '../../patterns/post/models/post-attributes';
