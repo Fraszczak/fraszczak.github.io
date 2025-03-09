@@ -1,6 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './ui/components/header/header.component';
+import { HeaderComponent } from './patterns/header/header.component';
 import { FooterComponent } from './ui/components/footer/footer.component';
 
 @Component({

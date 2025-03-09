@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { injectContentFiles } from '@analogjs/content';
+import { injectContent, injectContentFiles } from '@analogjs/content';
 import PostAttributes from '../../patterns/post/models/post-attributes';
 import { PreviewComponent } from '../../patterns/post/preview/preview.component';
 
 @Component({
+  selector: 'app-blog-index',
   standalone: true,
   imports: [PreviewComponent],
   template: `
@@ -20,5 +21,9 @@ import { PreviewComponent } from '../../patterns/post/preview/preview.component'
   `,
 })
 export default class BlogComponent {
-  readonly posts = injectContentFiles<PostAttributes>();
+  readonly posts = injectContentFiles<PostAttributes>()
+  .filter((post) => post.filename.startsWith('/src/content/blog/'))
+  .sort((a, b) => {
+    return new Date(b.attributes.publishDate).getTime() - new Date(a.attributes.publishDate).getTime();
+  });
 }

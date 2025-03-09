@@ -5,7 +5,7 @@ import PostAttributes from '../../patterns/post/models/post-attributes';
 import { ReviewComponent } from '../../patterns/post/review/review.component';
 
 @Component({
-  selector: 'app-blog-detail',
+  selector: 'app-course-detail',
   standalone: true,
   imports: [AsyncPipe, ReviewComponent],
   template: `
@@ -16,9 +16,9 @@ import { ReviewComponent } from '../../patterns/post/review/review.component';
     }
   `,
 })
-export default class BlogPostsComponent {
+export default class CourseComponent {
   readonly post$ = injectContent<PostAttributes>({
     param: 'slug',
-    subdirectory: 'blog',
+    subdirectory: 'courses',
   });
 }
