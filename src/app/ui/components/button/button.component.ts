@@ -7,6 +7,7 @@ import {
   inject,
   input,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'blog-button',
@@ -17,6 +18,7 @@ import {
 })
 export class ButtonComponent implements AfterViewInit {
   #platformId = inject(PLATFORM_ID);
+  #router = inject(Router);
 
   label = input.required<string>();
   icon = input.required<string>();
@@ -27,25 +29,22 @@ export class ButtonComponent implements AfterViewInit {
     if (isPlatformBrowser(this.#platformId)) {
       document
         ?.getElementById(this.icon())
-        ?.addEventListener('click', this.#shareEvent);
+        ?.addEventListener('click', () => window.open(this.eventUrl(), '_self'));
     }
   }
 
   #shareEvent = (): void => {
-    if (this.disabled()) {
+    if (this.disabled() || !isPlatformBrowser(this.#platformId)) {
       return;
     }
-    if (!isPlatformBrowser(this.#platformId)) {
-      return;
-    }
-    if (this.eventUrl()) {
-      console.log('eventUrl', this.eventUrl());
-      window.open(this.eventUrl(), '_self');
+
+    const url = this.eventUrl()
+    if (url) {
+      this.#router.navigateByUrl(url);
     } else {
-      console.log('window.location.href', window.location.href);
       const winUri = window.location.href.split('/');
       winUri.pop();
-      window.open(winUri.join('/'), '_self');
+      this.#router.navigateByUrl(winUri.join('/'));
     }
   };
 }
