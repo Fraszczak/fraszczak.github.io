@@ -1,8 +1,9 @@
 import { ContentFile, MarkdownComponent } from '@analogjs/content';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  PLATFORM_ID,
   computed,
   inject,
   input,
@@ -26,10 +27,12 @@ import PostAttributes from '../models/post-attributes';
     TagComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { 'ngSkipHydration': '' }
 })
 export class ReviewComponent {
   #configService = inject(ConfigService);
   #widthService = inject(WindowWidthService);
+  #platformId = inject(PLATFORM_ID);
 
   post = input.required<ContentFile<PostAttributes | Record<string, never>>>();
 
@@ -44,8 +47,12 @@ export class ReviewComponent {
   );
 
   windowUrl = computed(() => {
-    const winUri = window.location.href.split('/');
-    winUri.pop();
-    return `${winUri.join('/')}/`;
+    if (isPlatformBrowser(this.#platformId)) {
+      const winUri = window.location.href.split('/');
+      winUri.pop();
+      return `${winUri.join('/')}/`;
+    }
+    // Default value for server-side rendering
+    return '/';
   });
 }

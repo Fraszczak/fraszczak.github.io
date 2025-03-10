@@ -1,8 +1,10 @@
-import { NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  PLATFORM_ID,
+  inject,
   input,
 } from '@angular/core';
 
@@ -14,19 +16,26 @@ import {
   imports: [NgTemplateOutlet],
 })
 export class ButtonComponent implements AfterViewInit {
+  #platformId = inject(PLATFORM_ID);
+
   label = input.required<string>();
   icon = input.required<string>();
   eventUrl = input<string>();
   disabled = input<boolean>();
 
   ngAfterViewInit(): void {
-    document
-      ?.getElementById(this.icon())
-      ?.addEventListener('click', this.#shareEvent);
+    if (isPlatformBrowser(this.#platformId)) {
+      document
+        ?.getElementById(this.icon())
+        ?.addEventListener('click', this.#shareEvent);
+    }
   }
 
   #shareEvent = (): void => {
     if (this.disabled()) {
+      return;
+    }
+    if (!isPlatformBrowser(this.#platformId)) {
       return;
     }
     if (this.eventUrl()) {
