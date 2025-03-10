@@ -5,17 +5,8 @@
     <title>Single Page Apps for GitHub Pages</title>
     <!-- Start Single Page Apps for GitHub Pages -->
     <script>
-      // sessionStorage.setItem("redirect", window.location.pathname);
-      // window.location.href = "/";
-
-      var pathSegments = window.location.pathname.split("/");
-      var repo = "/" + pathSegments[1]; // pierwszy segment po domenie to nazwa repo
-
-      // Zapisujemy ścieżkę bez nazwy repo
-      var path = window.location.pathname.replace(repo, "");
-
-      sessionStorage.setItem("redirect", path);
-      window.location.href = repo; // Przekierowanie do głównej strony repo
+      sessionStorage.setItem("redirect", window.location.pathname);
+      window.location.href = "/";
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
   </head>
