@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     mainFields: ['module'],
   },
-  base: '/fraszczak.github.io',
   plugins: [
     analog({
       prerender: {
