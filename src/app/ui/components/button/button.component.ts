@@ -39,8 +39,10 @@ export class ButtonComponent implements AfterViewInit {
       return;
     }
     if (this.eventUrl()) {
+      console.log('eventUrl', this.eventUrl());
       window.open(this.eventUrl(), '_self');
     } else {
+      console.log('window.location.href', window.location.href);
       const winUri = window.location.href.split('/');
       winUri.pop();
       window.open(winUri.join('/'), '_self');
