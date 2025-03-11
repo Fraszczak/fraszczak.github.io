@@ -71,10 +71,10 @@ importers:
     devDependencies:
       '@analogjs/platform':
         specifier: ^1.4.0
-        version: 1.4.0(jbjglwhychriewjimfaakjir7q)
+        version: 1.4.0(cec0616c4d913b35b488793233ff1132)
       '@analogjs/vite-plugin-angular':
         specifier: ^1.4.0
-        version: 1.4.0(eq2uwbkdl7iqw77z34qmncv454)
+        version: 1.4.0(7c19c3f4c44780699056f96ee890ca22)
       '@angular-devkit/build-angular':
         specifier: ^18.0.0
         version: 18.0.2(@angular/compiler-cli@18.0.1(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(typescript@5.4.5))(@angular/platform-server@18.0.1(@angular/animations@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/common@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(rxjs@7.5.7))(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(@angular/platform-browser@18.0.1(@angular/animations@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/common@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(rxjs@7.5.7))(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))))(@types/node@20.14.2)(chokidar@3.6.0)(stylus@0.59.0)(tailwindcss@3.4.3(ts-node@10.9.1(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
@@ -103,7 +103,7 @@ importers:
         specifier: ^8.4.21
         version: 8.4.38
       tailwindcss:
-        specifier: ^3.3.1
+        specifier: ^3.4.3
         version: 3.4.3(ts-node@10.9.1(@types/node@20.14.2)(typescript@5.4.5))
       typescript:
         specifier: ~5.4.2
@@ -3575,6 +3575,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -6939,11 +6940,11 @@ snapshots:
       rxjs: 7.5.7
       tslib: 2.6.3
 
-  '@analogjs/platform@1.4.0(jbjglwhychriewjimfaakjir7q)':
+  '@analogjs/platform@1.4.0(cec0616c4d913b35b488793233ff1132)':
     dependencies:
-      '@analogjs/vite-plugin-angular': 1.4.0(eq2uwbkdl7iqw77z34qmncv454)
+      '@analogjs/vite-plugin-angular': 1.4.0(7c19c3f4c44780699056f96ee890ca22)
       '@analogjs/vite-plugin-nitro': 1.4.0(@opentelemetry/api@1.8.0)(encoding@0.1.13)
-      '@nx/angular': 19.2.0(4ok5l5d3i6eiuxrxv6ihuq5u6q)
+      '@nx/angular': 19.2.0(cd47c8a866bbf5260aad48b8b107121c)
       '@nx/devkit': 19.2.0(nx@19.2.0)
       '@nx/vite': 19.2.0(@babel/traverse@7.24.7)(@types/node@20.14.2)(nx@19.2.0)(typescript@5.4.5)(vite@5.2.12(@types/node@20.14.2)(less@4.2.0)(sass@1.77.2)(stylus@0.59.0)(terser@5.31.0))(vitest@1.6.0(@types/node@20.14.2)(jsdom@22.1.0)(less@4.2.0)(sass@1.77.2)(stylus@0.59.0)(terser@5.31.0))
       nitropack: 2.9.6(@opentelemetry/api@1.8.0)(encoding@0.1.13)
@@ -6989,7 +6990,7 @@ snapshots:
       - prismjs
       - rxjs
 
-  '@analogjs/vite-plugin-angular@1.4.0(eq2uwbkdl7iqw77z34qmncv454)':
+  '@analogjs/vite-plugin-angular@1.4.0(7c19c3f4c44780699056f96ee890ca22)':
     dependencies:
       '@angular-devkit/build-angular': 18.0.2(@angular/compiler-cli@18.0.1(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(typescript@5.4.5))(@angular/platform-server@18.0.1(@angular/animations@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/common@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(rxjs@7.5.7))(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(@angular/platform-browser@18.0.1(@angular/animations@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/common@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(rxjs@7.5.7))(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))))(@types/node@20.14.2)(chokidar@3.6.0)(stylus@0.59.0)(tailwindcss@3.4.3(ts-node@10.9.1(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
       '@ngtools/webpack': 18.0.2(@angular/compiler-cli@18.0.1(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(typescript@5.4.5))(typescript@5.4.5)(webpack@5.91.0(esbuild@0.21.3))
@@ -9231,9 +9232,9 @@ snapshots:
       - bluebird
       - supports-color
 
-  '@nrwl/angular@19.2.0(4ok5l5d3i6eiuxrxv6ihuq5u6q)':
+  '@nrwl/angular@19.2.0(cd47c8a866bbf5260aad48b8b107121c)':
     dependencies:
-      '@nx/angular': 19.2.0(4ok5l5d3i6eiuxrxv6ihuq5u6q)
+      '@nx/angular': 19.2.0(cd47c8a866bbf5260aad48b8b107121c)
       tslib: 2.6.3
     transitivePeerDependencies:
       - '@angular-devkit/build-angular'
@@ -9371,12 +9372,12 @@ snapshots:
       - '@swc/core'
       - debug
 
-  '@nx/angular@19.2.0(4ok5l5d3i6eiuxrxv6ihuq5u6q)':
+  '@nx/angular@19.2.0(cd47c8a866bbf5260aad48b8b107121c)':
     dependencies:
       '@angular-devkit/build-angular': 18.0.2(@angular/compiler-cli@18.0.1(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(typescript@5.4.5))(@angular/platform-server@18.0.1(@angular/animations@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/common@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(rxjs@7.5.7))(@angular/compiler@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(@angular/platform-browser@18.0.1(@angular/animations@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6)))(@angular/common@18.0.1(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))(rxjs@7.5.7))(@angular/core@18.0.1(rxjs@7.5.7)(zone.js@0.14.6))))(@types/node@20.14.2)(chokidar@3.6.0)(stylus@0.59.0)(tailwindcss@3.4.3(ts-node@10.9.1(@types/node@20.14.2)(typescript@5.4.5)))(typescript@5.4.5)
       '@angular-devkit/core': 18.0.2(chokidar@3.6.0)
       '@angular-devkit/schematics': 18.0.2(chokidar@3.6.0)
-      '@nrwl/angular': 19.2.0(4ok5l5d3i6eiuxrxv6ihuq5u6q)
+      '@nrwl/angular': 19.2.0(cd47c8a866bbf5260aad48b8b107121c)
       '@nx/devkit': 19.2.0(nx@19.2.0)
       '@nx/eslint': 19.2.0(@babel/traverse@7.24.7)(@types/node@20.14.2)(@zkochan/js-yaml@0.0.7)(eslint@8.57.0)(nx@19.2.0)
       '@nx/js': 19.2.0(@babel/traverse@7.24.7)(@types/node@20.14.2)(nx@19.2.0)(typescript@5.4.5)

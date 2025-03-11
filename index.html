@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Fraszczak - Personal Website</title>
@@ -21,19 +21,13 @@
 
     <!-- Start toggle theme script -->
     <script>
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
+      if (localStorage.theme === "dark") {
         if (document && document.documentElement) {
           document.documentElement.classList.add("dark");
-          localStorage.setItem("theme", "dark");
         }
-      } else {
+      } else if (localStorage.theme === "light") {
         if (document && document.documentElement) {
           document.documentElement.classList.remove("dark");
-          localStorage.setItem("theme", "light");
         }
       }
     </script>
