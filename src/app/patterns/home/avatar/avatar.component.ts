@@ -1,13 +1,17 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [],
+  imports: [NgOptimizedImage],
   template: `
     <div class="flex justify-center items-center">
       <img
-        src="/images/home/avatar.png"
+        priority
+        height="250"
+        width="250"
+        ngSrc="/images/home/avatar.png"
         alt="Avatar"
         class="h-64 object-cover rounded-lg"
       />
