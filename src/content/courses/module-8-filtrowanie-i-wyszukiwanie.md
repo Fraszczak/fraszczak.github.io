@@ -10,101 +10,170 @@ tags:
   - Angular
 ---
 
-**Moduł 8: Filtrowanie i wyszukiwanie**
-Filtrowanie przepisów według poziomu trudności wykonania (łatwe, trudne, średnio trudne).
-Wyszukiwanie przepisów na podstawie nazwy.
+## Filtrowanie i wyszukiwanie
 
+_Filtrowanie przepisów według poziomu trudności wykonania (łatwe, trudne, średnio trudne)_
+_Wyszukiwanie przepisów na podstawie nazwy_
 
-1. Na początek, rozszerzmy trochę zakres naszych przepsów.
-   * Przejdź do `component-code.ts`
-   * Podmień zawartość pliku `db.json` na kod z `component-code.ts` - krok 1.
+### Na początek, rozszerzmy trochę zakres naszych przepsów.
 
-2. Dodanie funkcji filtrowania
-   * przejdź do `recipe-list.component.ts`
-   * dodaj dwie zmienne
-   > `filteredRecipes: RecipeModel[] = []; // przechowuje liste przefiltrowanych przepisów wg trudności wykonania`
-   > `selectedDifficulty: string = '';  // informacja o aktualnie wybranym poziomie trudności.`
+Podmień zawartość pliku **db.json** na kod
 
-   * Stwórz funkcję filterRecipes() - ta funkcja sprawdzi, czy użytkownik wybrał konkretny poziom trudności.
-     Jeśli tak, to wyświetli przepisy o tej trudności, a jeśli nie, to pokaże wszystkie przepisy
+```json
+{
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Spaghetti Carbonara",
+      "description": "Klasyczne włoskie danie.",
+      "ingredients": ["Pasta", "Eggs", "Pork", "Cheese", "Pepper"],
+      "preparationTime": 30,
+      "difficulty": "easy"
+    },
+    {
+      "id": 2,
+      "title": "Pancakes",
+      "description": "Puszyste naleśniki z syropem klonowym.",
+      "ingredients": ["Flour", "Milk", "Eggs", "Honey"],
+      "preparationTime": 20,
+      "difficulty": "medium"
+    },
+    {
+      "id": 3,
+      "title": "Tacos",
+      "description": "Meksykańskie tacos z wołowiną i salsą.",
+      "ingredients": ["Flour", "Milk", "Eggs", "Beef", "Salt"],
+      "preparationTime": 60,
+      "difficulty": "hard"
+    },
+    {
+      "id": "3",
+      "title": "Tacos",
+      "description": "Meksykańskie tacos z wołowiną i salsą.",
+      "ingredients": ["Flour", "Milk", "Eggs", "Beef", "Salt"],
+      "preparationTime": 60,
+      "difficulty": "hard"
+    }
+  ]
+}
+```
 
-      > `//Gdy przepisy zostaną pobrane z serwera, funkcja getRecipes() zapisze je w recipes,`
-      > `// a następnie wywoła filterRecipes(), by zastosować filtr (jeśli jest ustawiony).`
-      > `filterRecipes(): void {`
-      > `  if (this.selectedDifficulty) {`
-      > `    this.filteredRecipes = this.recipes.filter(recipe => recipe.difficulty === this.selectedDifficulty);`
-      > `  } else {`
-      > `    this.filteredRecipes = this.recipes;  // Bez filtra pokazujemy wszystkie przepisy`
-      > `  }`
-      > `}`
+### Dodanie funkcji filtrowania
 
-   * Zmień istniejącą funkcję `getRecipes()`, by uwzględniała automatyczne filtrowanie po pobraniu przepisów:
-   > `private getRecipes(): void {`
-   > `  this.recipeService.getRecipes().pipe(`
-   > `    tap((recipesFromGetRecipesMethod: RecipeModel[]) => {`
-   > `      this.recipes = recipesFromGetRecipesMethod;`
-   > `      this.filterRecipes(); // Inicjalne filtrowanie przy pobraniu przepisów`
-   > `    })`
-   > `  ).subscribe();`
-   > `}`
+Przejdź do **recipe-list.component.ts** i dodaj dwie zmienne
 
-   * Dodaj do listy importów dwa moduły `MatSelectModule` i `FormsModule`
-      **MatSelectModule** jest potrzebny, aby móc używać elementu `<mat-select>`, który pozwala na wybór poziomu trudności.
-      **FormsModule** jest potrzebny, aby poprawnie działało dwukierunkowe bindowanie danych, dzięki któremu wybrana trudność automatycznie zapisze się w zmiennej `selectedDifficulty`.
+```typescript
+filteredRecipes: RecipeModel[] = []; // przechowuje liste przefiltrowanych przepisów wg trudności wykonania
+selectedDifficulty: string = '';  // informacja o aktualnie wybranym poziomie trudności.
+```
 
+Stwórz funkcję **filterRecipes()** - ta funkcja sprawdzi, czy użytkownik wybrał konkretny poziom trudności.
+Jeśli tak, to wyświetli przepisy o tej trudności, a jeśli nie, to pokaże wszystkie przepisy
 
-   * przejdź do `recipe-list.component.html`.
-   * Wstaw poniższy kod na początku pliku:
-   > ` <mat-form-field>`
-   > `  <mat-label>Filtruj wg trudności wykonania</mat-label>`
-   > `  <mat-select [(ngModel)]="selectedDifficulty" (selectionChange)="filterRecipes()">`
-   > `    <mat-option value="">Wszystkie</mat-option>`
-   > `    <mat-option value="easy">Łatwy</mat-option>`
-   > `    <mat-option value="medium">Średni</mat-option>`
-   > `    <mat-option value="hard">Trudny</mat-option>`
-   > `  </mat-select>`
-   > `</mat-form-field>`
+```typescript
+     //Gdy przepisy zostaną pobrane z serwera, funkcja getRecipes() zapisze je w recipes
+     // a następnie wywoła filterRecipes(), by zastosować filtr (jeśli jest ustawiony).
+     filterRecipes(): void {
+        if (this.selectedDifficulty) {
+            this.filteredRecipes = this.recipes.filter(recipe => recipe.difficulty === this.selectedDifficulty);
+         } else {
+            this.filteredRecipes = this.recipes;  // Bez filtra pokazujemy wszystkie przepisy
+         }
+      }
+```
 
-   **(ngModel)** wiąże zmienną selectedDifficulty z wybraną wartością w `<mat-select>`.
-   **(selectionChange)="filterRecipes()"** wywołuje funkcję `filterRecipes()`, gdy użytkownik zmieni poziom trudności, dzięki czemu lista przepisów zostanie automatycznie przefiltrowana.
+Zmień istniejącą funkcję **getRecipes()**, by uwzględniała automatyczne filtrowanie po pobraniu przepisów
 
+```typescript
+  private getRecipes(): void {
+     this.recipeService.getRecipes()
+     .pipe(
+         tap((recipesFromGetRecipesMethod: RecipeModel[]) => {
+               this.recipes = recipesFromGetRecipesMethod;
+               this.filterRecipes(); // Inicjalne filtrowanie przy pobraniu przepisów
+            })
+     ).subscribe();
+   }
+```
 
-   * Znajdź blok `@for (recipe of recipes; track recipe)` i zmień go na: `@for (recipe of filteredRecipes; track recipe)`
-   * na koniec dorzuć drobne style do pliku `recipe-list.component.scss`
-   > ` mat-form-field {`
-   > `  width: 100%;`
-   > `  border-radius: 12px;`
-   > `}`
+Dodaj do listy importów dwa moduły **MatSelectModule, FormsModule**
+**MatSelectModule** jest potrzebny, aby móc używać elementu `<mat-select>`, który pozwala na wybór poziomu trudności.
+**FormsModule** jest potrzebny, aby poprawnie działało dwukierunkowe bindowanie danych, dzięki któremu wybrana trudność automatycznie zapisze się w zmiennej **selectedDifficulty**.
 
+Przejdź do **recipe-list.component.html**.
+Wstaw poniższy kod na początku pliku
 
-3. Dodanie funkcji wyszukiwania po nazwie.
-   * Przejdź do `recipe-list.component.ts`
-   * Dodaj zmienną `searchTerm`, która będzie przechowywać tekst wpisany przez użytkownika w polu wyszukiwania.
-   > `searchTerm: string = ''; // Tekst wpisany przez użytkownika do wyszukiwania`
+```html
+<mat-form-field>
+  <mat-label>Filtruj wg trudności wykonania</mat-label>
+  <mat-select [(ngModel)]="selectedDifficulty" (selectionChange)="filterRecipes()">
+    <mat-option value="">Wszystkie</mat-option>
+    <mat-option value="easy">Łatwy</mat-option>
+    <mat-option value="medium">Średni</mat-option>
+    <mat-option value="hard">Trudny</mat-option>
+  </mat-select>
+</mat-form-field>
+```
 
-   * Zaktualizuj funkcję `filterRecipes()`, by uwzględniała wyszukiwanie po nazwie
-   > `filterRecipes(): void {`
-   > `  // Filtrowanie według trudności`
-   > `  let filteredByDifficulty = this.selectedDifficulty ? this.recipes.filter(recipe => recipe.difficulty === this.selectedDifficulty) : this.recipes;`
-   > 
-   > `  // Dodatkowe filtrowanie według nazwy przepisu`
-   > `  if (this.searchTerm) {`
-   > `    this.filteredRecipes = filteredByDifficulty.filter(recipe => recipe.title.toLowerCase().includes(this.searchTerm.toLowerCase()));`
-   > `  } else {`
-   > `    this.filteredRecipes = filteredByDifficulty; // Bez filtra wyszukiwania pokazujemy przepisy przefiltrowane według trudności`
-   > `  }`
-   > `}`
+**(ngModel)** wiąże zmienną **selectedDifficulty** z wybraną wartością w `<mat-select>`.
+**(selectionChange)="filterRecipes()"** wywołuje funkcję `filterRecipes()`, gdy użytkownik zmieni poziom trudności, dzięki czemu lista przepisów zostanie automatycznie przefiltrowana.
 
-   * dodaj `MatInputModule` do listy importów.
+Znajdź blok
 
-   * następnie przejdź do `recipe-list.component.html` i dodaj na samej górze naszej strony input, który będzie wyszukiwarką przepisów
-   > `  <!-- Pole wyboru przepisu po nazwie -->`
-   > `<mat-form-field>`
-   > `  <input matInput placeholder="Wyszukaj przepis" [(ngModel)]="searchTerm"`
-   > `    (input)="filterRecipes()" />`
-   > `</mat-form-field>`
+```html
+@for (recipe of recipes; track recipe)
+```
 
+zmień go na
 
+```html
+@for (recipe of filteredRecipes; track recipe)
+```
 
-W tym module:
-   * Dodaliśmy funkcjonalność filtrowania listy przepisów po poziomie trudności oraz po nazwie.
+Na koniec dorzuć drobne style do pliku **recipe-list.component.scss**
+
+```css
+mat-form-field {
+  width: 100%;
+  border-radius: 12px;
+}
+```
+
+### Dodanie funkcji wyszukiwania po nazwie.
+
+Przejdź do **recipe-list.component.ts**
+Dodaj zmienną **searchTerm**, która będzie przechowywać tekst wpisany przez użytkownika w polu wyszukiwania.
+
+```typescript
+searchTerm: string = ""; // Tekst wpisany przez użytkownika do wyszukiwania
+```
+
+Zaktualizuj funkcję **filterRecipes()**, by uwzględniała wyszukiwanie po nazwie
+
+```typescript
+  filterRecipes(): void {  // Filtrowanie według trudności
+      let filteredByDifficulty = this.selectedDifficulty ? this.recipes.filter(recipe => recipe.difficulty === this.selectedDifficulty) : this.recipes;
+
+  // Dodatkowe filtrowanie według nazwy przepisu
+      if (this.searchTerm) {
+            this.filteredRecipes = filteredByDifficulty.filter(recipe => recipe.title.toLowerCase().includes(this.searchTerm.toLowerCase()));
+      } else {
+            this.filteredRecipes = filteredByDifficulty; // Bez filtra wyszukiwania pokazujemy przepisy przefiltrowane według trudności
+         }
+   }
+```
+
+Dodaj **MatInputModule** do listy importów.
+
+Następnie przejdź do **`**recipe-list.component.html\*\* i dodaj na samej górze naszej strony input, który będzie wyszukiwarką przepisów
+
+```html
+<!-- Pole wyboru przepisu po nazwie -->
+<mat-form-field>
+  <input matInput placeholder="Wyszukaj przepis" [(ngModel)]="searchTerm" (input)="filterRecipes()" />
+</mat-form-field>
+```
+
+##### W tym module:
+
+- Dodaliśmy funkcjonalność filtrowania listy przepisów po poziomie trudności oraz po nazwie.
