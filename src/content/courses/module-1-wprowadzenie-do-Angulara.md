@@ -85,16 +85,16 @@ Projekt defaultowo będzie dostępny pod adresem **http://localhost:4200**
 
 #### Teraz omówimy strukturę plików, które zostały wygenerowane po utworzeniu projektu.
 
-| Plik                  |                                                                                       Opis                                                                                        |
-| --------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **angular.json**      |                           Jest to główny plik konfiguracyjny Angulara. Zawiera ustawienia dotyczące budowania, testowania oraz uruchamiania aplikacji.                            |
-| **package.json**      |          Zawiera listę zależności projektu oraz skrypty do zarządzania aplikacją. Znajdziesz tu m.in. informację o tym, jaką wersję Angulara i innych bibliotek używasz.          |
-| **package-lock.json** | Zabezpiecza konkretne wersje zależności, które zostały zainstalowane przez npm. Dzięki temu wszyscy deweloperzy pracujący nad projektem będą używać tych samych wersji bibliotek. |
-| **tsconfig.\*.json**  |                   Plik konfiguracyjny dla TypeScript. Angular opiera się na TypeScript, więc tutaj znajdziesz ustawienia dotyczące kompilacji kodu TypeScript.                    |
-| **src/index.html**    |                                                     To główny plik HTML aplikacji. Angular wstawia tutaj wygenerowane widoki.                                                     |
-| **src/main.ts**       |                                           Punkt wejścia dla aplikacji Angular. Tutaj Angular inicjalizuje moduły i uruchamia aplikację.                                           |
-| **src/styles.scss**   |                                               Główny plik stylów dla aplikacji, w formacie SCSS. Możesz tutaj dodać globalne style.                                               |
-| **src/app/**          |                                     To najważniejszy folder, ponieważ tutaj będą znajdować się moduły, komponenty i serwisy twojej aplikacji.                                     |
+| Plik                  |                                                                                                        Opis                                                                                                        |
+| --------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **angular.json**      | Jest to główny plik konfiguracyjny Angulara. Zawiera ustawienia dotyczące budowania, testowania oraz uruchamiania aplikacji. W Angularze, w standardowym setupie, bez dodatkowych narzedzi, jest jeden na projekt. |
+| **package.json**      |                          Zawiera listę zależności projektu oraz skrypty do zarządzania aplikacją. Znajdziesz tu m.in. informację o tym, jaką wersję Angulara i innych bibliotek używasz.                           |
+| **package-lock.json** |                 Zabezpiecza konkretne wersje zależności, które zostały zainstalowane przez npm. Dzięki temu wszyscy deweloperzy pracujący nad projektem będą używać tych samych wersji bibliotek.                  |
+| **tsconfig.\*.json**  |                                    Plik konfiguracyjny dla TypeScript. Angular opiera się na TypeScript, więc tutaj znajdziesz ustawienia dotyczące kompilacji kodu TypeScript.                                    |
+| **src/index.html**    |                                                                     To główny plik HTML aplikacji. Angular wstawia tutaj wygenerowane widoki.                                                                      |
+| **src/main.ts**       |                                                           Punkt wejścia dla aplikacji Angular. Tutaj Angular inicjalizuje moduły i uruchamia aplikację.                                                            |
+| **src/styles.scss**   |                                                               Główny plik stylów dla aplikacji, w formacie SCSS. Możesz tutaj dodać globalne style.                                                                |
+| **src/app/**          |                                                     To najważniejszy folder, ponieważ tutaj będą znajdować się moduły, komponenty i serwisy twojej aplikacji.                                                      |
 
 ### Dlaczego projekt nie zawiera żadnego modułu?
 

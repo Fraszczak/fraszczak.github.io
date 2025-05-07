@@ -193,6 +193,7 @@ Otwórz plik **src/app/app.component.ts** i dodaj
 
   onRecipeSelected(recipe: { title: string, description: string }) {
     this.selectedRecipe = recipe;
+    }
 ```
 
 > Kiedy użytkownik wybierze przepis w **RecipeListComponent**, dane o wybranym przepisie są przekazywane do **AppComponent** za pomocą event bindingu.

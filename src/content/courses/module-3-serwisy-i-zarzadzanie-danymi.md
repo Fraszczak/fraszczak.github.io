@@ -19,16 +19,12 @@ _Serwisy w Angularze pozwalają oddzielić logikę biznesową od warstwy prezent
 Stwórzmy folder **src/app/ui** i przenieśmy tam stworzone przez nas komponenty.
 
 - _recipe-detail_,
-- _recipe-list_,
-- _recipe-list-element_
+- _recipe-list_
 
 Poprawi to trochę naszą strukturę.
 Upewnij się, że importy w całym projekcie są zgodne z nową strukturą.
 
-Przejdźmy od stworzenia/aktualizacji modelu danych **RecipeModel**
-
-Przejdź do **src/app/core/recipe/recipe.model.ts**
-Stwórz lub zaktualizuj stworzony wcześniej model tak by zawierał:
+Teraz stwórzmy nasz pierwszy plik z modelem. **src/app/core/recipe/recipe.model.ts**
 
 ```typescript
 export interface RecipeModel {
@@ -41,9 +37,9 @@ export interface RecipeModel {
 }
 ```
 
-W miejscach w których deklarujemy zmienne typu **RecipeModel** kompilator zwórci uwagę, że brakuje pełnej definicji modelu.
-
-Na razie by go zadowolić, moglibyśmy użyjemy utility type pochodzącego z TypeScrip, który sprawy, że wszystkie właściwości takiego modelu staną się opcjonalne.
+W miejscach w których uzywamy typu inline **{ title: string; description: string }** uzyjmy wcześniej stworzonego modelu**RecipeModel**.
+W **RecipeListComponent** jest lista naszych przepisów, nadajmy jej odpowiedni model.
+Jezeli kompilator zwórci uwagę, że brakuje pełnej definicji modelu, mozesz uzyć Parial<T>, to tak zwany **utility type** który sprawi, ze wszystkie pola staną się opcjonalne.
 
 ```typescript
 Partial<RecipeModel>;
@@ -55,7 +51,8 @@ Możemy także ręcznie pokazać kompilatorowi które pola są opcjonalne poprze
   id?: number;
 ```
 
-Tak właśnie zróbmy, z biegiem czasu zaczniemy usuwać opcjonalności.
+Zwróć uwagę jak teraz pracę utrudnia Ci TypeScript.
+Względem JavaScript, kod teraz powstaje trochę wolniej, ale w perspektywie czasu stworzenia a potem utrzymywania takiego projektu będzie łatwiejsze.
 
 ### Następnie stwórzmy serwis RecipeService
 
@@ -73,6 +70,32 @@ W terminalu, będąc w folderze projektu utwórz serwis za pomocą Angular CLI:
 Na początek przenieśmy do serwisu **recipe-service.ts** przepisy z komponentu **recipe-list**.
 
 Uzupełnijmy brakujące pola modelu wg uznania. (ingredients, preparationTime, difficulty)
+
+```typescript
+recipes: RecipeModel[] = [
+    {
+      title: 'Spaghetti Carbonara',
+      description: 'Klasyczne włoskie danie.',
+      ingredients: [],
+      preparationTime: 10,
+      difficulty: 'easy',
+    },
+    {
+      title: 'Pancakes',
+      description: 'Puszyste naleśniki z syropem klonowym.',
+      ingredients: [],
+      preparationTime: 20,
+      difficulty: 'hard',
+    },
+    {
+      title: 'Tacos',
+      description: 'Meksykańskie tacos z wołowiną i salsą.',
+      ingredients: [],
+      preparationTime: 30,
+      difficulty: 'medium',
+    },
+  ];
+```
 
 Teraz dodajmy metodę **getRecipes(): RecipeModel[]** którą pobierzemy nasz przepisy w przyszłości.
 
