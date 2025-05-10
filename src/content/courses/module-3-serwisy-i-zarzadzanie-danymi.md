@@ -12,244 +12,248 @@ tags:
 
 ## Serwisy i zarządzanie danymi
 
-_W tym module stworzymy serwis RecipeService, który będzie przechowywał i zarządzał danymi przepisów. Skonfigurujemy model danych RecipeModel, a także nauczymy się, jak wstrzykiwać serwis do komponentu, aby umożliwić pobieranie i usuwanie przepisów._
+W tym module nauczysz się, jak zarządzać danymi w Angularze za pomocą serwisów. Przejdziemy krok po kroku przez proces tworzenia serwisu, modelu danych oraz dostosowywania komponentów do pracy z tymi elementami. Na koniec dodamy funkcję usuwania przepisów z listy.
 
-_Serwisy w Angularze pozwalają oddzielić logikę biznesową od warstwy prezentacji. Dzięki temu komponenty są bardziej przejrzyste, a kod jest łatwiejszy do zarządzania i testowania._
+### 1. Przygotowanie struktury projektu
 
-Stwórzmy folder **src/app/ui** i przenieśmy tam stworzone przez nas komponenty.
+1. **Utwórz folder `src/app/ui`** i przenieś do niego komponenty:
 
-- _recipe-detail_,
-- _recipe-list_
+   - `recipe-detail`
+   - `recipe-list`
 
-Poprawi to trochę naszą strukturę.
-Upewnij się, że importy w całym projekcie są zgodne z nową strukturą.
+   Dzięki temu poprawimy strukturę projektu. Upewnij się, że wszystkie importy w projekcie są zgodne z nową lokalizacją komponentów.
 
-Teraz stwórzmy nasz pierwszy plik z modelem. **src/app/core/recipe/recipe.model.ts**
+### 2. Tworzenie modelu danych
 
-```typescript
-export interface RecipeModel {
-  id: number; // Unikalny identyfikator przepisu
-  title: string; // Tytuł przepisu
-  description: string; // Krótki opis przepisu
-  ingredients: string[]; // Tablica składników
-  preparationTime: number; // Czas przygotowania w minutach
-  difficulty: "easy" | "medium" | "hard"; // Poziom trudności
-}
-```
+1. **Utwórz plik `src/app/core/recipe/recipe.model.ts`** i wklej poniższy kod:
 
-W miejscach w których uzywamy typu inline **{ title: string; description: string }** uzyjmy wcześniej stworzonego modelu**RecipeModel**.
-W **RecipeListComponent** jest lista naszych przepisów, nadajmy jej odpowiedni model.
-Jezeli kompilator zwórci uwagę, że brakuje pełnej definicji modelu, mozesz uzyć Parial<T>, to tak zwany **utility type** który sprawi, ze wszystkie pola staną się opcjonalne.
+   ```typescript
+   export interface RecipeModel {
+     id: number; // Unikalny identyfikator przepisu
+     title: string; // Tytuł przepisu
+     description: string; // Krótki opis przepisu
+     ingredients: string[]; // Tablica składników
+     preparationTime: number; // Czas przygotowania w minutach
+     difficulty: "easy" | "medium" | "hard"; // Poziom trudności
+   }
+   ```
 
-```typescript
-Partial<RecipeModel>;
-```
+2. W miejscach, gdzie używasz typu inline, np. `{ title: string; description: string }`, zamień go na `RecipeModel`.
 
-Możemy także ręcznie pokazać kompilatorowi które pola są opcjonalne poprzed dodanie **?** po nazwie właściwości jak
+3. Jeśli kompilator zgłasza błędy dotyczące brakujących pól, możesz:
+   - Użyć `Partial<RecipeModel>`, co sprawi, że wszystkie pola będą opcjonalne.
+   - Lub dodać `?` po nazwie właściwości, np. `id?: number`.
 
-```typescript
-  id?: number;
-```
+### 3. Tworzenie serwisu RecipeService
 
-Zwróć uwagę jak teraz pracę utrudnia Ci TypeScript.
-Względem JavaScript, kod teraz powstaje trochę wolniej, ale w perspektywie czasu stworzenia a potem utrzymywania takiego projektu będzie łatwiejsze.
+1. W terminalu, będąc w folderze projektu, uruchom polecenie:
 
-### Następnie stwórzmy serwis RecipeService
+   ```bash
+   ng generate service core/recipe/services/recipe
+   ```
 
-W terminalu, będąc w folderze projektu utwórz serwis za pomocą Angular CLI:
+   To polecenie utworzy pliki:
 
-```bash
-  ng generate service core/recipe/services/recipe
-```
+   - `src/app/core/recipe/services/recipe.service.ts`
+   - `src/app/core/recipe/services/recipe.service.spec.ts` (testy, na razie ich nie ruszamy).
 
-> To polecenie stworzy pliki:
->
-> - **src/app/core/recipe/services/recipe.service.ts**
-> - **src/app/core/recipe/services/recipe.service.spec.ts** (testy, na razie ich nie ruszamy).
+2. Przenieś dane przepisów z komponentu `recipe-list` do serwisu. W pliku `recipe.service.ts` dodaj:
 
-Na początek przenieśmy do serwisu **recipe-service.ts** przepisy z komponentu **recipe-list**.
+   ```typescript
+   recipes: RecipeModel[] = [
+     {
+       id: 1,
+       title: 'Spaghetti Carbonara',
+       description: 'Klasyczne włoskie danie.',
+       ingredients: [],
+       preparationTime: 10,
+       difficulty: 'easy',
+     },
+     {
+       id: 2,
+       title: 'Pancakes',
+       description: 'Puszyste naleśniki z syropem klonowym.',
+       ingredients: [],
+       preparationTime: 20,
+       difficulty: 'hard',
+     },
+     {
+       id: 3,
+       title: 'Tacos',
+       description: 'Meksykańskie tacos z wołowiną i salsą.',
+       ingredients: [],
+       preparationTime: 30,
+       difficulty: 'medium',
+     },
+   ];
+   ```
 
-Uzupełnijmy brakujące pola modelu wg uznania. (ingredients, preparationTime, difficulty)
+3. Dodaj metodę, która zwróci listę przepisów:
 
-```typescript
-recipes: RecipeModel[] = [
-    {
-      title: 'Spaghetti Carbonara',
-      description: 'Klasyczne włoskie danie.',
-      ingredients: [],
-      preparationTime: 10,
-      difficulty: 'easy',
-    },
-    {
-      title: 'Pancakes',
-      description: 'Puszyste naleśniki z syropem klonowym.',
-      ingredients: [],
-      preparationTime: 20,
-      difficulty: 'hard',
-    },
-    {
-      title: 'Tacos',
-      description: 'Meksykańskie tacos z wołowiną i salsą.',
-      ingredients: [],
-      preparationTime: 30,
-      difficulty: 'medium',
-    },
-  ];
-```
+   ```typescript
+   getRecipes(): RecipeModel[] {
+     return this.recipes;
+   }
+   ```
 
-Teraz dodajmy metodę **getRecipes(): RecipeModel[]** którą pobierzemy nasz przepisy w przyszłości.
+### 4. Wstrzykiwanie serwisu do komponentu
 
-Gdy metoda jest już gotowa, a przepisy są przeniesione do ciała serwisu, wstrzyknijmy serwis **RecipeService** do komponentu **RecipeListComponent** i sprawmy by nasza aplikacja zaczęła działać z wykorzystaniem serwisu.
+1. W pliku `recipe-list.component.ts` dodaj konstruktor:
 
-By wstrzyknąć serwis do komponentu będzie potrzebny nam konstruktor w ciele klasy komponentu. Dodajmy go.
+   ```typescript
+   constructor(private recipeService: RecipeService) {}
+   ```
 
-```typescript
-  constructor() {}
+2. Dodaj zmienną do przechowywania przepisów:
 
-  // alternatywnie mozemy uzyc funkcji inject() pochodzącej z @angular/core
-```
+   ```typescript
+   recipes: RecipeModel[] = [];
+   ```
 
-Następnie jako parametr podajmy wcześniej stworzony serwis
+3. Zaimplementuj interfejs `OnInit`, który jest częścią cyklu życia komponentów w Angularze. Interfejs ten wymaga dodania metody `ngOnInit`, która jest wywoływana, gdy komponent jest inicjalizowany. To idealne miejsce na przypisanie danych z serwisu, ponieważ w tym momencie wszystkie zależności komponentu są gotowe.
 
-```typescript
-  constructor(private recipeService: RecipeService) {}
-```
+   W pliku `recipe-list.component.ts` zaimplementuj interfejs i dodaj metodę:
 
-W komponencie **RecipeListComponent** dodajmy zmienną
+   ```typescript
+   import { Component, OnInit } from "@angular/core";
 
-```typescript
-  recipes: RecipeModel[]  = []
-```
+   export class RecipeListComponent implements OnInit {
+     recipes: RecipeModel[] = [];
 
-Następnie zaciągnijmy dane z serwisu i przypiszmy je do naszej zmiennej. Żeby zrobić to w odpowiednim momencie, musimy dodać **ngOnInit** life cycle hook.
+     constructor(private recipeService: RecipeService) {}
 
-Zrobimy to poprzez implementacje interfejsu OnInit i spełnienie jego kontraktu
+     ngOnInit(): void {
+       this.recipes = this.recipeService.getRecipes();
+     }
+   }
+   ```
 
-```typescript
-  export class RecipeListComponent implements OnInit {
-  // ...
-  ngOnInit(): void {}
-  // ...
-```
+   > **Dlaczego `ngOnInit`?**
+   > Metoda `ngOnInit` jest częścią cyklu życia komponentu w Angularze. Wykorzystujemy ją, ponieważ w momencie jej wywołania komponent jest już w pełni zainicjalizowany, a wszystkie jego zależności (np. serwisy) są gotowe do użycia. Dzięki temu mamy pewność, że dane z serwisu zostaną poprawnie przypisane do zmiennej `recipes`.
 
-W ciele ngOnInit przypisz wywołanie funkcji getRecipes z serwisu
+### 5. Tworzenie i rozszerzanie komponentu `recipe-list-element`
 
-```typescript
-  export class RecipeListComponent implements OnInit {
-  // ...
-    ngOnInit(): void {
-    this.recipes = this.recipeService.getRecipes();
-  }
-  // ...
-```
+1. **Utwórz nowy komponent `recipe-list-element`** za pomocą Angular CLI:
 
-> Akcja przypisania wartości do zmiennej recipe dzieje się w metodzie ngOnInit, bo to bezpieczny moment w którym wszystko potrzebne jest gotowe, komponent jest wyrenderowany i mamy dostępn do jego zależności, serwis jest stworzony a jego instancja jest dostępna w scope komponentu.
-> Jest to bardzo istotne, w momencie w którym przejdziemy do programowania reaktywnego, zrozumienie cykli życia jest niezbędne.
+   ```bash
+   ng generate component ui/recipe-list-element
+   ```
 
-Po wykonaniu wszystkich kroków aplikacja powinna wrócić do stanu sprzed dodania serwisu.
-Możesz mieć problem z importami, wyrównaj je.
+   Ten komponent będzie odpowiadał za wyświetlanie pojedynczego elementu listy przepisów.
 
-### Rozszerzyliśmy model o dodatkowe właściwości, zróbmy to samo z widokiem komponentów wyświetlających nasze przepisy
+2. Przenieś kod HTML odpowiedzialny za wyświetlanie pojedynczego przepisu z komponentu `recipe-list` do nowo utworzonego komponentu `recipe-list-element.component.html`.
 
-Przejdzmy do **recipe-list-element.component.html** dostosujmy widok do modelu analogiczne do tego co już jest tam robione.
-Dorzućmy linijki które wyświtlą nam poziom trudności oraz czas przygotowania.
+   Przykład kodu:
 
-```typescript
-  @if (recipe) {
-    <article (click)="onRecipeClick(recipe)">
-        <h3>{{ recipe.title }}</h3>
-        <p>{{ recipe.description }}</p>
-        <p>Poziom trudności: {{ recipe.difficulty }}</p>
-        <p>Czas przygotowania: {{ recipe.preparationTime }} minut</p>
-    </article>
-}
-```
+   ```html
+   @if (recipe) {
+   <article>
+     <h3>{{ recipe.title }}</h3>
+     <p>{{ recipe.description }}</p>
+   </article>
+   }
+   ```
 
-To samo zróbmy z komponentem **recipe-detail.component**
+3. Dodaj obsługę kliknięcia na przepis w komponencie `recipe-list-element`. Przenieś `(click)="onRecipeClick(recipe)"` z komponentu `recipe-list` do `recipe-list-element.component.html`:
 
-Wszystkie modele inline zamień na **RecipeModel** lub **RecipeModel & { selectedRecipeTitle: string }** w zależności od potrzeby (ten drugi jest potrzebny przy przyciskach)
+   ```html
+   @if (recipe) {
+   <article (click)="onRecipeClick(recipe)">
+     <h3>{{ recipe.title }}</h3>
+     <p>{{ recipe.description }}</p>
+   </article>
+   }
+   ```
 
-> Podczas zmian w modelach, zauważ ile to pracy, dlatego bardzo ważna jest chociaż podstawowa znajomość TS'a oraz prawidłowe modelowanie najlepiej od samego początku powstawania projektu.
+4. Rozszerz widok komponentu `recipe-list-element` o dodatkowe elementy modelu:
 
-Możesz potrzebować mapowania, np przy emitowaniu wartości, możesz to zrobić poprzez stworzenie nowego obiektu i przypsanie do niego ręcznie pól jakie Cię interesuje, przykład:
+   ```html
+   @if (recipe) {
+   <article (click)="onRecipeClick(recipe)">
+     <h3>{{ recipe.title }}</h3>
+     <p>{{ recipe.description }}</p>
+     <p>Poziom trudności: {{ recipe.difficulty }}</p>
+     <p>Czas przygotowania: {{ recipe.preparationTime }} minut</p>
+   </article>
+   }
+   ```
 
-```typescript
-const toEmit = {
-  id: listElement.id,
-  title: listElement.title,
-  description: listElement.description,
-  ingredients: listElement.ingredients,
-  preparationTime: listElement.preparationTime,
-  difficulty: listElement.difficulty,
-};
-```
+5. W pliku `recipe-list-element.component.ts` dodaj właściwość `@Input` do przyjmowania danych przepisu oraz metodę `onRecipeClick`:
 
-### Dodajmy teraz przycisk który pozwoli nam usunąć przepis.
+   ```typescript
+   import { Component, Input, Output, EventEmitter } from "@angular/core";
+   import { RecipeModel } from "src/app/core/recipe/recipe.model";
 
-Zacznijmy od widoku, przejdzmy do **recipe-list-element.html** i dodajmy
+   @Component({
+     selector: "app-recipe-list-element",
+     templateUrl: "./recipe-list-element.component.html",
+     styleUrls: ["./recipe-list-element.component.css"],
+   })
+   export class RecipeListElementComponent {
+     @Input() recipe!: RecipeModel;
+     @Output() recipeClicked = new EventEmitter<RecipeModel>();
 
-```html
-<button (click)="onDeleteRecipe(recipe.id)">Usuń</button>
-<p>Czas przygotowania: {{ recipe.preparationTime }} minut</p>
-```
+     onRecipeClick(recipe: RecipeModel): void {
+       this.recipeClicked.emit(recipe);
+     }
+   }
+   ```
 
-Przejdzmy do **recipe-list-element.component.ts** i dodajmy implementacje metody **onDeleteRecipe(id: number)** Powinna emitować **id** do komponentu nadrzędnego.
+6. W pliku `recipe-list.component.html` użyj nowego komponentu `recipe-list-element` i obsłuż zdarzenie `recipeClicked`:
 
-Następnie przejdzmy do komponentu **recipe-list.component.html** i dodajmy obsługę zdarzenia
+   ```html
+   @for (let recipe of recipes) {
+   <app-recipe-list-element [recipe]="recipe" (recipeClicked)="onRecipeClick($event)"></app-recipe-list-element>
+   }
+   ```
 
-```html
-(recipeRemoved)="onDeleteRecipe($event)"
-```
+### 6. Dodanie funkcji usuwania przepisów
 
-W tym samym komponencie, w jego **.ts** zaimplementuje metodę **onDeleteRecipe(id: number)**
-_Teraz brakuje nam już tylko logiki która obsłuży usuwanie przepisu._
+1. W pliku `recipe-list-element.component.html` dodaj przycisk usuwania:
 
-Przejdzmy do serwisu **recipe-service.ts** i dodajmy metode
+   ```html
+   <button (click)="onDeleteRecipe(recipe.id)">Usuń</button>
+   ```
 
-```typescript
-@Injectable({
-  providedIn: "root",
-})
-export class RecipeService {
-  // ...
+2. W pliku `recipe-list-element.component.ts` zaimplementuj metodę:
 
-  // Metoda usuwająca przepis
-  deleteRecipe(id: number): void {
-    this.recipes = this.recipes.filter((r) => r.id !== id);
-  }
-}
-```
+   ```typescript
+   onDeleteRecipe(id: number): void {
+     this.recipeRemoved.emit(id);
+   }
+   ```
 
-Gdy już mamy gotową metodę, wywołajmy ja w metodzie **onDeleteRecipe** w komponencie **recipe-listcomponent.ts**, przekazując **id** jako parametr.
+3. W pliku `recipe-list.component.ts` dodaj metodę obsługującą usuwanie:
 
-Przy akcji usunięcia pamiętajmy o odświeżeniu modelu danych.
+   ```typescript
+   onDeleteRecipe(id: number): void {
+     this.recipeService.deleteRecipe(id);
+     this.recipes = this.recipeService.getRecipes();
+   }
+   ```
 
-```typescript
-export class RecipeListComponent implements OnInit {
-  // ...
-  onDeleteRecipe(id: number): void {
-    this.recipeService.deleteRecipe(id); // Usuwanie przepisu
-    this.recipes = this.recipeService.getRecipes(); // Odśwież listę
-  }
-}
-```
+4. W serwisie `recipe.service.ts` dodaj metodę usuwającą przepis:
 
-Na sam koniec powinieneś zobaczyć błędy w konsoli, dotyczą one typów.
-Usuń opcjonalność z właściwości modelu **RecipeModel**.
-Upewnij się, że wszędzie używasz tego modelu danych.
+   ```typescript
+   deleteRecipe(id: number): void {
+     this.recipes = this.recipes.filter((r) => r.id !== id);
+   }
+   ```
 
-Teraz w przeglądarce zobaczysz listę przepisów kulinarnych, będziesz mógł podejrzeć ich szczegóły oraz usunąć wybrane pozycje! 🎉
+### 7. Testowanie aplikacji
 
-## Podsumowanie Modułu:
+Po wykonaniu wszystkich kroków aplikacja powinna działać poprawnie. W przeglądarce zobaczysz listę przepisów, będziesz mógł podejrzeć ich szczegóły oraz usuwać wybrane pozycje.
+
+### Podsumowanie
 
 W tym module:
 
 - Utworzyliśmy i skonfigurowaliśmy serwis RecipeService.
-- Nauczyliśmy się, jak zarządzać danymi przy użyciu serwisów.
-- Rozszerzyliśmy RecipeModel i przystosowaliśmy komponenty do pracy z nowymi właściwościami.
-- Zaimplementowaliśmy funkcję usuwania przepisów z listy.
+- Nauczyliśmy się zarządzać danymi za pomocą serwisów.
+- Rozszerzyliśmy model danych i dostosowaliśmy komponenty do nowych właściwości.
+- Dodaliśmy funkcję usuwania przepisów z listy.
 
 #### Zadanie dla chętnych
 
-- Spraw by naciśnięciu przycisku usunięcia przepis nie był jednocześnie zaznaczany.
-- Spraw by usunięcie zaznaczonego przepisu powodowało jego "odznaczenie".
+- Spraw, by naciśnięcie przycisku usunięcia nie zaznaczało przepisu.
+- Spraw, by usunięcie zaznaczonego przepisu powodowało jego "odznaczenie".

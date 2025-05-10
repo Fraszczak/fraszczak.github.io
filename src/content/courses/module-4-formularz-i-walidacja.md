@@ -264,6 +264,15 @@ Kod potrzebny do stworzenia widoku.
       } }
     </div>
 
+    <!-- Opis -->
+    <div>
+      <label for="description">Opis przepisu:</label>
+      <textarea formControlName="description"></textarea>
+      @if (recipeFormGroup.get('description')?.invalid && recipeFormGroup.get('description')?.touched) { @if (recipeFormGroup.get('description')?.errors?.required) {
+      <small>Opis jest wymagany</small>
+      } }
+    </div>
+
     <!-- Składniki -->
     <div>
       <label for="ingredients">Składniki (minimum 2):</label>
