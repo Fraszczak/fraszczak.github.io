@@ -176,7 +176,7 @@ Dodajmy przycisk "Zobacz szczegóły"
       <p><strong>Składniki:</strong>{{ recipe.ingredients.join(', ') }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary" [routerLink]="[' /recipe', recipe.id]">Zobacz szczegóły</button>
+      <button mat-button color="primary" [routerLink]="['/recipe', recipe.id]">Zobacz szczegóły</button>
       <button mat-button color="accent" [routerLink]="['/recipe/edit', recipe.id]">Edytuj</button>
       <button mat-button color="warn" (click)="onDeleteRecipe(recipe?.id)">Usuń</button>
     </mat-card-actions>
@@ -509,7 +509,7 @@ linijkę z return'em zamień na
 return of(null) // of() tworzy strumień
   .pipe(
     // pipe pozwala na uzycie operatorów na strumieniu
-    debounceTime(5000), // operator: opóźni zwrotkę o 5 sekund
+    delay(5000), // operator: opóźni zwrotkę o 5 sekund
     map(() => true) // operator: zmapuje zwrotkę do wartości true
   );
 ```
