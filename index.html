@@ -1,48 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pl">
   <head>
-    <meta charset="utf-8" />
-    <title>Fraszczak - Personal Website</title>
-    <base href="/fraszczak.github.io" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/src/styles.css" />
-    <!-- Start Single Page Apps for GitHub Pages -->
-    <script>
-      (function () {
-        var redirect = sessionStorage.getItem("redirect");
-        if (redirect && redirect !== window.location.pathname) {
-          sessionStorage.removeItem("redirect");
-          history.replaceState(null, null, redirect);
-        }
-      })();
-    </script>
-    <!-- End Single Page Apps for GitHub Pages -->
-
-    <!-- Start toggle theme script -->
-    <script>
-      if (localStorage.theme === "dark") {
-        if (document && document.documentElement) {
-          document.documentElement.classList.add("dark");
-        }
-      } else if (localStorage.theme === "light") {
-        if (document && document.documentElement) {
-          document.documentElement.classList.remove("dark");
-        }
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Fraszczak Piotr - Full-stack developer specjalizujący się w nowoczesnych aplikacjach webowych. React, Node.js, TypeScript." />
+    <meta name="keywords" content="full-stack developer, React, Node.js, TypeScript, web development, programista, kursy programowania" />
+    <meta name="author" content="Fraszczak Piotr" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fraszczak Piotr - Full-Stack Web Developer" />
+    <meta property="og:description" content="Tworzę nowoczesne aplikacje webowe używając najnowszych technologii. Specjalizuję się w React, Node.js i architektury cloud-native." />
+    <meta property="og:image" content="/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Fraszczak Piotr - Full-Stack Web Developer" />
+    <meta property="twitter:description" content="Tworzę nowoczesne aplikacje webowe używając najnowszych technologii. Specjalizuję się w React, Node.js i architektury cloud-native." />
+    <meta property="twitter:image" content="/og-image.jpg" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Fraszczak Piotr",
+      "jobTitle": "Full-Stack Web Developer",
+      "description": "Full-stack developer specjalizujący się w nowoczesnych technologiach webowych",
+      "url": "https://fraszczak.github.io/fraszczak.github.io",
+      "sameAs": [
+        "https://www.linkedin.com/in/12071995",
+        "https://github.com/Fraszczak",
+      ],
+      "knowsAbout": ["React", "Node.js", "TypeScript", "JavaScript", "Web Development"],
+      "offers": {
+        "@type": "Service",
+        "serviceType": ["Web Development", "Programming Courses", "Technical Consulting"]
       }
+    }
     </script>
-    <!-- End toggle theme script -->
+    
+    <title>Fraszczak Piotr - Full-Stack Web Developer | React, Node.js, TypeScript</title>
   </head>
-  <body class="bg-white dark:bg-gray-950">
-    <app-root></app-root>
-    <script type="module" src="/src/main.ts"></script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
