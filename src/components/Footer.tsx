@@ -2,27 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HeartIcon } from "@heroicons/react/24/solid";
-
-const footerLinks = {
-  Nawigacja: [
-    { name: "Home", href: "/" },
-    { name: "O mnie", href: "/about" },
-    { name: "Portfolio", href: "/portfolio" },
-    { name: "Blog", href: "/blog" },
-  ],
-  Usługi: [
-    { name: "Kursy", href: "/courses" },
-    { name: "Konsultacje", href: "/contact" },
-    { name: "Warsztaty", href: "/courses" },
-    { name: "Współpraca", href: "/contact" },
-  ],
-  Social: [
-    { name: "LinkedIn", href: "https://linkedin.com" },
-    { name: "GitHub", href: "https://github.com" },
-    { name: "Twitter", href: "https://twitter.com" },
-    { name: "Instagram", href: "https://instagram.com" },
-  ],
-};
+import { footerLinks } from "../../assets/config";
 
 export function Footer() {
   return (
@@ -34,12 +14,8 @@ export function Footer() {
             <Link to="/" className="font-bold text-2xl mb-4 block">
               Fraszczak Piotr
             </Link>
-            <p className="text-slate-400 leading-relaxed mb-6">
-              Full-stack developer specjalizujący się w nowoczesnych
-              technologiach webowych. Tworzę aplikacje, które łączą
-              funkcjonalność z pięknym designem.
-            </p>
-            <div className="flex space-x-4">
+
+            <div className="flex flex-col space-y-4">
               {footerLinks.Social.map((item) => (
                 <a
                   key={item.name}
@@ -78,9 +54,7 @@ export function Footer() {
           {/* Newsletter */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Newsletter</h3>
-            <p className="text-slate-400 mb-4">
-              Otrzymuj najnowsze artykuły i porady programistyczne.
-            </p>
+            <p className="text-slate-400 mb-4">{footerLinks.newsletter.text}</p>
             <div className="flex">
               <input
                 type="email"
