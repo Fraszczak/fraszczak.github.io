@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
-import { StarIcon, ClockIcon, UserGroupIcon, PlayIcon } from '@heroicons/react/24/solid';
-import { StarIcon as StarOutlineIcon } from '@heroicons/react/24/outline';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { GlassCard } from "../components/GlassCard";
+import {
+  StarIcon,
+  ClockIcon,
+  UserGroupIcon,
+  PlayIcon,
+} from "@heroicons/react/24/solid";
+import { StarIcon as StarOutlineIcon } from "@heroicons/react/24/outline";
 
 const courses = [
   {
     id: 1,
-    title: 'React od Podstaw do Zaawansowanego',
-    description: 'Kompletny kurs React.js z praktycznymi projektami i najnowszymi wzorcami.',
-    image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: "React od Podstaw do Zaawansowanego",
+    description:
+      "Kompletny kurs React.js z praktycznymi projektami i najnowszymi wzorcami.",
+    image:
+      "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=600",
     price: 299,
     originalPrice: 399,
-    level: 'Początkujący',
-    technology: 'React',
-    format: 'Online',
-    duration: '40 godzin',
+    level: "Początkujący",
+    technology: "React",
+    format: "Online",
+    duration: "40 godzin",
     students: 1247,
     rating: 4.8,
     reviews: 156,
@@ -24,15 +31,17 @@ const courses = [
   },
   {
     id: 2,
-    title: 'Node.js i Express - Budowa API',
-    description: 'Naucz się tworzyć skalowalne backend aplikacje z Node.js i Express.',
-    image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: "Node.js i Express - Budowa API",
+    description:
+      "Naucz się tworzyć skalowalne backend aplikacje z Node.js i Express.",
+    image:
+      "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600",
     price: 249,
     originalPrice: 329,
-    level: 'Średniozaawansowany',
-    technology: 'Node.js',
-    format: 'Online',
-    duration: '32 godziny',
+    level: "Średniozaawansowany",
+    technology: "Node.js",
+    format: "Online",
+    duration: "32 godziny",
     students: 834,
     rating: 4.7,
     reviews: 98,
@@ -40,15 +49,16 @@ const courses = [
   },
   {
     id: 3,
-    title: 'TypeScript w Praktyce',
-    description: 'Opanuj TypeScript i pisz bezpieczniejszy kod JavaScript.',
-    image: 'https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: "TypeScript w Praktyce",
+    description: "Opanuj TypeScript i pisz bezpieczniejszy kod JavaScript.",
+    image:
+      "https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=600",
     price: 199,
     originalPrice: 279,
-    level: 'Średniozaawansowany',
-    technology: 'TypeScript',
-    format: 'Online',
-    duration: '24 godziny',
+    level: "Średniozaawansowany",
+    technology: "TypeScript",
+    format: "Online",
+    duration: "24 godziny",
     students: 567,
     rating: 4.9,
     reviews: 78,
@@ -56,15 +66,17 @@ const courses = [
   },
   {
     id: 4,
-    title: 'Full-Stack Development Bootcamp',
-    description: 'Intensywny warsztat obejmujący frontend, backend i deployment.',
-    image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: "Full-Stack Development Bootcamp",
+    description:
+      "Intensywny warsztat obejmujący frontend, backend i deployment.",
+    image:
+      "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600",
     price: 899,
     originalPrice: 1199,
-    level: 'Zaawansowany',
-    technology: 'Full-Stack',
-    format: 'Warsztat',
-    duration: '3 dni',
+    level: "Zaawansowany",
+    technology: "Full-Stack",
+    format: "Warsztat",
+    duration: "3 dni",
     students: 289,
     rating: 4.9,
     reviews: 67,
@@ -72,15 +84,17 @@ const courses = [
   },
   {
     id: 5,
-    title: 'Docker dla Developerów',
-    description: 'Praktyczne użycie Docker w procesie developmentu i deploymentu.',
-    image: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: "Docker dla Developerów",
+    description:
+      "Praktyczne użycie Docker w procesie developmentu i deploymentu.",
+    image:
+      "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=600",
     price: 179,
     originalPrice: 229,
-    level: 'Początkujący',
-    technology: 'DevOps',
-    format: 'Online',
-    duration: '16 godzin',
+    level: "Początkujący",
+    technology: "DevOps",
+    format: "Online",
+    duration: "16 godzin",
     students: 423,
     rating: 4.6,
     reviews: 52,
@@ -88,15 +102,16 @@ const courses = [
   },
   {
     id: 6,
-    title: 'GraphQL i Apollo Client',
-    description: 'Nowoczesne API z GraphQL i integracja z React aplikacjami.',
-    image: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=600',
+    title: "GraphQL i Apollo Client",
+    description: "Nowoczesne API z GraphQL i integracja z React aplikacjami.",
+    image:
+      "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=600",
     price: 219,
     originalPrice: 289,
-    level: 'Zaawansowany',
-    technology: 'GraphQL',
-    format: 'Online',
-    duration: '20 godzin',
+    level: "Zaawansowany",
+    technology: "GraphQL",
+    format: "Online",
+    duration: "20 godzin",
     students: 312,
     rating: 4.7,
     reviews: 41,
@@ -104,23 +119,40 @@ const courses = [
   },
 ];
 
-const levels = ['Wszystkie', 'Początkujący', 'Średniozaawansowany', 'Zaawansowany'];
-const technologies = ['Wszystkie', 'React', 'Node.js', 'TypeScript', 'Full-Stack', 'DevOps', 'GraphQL'];
-const formats = ['Wszystkie', 'Online', 'Warsztat'];
+const levels = [
+  "Wszystkie",
+  "Początkujący",
+  "Średniozaawansowany",
+  "Zaawansowany",
+];
+const technologies = [
+  "Wszystkie",
+  "React",
+  "Node.js",
+  "TypeScript",
+  "Full-Stack",
+  "DevOps",
+  "GraphQL",
+];
+const formats = ["Wszystkie", "Online", "Warsztat"];
 
 export function CoursesPage() {
-  const [selectedLevel, setSelectedLevel] = useState('Wszystkie');
-  const [selectedTechnology, setSelectedTechnology] = useState('Wszystkie');
-  const [selectedFormat, setSelectedFormat] = useState('Wszystkie');
+  const [selectedLevel, setSelectedLevel] = useState("Wszystkie");
+  const [selectedTechnology, setSelectedTechnology] = useState("Wszystkie");
+  const [selectedFormat, setSelectedFormat] = useState("Wszystkie");
 
-  const filteredCourses = courses.filter(course => {
-    const matchesLevel = selectedLevel === 'Wszystkie' || course.level === selectedLevel;
-    const matchesTechnology = selectedTechnology === 'Wszystkie' || course.technology === selectedTechnology;
-    const matchesFormat = selectedFormat === 'Wszystkie' || course.format === selectedFormat;
+  const filteredCourses = courses.filter((course) => {
+    const matchesLevel =
+      selectedLevel === "Wszystkie" || course.level === selectedLevel;
+    const matchesTechnology =
+      selectedTechnology === "Wszystkie" ||
+      course.technology === selectedTechnology;
+    const matchesFormat =
+      selectedFormat === "Wszystkie" || course.format === selectedFormat;
     return matchesLevel && matchesTechnology && matchesFormat;
   });
 
-  const featuredCourses = courses.filter(course => course.featured);
+  const featuredCourses = courses.filter((course) => course.featured);
 
   const renderStars = (rating: number) => {
     const stars = [];
@@ -137,7 +169,9 @@ export function CoursesPage() {
 
     const remainingStars = 5 - Math.ceil(rating);
     for (let i = 0; i < remainingStars; i++) {
-      stars.push(<StarOutlineIcon key={`empty-${i}`} className="w-5 h-5 text-gray-300" />);
+      stars.push(
+        <StarOutlineIcon key={`empty-${i}`} className="w-5 h-5 text-gray-300" />
+      );
     }
 
     return stars;
@@ -200,15 +234,15 @@ export function CoursesPage() {
                           {course.format}
                         </span>
                       </div>
-                      
+
                       <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
                         {course.title}
                       </h3>
-                      
+
                       <p className="text-slate-600 dark:text-slate-300 mb-4 flex-1">
                         {course.description}
                       </p>
-                      
+
                       <div className="space-y-3">
                         <div className="flex items-center justify-between text-sm text-slate-500">
                           <div className="flex items-center">
@@ -220,7 +254,7 @@ export function CoursesPage() {
                             {course.students} uczniów
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             {renderStars(course.rating)}
@@ -258,7 +292,7 @@ export function CoursesPage() {
           <h2 className="text-3xl font-bold text-slate-800 dark:text-white">
             Wszystkie Kursy
           </h2>
-          
+
           {/* Level Filter */}
           <div>
             <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
@@ -271,8 +305,8 @@ export function CoursesPage() {
                   onClick={() => setSelectedLevel(level)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedLevel === level
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
-                      : 'bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30'
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
+                      : "bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30"
                   }`}
                 >
                   {level}
@@ -293,8 +327,8 @@ export function CoursesPage() {
                   onClick={() => setSelectedTechnology(tech)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedTechnology === tech
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
-                      : 'bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30'
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
+                      : "bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30"
                   }`}
                 >
                   {tech}
@@ -315,8 +349,8 @@ export function CoursesPage() {
                   onClick={() => setSelectedFormat(format)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedFormat === format
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
-                      : 'bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30'
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
+                      : "bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30"
                   }`}
                 >
                   {format}
@@ -361,15 +395,15 @@ export function CoursesPage() {
                         {course.format}
                       </span>
                     </div>
-                    
+
                     <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
                       {course.title}
                     </h3>
-                    
+
                     <p className="text-slate-600 dark:text-slate-300 mb-4 flex-1">
                       {course.description}
                     </p>
-                    
+
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm text-slate-500">
                         <div className="flex items-center">
@@ -381,7 +415,7 @@ export function CoursesPage() {
                           {course.students} uczniów
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                           {renderStars(course.rating)}

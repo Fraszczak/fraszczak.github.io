@@ -1,108 +1,112 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
-import { 
-  EnvelopeIcon, 
-  PhoneIcon, 
-  MapPinIcon, 
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { GlassCard } from "../components/GlassCard";
+import {
+  EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
   PaperAirplaneIcon,
-  CheckCircleIcon
-} from '@heroicons/react/24/outline';
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.name.trim()) {
-      newErrors.name = 'Imię jest wymagane';
+      newErrors.name = "Imię jest wymagane";
     }
-    
+
     if (!formData.email.trim()) {
-      newErrors.email = 'Email jest wymagany';
+      newErrors.email = "Email jest wymagany";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email jest nieprawidłowy';
+      newErrors.email = "Email jest nieprawidłowy";
     }
-    
+
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Temat jest wymagany';
+      newErrors.subject = "Temat jest wymagany";
     }
-    
+
     if (!formData.message.trim()) {
-      newErrors.message = 'Wiadomość jest wymagana';
+      newErrors.message = "Wiadomość jest wymagana";
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Wiadomość musi mieć co najmniej 10 znaków';
+      newErrors.message = "Wiadomość musi mieć co najmniej 10 znaków";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setIsSubmitting(false);
     setIsSubmitted(true);
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: "", email: "", subject: "", message: "" });
     }, 3000);
   };
 
   const contactInfo = [
     {
       icon: EnvelopeIcon,
-      title: 'Email',
-      content: 'john@developer.com',
-      href: 'mailto:john@developer.com',
+      title: "Email",
+      content: "john@developer.com",
+      href: "mailto:john@developer.com",
     },
     {
       icon: PhoneIcon,
-      title: 'Telefon',
-      content: '+48 123 456 789',
-      href: 'tel:+48123456789',
+      title: "Telefon",
+      content: "+48 123 456 789",
+      href: "tel:+48123456789",
     },
     {
       icon: MapPinIcon,
-      title: 'Lokalizacja',
-      content: 'Warszawa, Polska',
-      href: 'https://maps.google.com',
+      title: "Lokalizacja",
+      content: "Warszawa, Polska",
+      href: "https://maps.google.com",
     },
   ];
 
   const socialLinks = [
-    { name: 'LinkedIn', url: 'https://linkedin.com', color: 'bg-blue-600' },
-    { name: 'GitHub', url: 'https://github.com', color: 'bg-gray-800' },
-    { name: 'Twitter', url: 'https://twitter.com', color: 'bg-blue-400' },
-    { name: 'Instagram', url: 'https://instagram.com', color: 'bg-pink-500' },
+    { name: "LinkedIn", url: "https://linkedin.com", color: "bg-blue-600" },
+    { name: "GitHub", url: "https://github.com", color: "bg-gray-800" },
+    { name: "Twitter", url: "https://twitter.com", color: "bg-blue-400" },
+    { name: "Instagram", url: "https://instagram.com", color: "bg-pink-500" },
   ];
 
   if (isSubmitted) {
@@ -120,7 +124,8 @@ export function ContactPage() {
                 Wiadomość Wysłana!
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-300">
-                Dziękuję za kontakt. Odpowiem na Twoją wiadomość w ciągu 24 godzin.
+                Dziękuję za kontakt. Odpowiem na Twoją wiadomość w ciągu 24
+                godzin.
               </p>
             </GlassCard>
           </motion.div>
@@ -143,8 +148,8 @@ export function ContactPage() {
             Skontaktuj się ze mną
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            Masz pytania o moje usługi, chcesz współpracować lub po prostu porozmawiać o technologii? 
-            Napisz do mnie - chętnie odpowiem!
+            Masz pytania o moje usługi, chcesz współpracować lub po prostu
+            porozmawiać o technologii? Napisz do mnie - chętnie odpowiem!
           </p>
         </motion.div>
 
@@ -159,11 +164,14 @@ export function ContactPage() {
               <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
                 Wyślij Wiadomość
               </h2>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                    >
                       Imię *
                     </label>
                     <input
@@ -173,7 +181,9 @@ export function ContactPage() {
                       value={formData.name}
                       onChange={handleChange}
                       className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 ${
-                        errors.name ? 'border-red-500' : 'border-white/30 dark:border-slate-700/30'
+                        errors.name
+                          ? "border-red-500"
+                          : "border-white/30 dark:border-slate-700/30"
                       }`}
                       placeholder="Twoje imię"
                     />
@@ -181,9 +191,12 @@ export function ContactPage() {
                       <p className="mt-1 text-sm text-red-500">{errors.name}</p>
                     )}
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                    >
                       Email *
                     </label>
                     <input
@@ -193,18 +206,25 @@ export function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 ${
-                        errors.email ? 'border-red-500' : 'border-white/30 dark:border-slate-700/30'
+                        errors.email
+                          ? "border-red-500"
+                          : "border-white/30 dark:border-slate-700/30"
                       }`}
                       placeholder="twoj@email.com"
                     />
                     {errors.email && (
-                      <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.email}
+                      </p>
                     )}
                   </div>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                  >
                     Temat *
                   </label>
                   <select
@@ -213,7 +233,9 @@ export function ContactPage() {
                     value={formData.subject}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 ${
-                      errors.subject ? 'border-red-500' : 'border-white/30 dark:border-slate-700/30'
+                      errors.subject
+                        ? "border-red-500"
+                        : "border-white/30 dark:border-slate-700/30"
                     }`}
                   >
                     <option value="">Wybierz temat</option>
@@ -223,12 +245,17 @@ export function ContactPage() {
                     <option value="other">Inne</option>
                   </select>
                   {errors.subject && (
-                    <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.subject}
+                    </p>
                   )}
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                  >
                     Wiadomość *
                   </label>
                   <textarea
@@ -238,15 +265,19 @@ export function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 resize-none ${
-                      errors.message ? 'border-red-500' : 'border-white/30 dark:border-slate-700/30'
+                      errors.message
+                        ? "border-red-500"
+                        : "border-white/30 dark:border-slate-700/30"
                     }`}
                     placeholder="Opisz swoją wiadomość..."
                   />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.message}
+                    </p>
                   )}
                 </div>
-                
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -280,7 +311,7 @@ export function ContactPage() {
               <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
                 Dane Kontaktowe
               </h2>
-              
+
               <div className="space-y-6">
                 {contactInfo.map((item, index) => (
                   <motion.a
@@ -311,7 +342,7 @@ export function ContactPage() {
               <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
                 Znajdź mnie w sieci
               </h2>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -335,9 +366,10 @@ export function ContactPage() {
                 Newsletter
               </h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Otrzymuj najnowsze artykuły i informacje o kursach prosto na swój email.
+                Otrzymuj najnowsze artykuły i informacje o kursach prosto na
+                swój email.
               </p>
-              
+
               <div className="flex gap-3">
                 <input
                   type="email"

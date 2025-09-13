@@ -1,80 +1,90 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
-import { EyeIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { GlassCard } from "../components/GlassCard";
+import { EyeIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
 
 const projects = [
   {
     id: 1,
-    title: 'E-commerce Platform',
-    description: 'Nowoczesna platforma e-commerce z zaawansowanym systemem zarządzania produktami',
-    image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
-    tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    category: 'Fullstack',
-    demo: 'https://example.com',
-    github: 'https://github.com/example',
+    title: "E-commerce Platform",
+    description:
+      "Nowoczesna platforma e-commerce z zaawansowanym systemem zarządzania produktami",
+    image:
+      "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600",
+    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+    category: "Fullstack",
+    demo: "https://example.com",
+    github: "https://github.com/example",
   },
   {
     id: 2,
-    title: 'Task Management App',
-    description: 'Aplikacja do zarządzania zadaniami z real-time collaboration',
-    image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600',
-    tech: ['React', 'Socket.io', 'PostgreSQL', 'Docker'],
-    category: 'Fullstack',
-    demo: 'https://example.com',
-    github: 'https://github.com/example',
+    title: "Task Management App",
+    description: "Aplikacja do zarządzania zadaniami z real-time collaboration",
+    image:
+      "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600",
+    tech: ["React", "Socket.io", "PostgreSQL", "Docker"],
+    category: "Fullstack",
+    demo: "https://example.com",
+    github: "https://github.com/example",
   },
   {
     id: 3,
-    title: 'Weather Dashboard',
-    description: 'Dashboard pogodowy z wizualizacją danych i prognozą',
-    image: 'https://images.pexels.com/photos/186980/pexels-photo-186980.jpeg?auto=compress&cs=tinysrgb&w=600',
-    tech: ['React', 'D3.js', 'Weather API', 'Tailwind'],
-    category: 'Frontend',
-    demo: 'https://example.com',
-    github: 'https://github.com/example',
+    title: "Weather Dashboard",
+    description: "Dashboard pogodowy z wizualizacją danych i prognozą",
+    image:
+      "https://images.pexels.com/photos/186980/pexels-photo-186980.jpeg?auto=compress&cs=tinysrgb&w=600",
+    tech: ["React", "D3.js", "Weather API", "Tailwind"],
+    category: "Frontend",
+    demo: "https://example.com",
+    github: "https://github.com/example",
   },
   {
     id: 4,
-    title: 'REST API Service',
-    description: 'Skalowalne API dla aplikacji mobilnej z dokumentacją Swagger',
-    image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600',
-    tech: ['Node.js', 'Express', 'MongoDB', 'JWT'],
-    category: 'Backend',
-    demo: 'https://example.com',
-    github: 'https://github.com/example',
+    title: "REST API Service",
+    description: "Skalowalne API dla aplikacji mobilnej z dokumentacją Swagger",
+    image:
+      "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600",
+    tech: ["Node.js", "Express", "MongoDB", "JWT"],
+    category: "Backend",
+    demo: "https://example.com",
+    github: "https://github.com/example",
   },
   {
     id: 5,
-    title: 'Portfolio Website',
-    description: 'Responsywna strona portfolio z animacjami i dark mode',
-    image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600',
-    tech: ['React', 'Framer Motion', 'Tailwind', 'Vite'],
-    category: 'Frontend',
-    demo: 'https://example.com',
-    github: 'https://github.com/example',
+    title: "Portfolio Website",
+    description: "Responsywna strona portfolio z animacjami i dark mode",
+    image:
+      "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600",
+    tech: ["React", "Framer Motion", "Tailwind", "Vite"],
+    category: "Frontend",
+    demo: "https://example.com",
+    github: "https://github.com/example",
   },
   {
     id: 6,
-    title: 'Chat Application',
-    description: 'Real-time chat z grupami, emoji i udostępnianiem plików',
-    image: 'https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg?auto=compress&cs=tinysrgb&w=600',
-    tech: ['React', 'Socket.io', 'Node.js', 'Redis'],
-    category: 'Fullstack',
-    demo: 'https://example.com',
-    github: 'https://github.com/example',
+    title: "Chat Application",
+    description: "Real-time chat z grupami, emoji i udostępnianiem plików",
+    image:
+      "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg?auto=compress&cs=tinysrgb&w=600",
+    tech: ["React", "Socket.io", "Node.js", "Redis"],
+    category: "Fullstack",
+    demo: "https://example.com",
+    github: "https://github.com/example",
   },
 ];
 
-const categories = ['Wszystkie', 'Frontend', 'Backend', 'Fullstack'];
+const categories = ["Wszystkie", "Frontend", "Backend", "Fullstack"];
 
 export function PortfolioPage() {
-  const [selectedCategory, setSelectedCategory] = useState('Wszystkie');
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("Wszystkie");
+  const [selectedProject, setSelectedProject] = useState<
+    (typeof projects)[0] | null
+  >(null);
 
-  const filteredProjects = selectedCategory === 'Wszystkie' 
-    ? projects 
-    : projects.filter(p => p.category === selectedCategory);
+  const filteredProjects =
+    selectedCategory === "Wszystkie"
+      ? projects
+      : projects.filter((p) => p.category === selectedCategory);
 
   return (
     <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
@@ -107,8 +117,8 @@ export function PortfolioPage() {
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 selectedCategory === category
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg'
-                  : 'bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30'
+                  ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
+                  : "bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 hover:bg-white/30 dark:hover:bg-slate-700/30"
               }`}
             >
               {category}
