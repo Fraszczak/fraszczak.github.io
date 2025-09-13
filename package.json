@@ -1,8 +1,9 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "fraszczak.github.io",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://fraszczak.github.io/fraszczak.github.io/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
