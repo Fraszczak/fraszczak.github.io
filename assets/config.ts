@@ -4,14 +4,14 @@ export const footerLinks = {
   Nawigacja: [
     { name: 'Home', href: '/' },
     { name: 'O mnie', href: '/about' },
-    { name: 'Portfolio', href: '/portfolio' },
     { name: 'Blog', href: '/blog' },
+    { name: 'Portfolio', href: '/portfolio' },
   ],
   Usługi: [
-    { name: 'Kursy', href: '/courses' },
     { name: 'Konsultacje', href: '/contact' },
-    { name: 'Warsztaty', href: '/courses' },
     { name: 'Współpraca', href: '/contact' },
+    { name: 'Kursy', href: '/courses' },
+    { name: 'Warsztaty', href: '/courses' },
   ],
   Social: [
     { name: 'LinkedIn', href: 'https://www.linkedin.com/in/12071995' },

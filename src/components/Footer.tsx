@@ -2,8 +2,18 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { footerLinks } from "../../assets/config";
+import { SoonTag } from "./SoonTag";
 
 export function Footer() {
+  // Helper function to check if item should be tagged
+  const shouldTagItem = (itemName: string) => {
+    return (
+      itemName === "Kursy" ||
+      itemName === "Warsztaty" ||
+      itemName === "Portfolio"
+    );
+  };
+
   return (
     <footer className="bg-slate-900 dark:bg-slate-950 text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -38,12 +48,20 @@ export function Footer() {
                 <ul className="space-y-3">
                   {links.map((item) => (
                     <li key={item.name}>
-                      <Link
-                        to={item.href}
-                        className="text-slate-400 hover:text-white transition-colors duration-200"
-                      >
-                        {item.name}
-                      </Link>
+                      {shouldTagItem(item.name) ? (
+                        <SoonTag disabled={true}>
+                          <span className="text-slate-400 cursor-not-allowed">
+                            {item.name}
+                          </span>
+                        </SoonTag>
+                      ) : (
+                        <Link
+                          to={item.href}
+                          className="text-slate-400 hover:text-white transition-colors duration-200"
+                        >
+                          {item.name}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>

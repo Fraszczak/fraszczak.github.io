@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { GlassCard } from "../components/GlassCard";
 import { homePage } from "../../assets/config";
+import { SoonTag } from "../components/SoonTag";
 
 export function HomePage() {
   return (
@@ -104,50 +105,53 @@ export function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {homePage.projects.newestProjects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <GlassCard className="overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-600 dark:text-slate-300 mb-4">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+          {/* Wrap the entire projects section with SoonTag */}
+          <SoonTag disabled={true} className="block">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {homePage.projects.newestProjects.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <GlassCard className="overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-slate-600 dark:text-slate-300 mb-4">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            ))}
-          </div>
+                  </GlassCard>
+                </motion.div>
+              ))}
+            </div>
 
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-full hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            {homePage.buttonAllProjects}
-            <ArrowRightIcon className="ml-2 w-5 h-5" />
-          </Link>
+            <Link
+              to="/portfolio"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-full hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              {homePage.buttonAllProjects}
+              <ArrowRightIcon className="ml-2 w-5 h-5" />
+            </Link>
+          </SoonTag>
         </div>
       </section>
     </div>

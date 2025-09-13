@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
+import { SoonTag } from "./SoonTag";
 
 const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Portfolio", path: "/portfolio" },
   { name: "Blog", path: "/blog" },
-  { name: "Courses", path: "/courses" },
   { name: "Contact", path: "/contact" },
+  { name: "Courses", path: "/courses", comingSoon: true },
+  { name: "Portfolio", path: "/portfolio", comingSoon: true },
 ];
 
 export function Navbar() {
@@ -25,6 +26,44 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const renderNavItem = (item: (typeof navItems)[0], isMobile = false) => {
+    const baseClasses = `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+      location.pathname === item.path
+        ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
+        : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+    }`;
+
+    const mobileClasses = `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+      location.pathname === item.path
+        ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
+        : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+    }`;
+
+    if (item.comingSoon) {
+      return (
+        <SoonTag
+          disabled={true}
+          className={isMobile ? "block" : "inline-block"}
+        >
+          <span className={isMobile ? mobileClasses : baseClasses}>
+            {item.name}
+          </span>
+        </SoonTag>
+      );
+    }
+
+    return (
+      <Link
+        key={item.name}
+        to={item.path}
+        className={isMobile ? mobileClasses : baseClasses}
+        onClick={() => isMobile && setIsOpen(false)}
+      >
+        {item.name}
+      </Link>
+    );
+  };
 
   return (
     <motion.nav
@@ -43,17 +82,7 @@ export function Navbar() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    location.pathname === item.path
-                      ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
-                      : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
-                  }`}
-                >
-                  {item.name}
-                </Link>
+                <div key={item.name}>{renderNavItem(item)}</div>
               ))}
             </div>
           </div>
@@ -86,18 +115,7 @@ export function Navbar() {
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    location.pathname === item.path
-                      ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
-                      : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
-                  }`}
-                >
-                  {item.name}
-                </Link>
+                <div key={item.name}>{renderNavItem(item, true)}</div>
               ))}
             </div>
           </motion.div>
