@@ -1,5 +1,5 @@
-# Sample workflow for building and deploying a static site to GitHub Pages
-name: Deploy Analog App to GitHub Pages
+# Workflow for building and deploying a Vite + React app to GitHub Pages
+name: Deploy React App to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -20,33 +20,36 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-     - name: Checkout repository
-       uses: actions/checkout@v4
-     - uses: actions/setup-node@v4
-       with:
-        node-version-file: package.json
-     - run: corepack enable
-     - run: pnpm --version
-     - uses: actions/setup-node@v4
-       with:
-        cache: 'pnpm'
-        cache-dependency-path: '**/pnpm-lock.yaml'
-     - name: Install dependencies
-       run: pnpm install --frozen-lockfile
-       
-     - name: Build
-       run: pnpm build
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-     - name: Upload Analog artifact
-       id: upload-artifact
-       uses: actions/upload-pages-artifact@v3
-       with:
-         path: ./dist/client
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
   # Deployment job
   deploy:
     environment:
