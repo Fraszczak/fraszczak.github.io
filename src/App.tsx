@@ -18,7 +18,7 @@ function App() {
   const { theme } = useTheme();
 
   return (
-    <Router basename="/fraszczak.github.io">
+    <Router>
       <I18nProvider>
         <div
           className={`min-h-screen transition-colors duration-300 ${
