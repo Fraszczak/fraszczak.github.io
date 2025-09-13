@@ -9,7 +9,7 @@ import { GlassCard } from "../components/GlassCard";
 import { SoonTag } from "../components/SoonTag";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import { useI18n } from "../contexts/I18nContext";
-import { PERSONAL_INFO } from "../../public/assets/config";
+import { PERSONAL_INFO } from "../../public/config";
 
 export function HomePage() {
   useScrollToTop();

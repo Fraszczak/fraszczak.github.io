@@ -4,7 +4,7 @@ import { CodeBracketIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 export const PERSONAL_INFO = {
   firstName: 'Piotr',
   lastName: 'Fraszczak',
-  image: '/assets/images/author.png',
+  image: '/images/author.png',
 } as const;
 
 export const SOCIAL_LINKS = {

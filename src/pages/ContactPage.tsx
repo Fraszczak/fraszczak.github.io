@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import { useI18n } from "../contexts/I18nContext";
-import { CONTACT_PAGE } from "../../public/assets/config";
+import { CONTACT_PAGE } from "../../public/config";
 
 export function ContactPage() {
   useScrollToTop();

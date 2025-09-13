@@ -8,7 +8,7 @@ import {
 import OrbitingSkills from "../components/Skills";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import { useI18n } from "../contexts/I18nContext";
-import { SKILLS_CONFIG } from "../../public/assets/config";
+import { SKILLS_CONFIG } from "../../public/config";
 
 export function AboutPage() {
   useScrollToTop();

@@ -60,7 +60,7 @@ const iconComponents: Record<
   html: {
     component: () => (
       <img
-        src="/assets/icons/html.svg"
+        src="/icons/html.svg"
         alt="HTML"
         className="w-full h-full"
         style={{
@@ -74,7 +74,7 @@ const iconComponents: Record<
   css: {
     component: () => (
       <img
-        src="/assets/icons/css.svg"
+        src="/icons/css.svg"
         alt="CSS"
         className="w-full h-full"
         style={{
@@ -88,7 +88,7 @@ const iconComponents: Record<
   javascript: {
     component: () => (
       <img
-        src="/assets/icons/javaScript.svg"
+        src="/icons/javaScript.svg"
         alt="JavaScript"
         className="w-full h-full"
       />
@@ -97,28 +97,20 @@ const iconComponents: Record<
   },
   react: {
     component: () => (
-      <img
-        src="/assets/icons/react.svg"
-        alt="React"
-        className="w-full h-full"
-      />
+      <img src="/icons/react.svg" alt="React" className="w-full h-full" />
     ),
     color: "#61DAFB",
   },
   node: {
     component: () => (
-      <img
-        src="/assets/icons/nodeJS.svg"
-        alt="Node.js"
-        className="w-full h-full"
-      />
+      <img src="/icons/nodeJS.svg" alt="Node.js" className="w-full h-full" />
     ),
     color: "#339933",
   },
   tailwind: {
     component: () => (
       <img
-        src="/assets/icons/tailwind.svg"
+        src="/icons/tailwind.svg"
         alt="Tailwind CSS"
         className="w-full h-full"
       />
@@ -127,18 +119,14 @@ const iconComponents: Record<
   },
   angular: {
     component: () => (
-      <img
-        src="/assets/icons/angular.svg"
-        alt="Angular"
-        className="w-full h-full"
-      />
+      <img src="/icons/angular.svg" alt="Angular" className="w-full h-full" />
     ),
     color: "#DD0031",
   },
   typescript: {
     component: () => (
       <img
-        src="/assets/icons/typeScript.svg"
+        src="/icons/typeScript.svg"
         alt="TypeScript"
         className="w-full h-full"
       />
@@ -148,7 +136,7 @@ const iconComponents: Record<
   dotnet: {
     component: () => (
       <img
-        src="/assets/icons/dotnet.svg"
+        src="/icons/dotnet.svg"
         alt=".NET"
         className="w-full h-full"
         style={{
@@ -162,7 +150,7 @@ const iconComponents: Record<
   cypress: {
     component: () => (
       <img
-        src="/assets/icons/cypress.svg"
+        src="/icons/cypress.svg"
         alt="Cypress"
         className="w-full h-full"
         style={{
@@ -175,23 +163,19 @@ const iconComponents: Record<
   },
   azure: {
     component: () => (
-      <img
-        src="/assets/icons/azure.svg"
-        alt="Azure"
-        className="w-full h-full"
-      />
+      <img src="/icons/azure.svg" alt="Azure" className="w-full h-full" />
     ),
     color: "#0078D4",
   },
   sql: {
     component: () => (
-      <img src="/assets/icons/sql.svg" alt="SQL" className="w-full h-full" />
+      <img src="/icons/sql.svg" alt="SQL" className="w-full h-full" />
     ),
     color: "#336791",
   },
   jest: {
     component: () => (
-      <img src="/assets/icons/jest.svg" alt="Jest" className="w-full h-full" />
+      <img src="/icons/jest.svg" alt="Jest" className="w-full h-full" />
     ),
     color: "#C21325",
   },
