@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/fraszczak.github.io/', // Match your repo name exactly
+  base: '/fraszczak.github.io/',
   build: {
     outDir: 'dist',
     sourcemap: false,
