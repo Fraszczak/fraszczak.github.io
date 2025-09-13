@@ -1,0 +1,24 @@
+{
+  "name": "Fraszczak Piotr - Full-Stack Web Developer",
+  "short_name": "Fraszczak Piotr",
+  "description": "Full-stack developer specjalizujący się w nowoczesnych aplikacjach webowych",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "developer"],
+  "lang": "pl"
+}

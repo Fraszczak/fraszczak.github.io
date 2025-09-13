@@ -6,11 +6,14 @@ import {
   TrophyIcon,
 } from "@heroicons/react/24/outline";
 import OrbitingSkills from "../components/Skills";
-import { ABOUT_PAGE } from "../../assets/config";
 import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useI18n } from "../contexts/I18nContext";
+import { SKILLS_CONFIG } from "../../public/assets/config";
 
 export function AboutPage() {
   useScrollToTop();
+  const { t } = useI18n();
+
   return (
     <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -22,10 +25,10 @@ export function AboutPage() {
           className="text-center mb-16"
         >
           <h1 className="text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {ABOUT_PAGE.title}
+            {t("about.title")}
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
-            {ABOUT_PAGE.description}
+            {t("about.description")}
           </p>
         </motion.div>
 
@@ -38,10 +41,10 @@ export function AboutPage() {
         >
           <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
             <BriefcaseIcon className="w-8 h-8 mr-3 text-indigo-500" />
-            {ABOUT_PAGE.experience.title}
+            {t("about.experience.title")}
           </h2>
           <div className="space-y-8">
-            {ABOUT_PAGE.experience.experienceItems.map((exp, index) => (
+            {t("about.experience.items").map((exp: any, index: number) => (
               <GlassCard key={index} className="p-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
@@ -61,6 +64,7 @@ export function AboutPage() {
             ))}
           </div>
         </motion.section>
+
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Left Column - Achievements */}
@@ -74,15 +78,17 @@ export function AboutPage() {
               Osiągnięcia
             </h2>
             <div className="space-y-6">
-              {ABOUT_PAGE.achievements.map((achievement, index) => (
-                <GlassCard key={index} className="p-8">
-                  <div className="flex items-center">
-                    <span className="text-slate-800 dark:text-white font-medium">
-                      {achievement}
-                    </span>
-                  </div>
-                </GlassCard>
-              ))}
+              {t("about.achievements").map(
+                (achievement: string, index: number) => (
+                  <GlassCard key={index} className="p-8">
+                    <div className="flex items-center">
+                      <span className="text-slate-800 dark:text-white font-medium">
+                        {achievement}
+                      </span>
+                    </div>
+                  </GlassCard>
+                )
+              )}
             </div>
           </motion.section>
 
@@ -96,10 +102,10 @@ export function AboutPage() {
             >
               <h2 className="text-3xl font-bold text-slate-800 dark:text-white flex items-center">
                 <AcademicCapIcon className="w-8 h-8 mr-3 text-indigo-500" />
-                {ABOUT_PAGE.skills.title}
+                {t("about.skills.title")}
               </h2>
               <div className="rounded-lg">
-                <OrbitingSkills skills={ABOUT_PAGE.skills.skillsConfig} />
+                <OrbitingSkills skills={SKILLS_CONFIG} />
               </div>
             </motion.section>
           </div>
@@ -114,10 +120,10 @@ export function AboutPage() {
         >
           <GlassCard className="p-8 text-center">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
-              {ABOUT_PAGE.hobby.title}
+              {t("about.hobby.title")}
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              {ABOUT_PAGE.hobby.description}
+              {t("about.hobby.description")}
             </p>
           </GlassCard>
         </motion.section>

@@ -3,20 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
 import { SoonTag } from "./SoonTag";
-
-const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Blog", path: "/blog" },
-  { name: "Contact", path: "/contact" },
-  { name: "Courses", path: "/courses", comingSoon: true },
-  { name: "Portfolio", path: "/portfolio", comingSoon: true },
-];
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useI18n } from "../contexts/I18nContext";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useI18n();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,13 +22,13 @@ export function Navbar() {
   }, []);
 
   const renderNavItem = (item: (typeof navItems)[0], isMobile = false) => {
-    const baseClasses = `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+    const baseClasses = `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
       location.pathname === item.path
         ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
         : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
     }`;
 
-    const mobileClasses = `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+    const mobileClasses = `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 whitespace-nowrap ${
       location.pathname === item.path
         ? "bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
         : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
@@ -65,6 +59,15 @@ export function Navbar() {
     );
   };
 
+  const navItems = [
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.about"), path: "/about" },
+    { name: t("nav.blog"), path: "/blog" },
+    { name: t("nav.contact"), path: "/contact" },
+    { name: t("nav.portfolio"), path: "/portfolio", comingSoon: true },
+    { name: t("nav.courses"), path: "/courses", comingSoon: true },
+  ];
+
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -77,18 +80,23 @@ export function Navbar() {
       transition={{ duration: 0.6 }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-center h-16">
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+        <div className="relative flex items-center justify-center h-16">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
+            <div className="flex items-baseline space-x-4 whitespace-nowrap">
               {navItems.map((item) => (
                 <div key={item.name}>{renderNavItem(item)}</div>
               ))}
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Language Switcher - Desktop - Right side */}
+          <div className="hidden md:block absolute right-0">
+            <LanguageSwitcher />
+          </div>
+
+          {/* Mobile menu button - Left side */}
+          <div className="md:hidden absolute left-0">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
@@ -117,6 +125,13 @@ export function Navbar() {
               {navItems.map((item) => (
                 <div key={item.name}>{renderNavItem(item, true)}</div>
               ))}
+
+              {/* Language Switcher - Mobile */}
+              <div className="pt-4 border-t border-slate-200/20 dark:border-slate-700/20">
+                <div className="px-3 py-2">
+                  <LanguageSwitcher />
+                </div>
+              </div>
             </div>
           </motion.div>
         )}

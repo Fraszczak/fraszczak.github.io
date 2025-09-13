@@ -2,10 +2,9 @@ import { CodeBracketIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 // === SHARED CONSTANTS ===
 export const PERSONAL_INFO = {
-  name: 'Fraszczak Piotr',
   firstName: 'Piotr',
   lastName: 'Fraszczak',
-  image: 'assets/images/author.png',
+  image: '/assets/images/author.png',
 } as const;
 
 export const SOCIAL_LINKS = {
@@ -13,38 +12,6 @@ export const SOCIAL_LINKS = {
   github: 'https://github.com/Fraszczak',
   twitter: 'https://x.com/PPFraszczak',
   instagram: 'https://www.instagram.com/fraszczakp',
-} as const;
-
-// === NAVIGATION CONFIG ===
-export const NAVIGATION = {
-  main: [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Portfolio', path: '/portfolio', comingSoon: true },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Courses', path: '/courses', comingSoon: true },
-    { name: 'Contact', path: '/contact' },
-  ],
-  footer: {
-    navigation: [
-      { name: 'Home', href: '/' },
-      { name: 'O mnie', href: '/about' },
-      { name: 'Blog', href: '/blog' },
-      { name: 'Portfolio', href: '/portfolio' },
-    ],
-    services: [
-      { name: 'Konsultacje', href: '/contact' },
-      { name: 'Współpraca', href: '/contact' },
-      { name: 'Kursy', href: '/courses' },
-      { name: 'Warsztaty', href: '/courses' },
-    ],
-    social: [
-      { name: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
-      { name: 'GitHub', href: SOCIAL_LINKS.github },
-      { name: 'Twitter', href: SOCIAL_LINKS.twitter },
-      { name: 'Instagram', href: SOCIAL_LINKS.instagram },
-    ],
-  },
 } as const;
 
 // === SKILLS CONFIGURATION ===
@@ -183,7 +150,7 @@ export const SKILLS_CONFIG = [
 
 // === PAGE CONFIGURATIONS ===
 export const HOME_PAGE = {
-  author: PERSONAL_INFO.name,
+  author: 'Fraszczak Piotr',
   name: PERSONAL_INFO.firstName,
   surname: PERSONAL_INFO.lastName,
   description:
@@ -367,10 +334,3 @@ export const CONTACT_PAGE = {
     },
   },
 } as const;
-
-export const footerLinks = {
-  Nawigacja: NAVIGATION.footer.navigation,
-  Usługi: NAVIGATION.footer.services,
-  Social: NAVIGATION.footer.social,
-  newsletter: CONTACT_PAGE.newsletter,
-};

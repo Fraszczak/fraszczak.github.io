@@ -12,37 +12,39 @@ import { Footer } from "./components/Footer";
 import { BackToTop } from "./components/BackToTop";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { useTheme } from "./hooks/useTheme";
-import { useScrollToTop } from "./hooks/useScrollToTop";
+import { I18nProvider } from "./contexts/I18nContext";
 
 function App() {
   const { theme } = useTheme();
 
   return (
     <Router>
-      <div
-        className={`min-h-screen transition-colors duration-300 ${
-          theme === "dark"
-            ? "dark bg-slate-900"
-            : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
-        }`}
-      >
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/courses" element={<CoursesPage />} />
-            <Route path="/courses/:id" element={<CourseDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-        <Footer />
-        <BackToTop />
-      </div>
+      <I18nProvider>
+        <div
+          className={`min-h-screen transition-colors duration-300 ${
+            theme === "dark"
+              ? "dark bg-slate-900"
+              : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+          }`}
+        >
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="/courses" element={<CoursesPage />} />
+              <Route path="/courses/:id" element={<CourseDetailPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+          <Footer />
+          <BackToTop />
+        </div>
+      </I18nProvider>
     </Router>
   );
 }

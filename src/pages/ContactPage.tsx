@@ -12,11 +12,14 @@ import {
   ChatBubbleLeftRightIcon,
   PhotoIcon,
 } from "@heroicons/react/24/solid";
-import { CONTACT_PAGE } from "../../assets/config";
 import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useI18n } from "../contexts/I18nContext";
+import { CONTACT_PAGE } from "../../public/assets/config";
 
 export function ContactPage() {
   useScrollToTop();
+  const { t } = useI18n();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,26 +46,23 @@ export function ContactPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = CONTACT_PAGE.validation.messages.nameRequired;
+      newErrors.name = t("contact.validation.nameRequired");
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = CONTACT_PAGE.validation.messages.emailRequired;
+      newErrors.email = t("contact.validation.emailRequired");
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = CONTACT_PAGE.validation.messages.emailInvalid;
+      newErrors.email = t("contact.validation.emailInvalid");
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = CONTACT_PAGE.validation.messages.subjectRequired;
+      newErrors.subject = t("contact.validation.subjectRequired");
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = CONTACT_PAGE.validation.messages.messageRequired;
-    } else if (
-      formData.message.trim().length <
-      CONTACT_PAGE.form.fields.message.minLength
-    ) {
-      newErrors.message = CONTACT_PAGE.validation.messages.messageMinLength;
+      newErrors.message = t("contact.validation.messageRequired");
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = t("contact.validation.messageMinLength");
     }
 
     setErrors(newErrors);
@@ -83,12 +83,6 @@ export function ContactPage() {
 
     setIsSubmitting(false);
     setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 3000);
   };
 
   // Icon mapping for social media
@@ -111,10 +105,10 @@ export function ContactPage() {
             <GlassCard className="p-12 text-center">
               <CheckCircleIcon className="w-20 h-20 text-green-500 mx-auto mb-6" />
               <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
-                {CONTACT_PAGE.form.success.title}
+                {t("contact.form.success.title")}
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-300">
-                {CONTACT_PAGE.form.success.message}
+                {t("contact.form.success.message")}
               </p>
             </GlassCard>
           </motion.div>
@@ -134,10 +128,10 @@ export function ContactPage() {
           className="text-center mb-16"
         >
           <h1 className="text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {CONTACT_PAGE.title}
+            {t("contact.title")}
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            {CONTACT_PAGE.description}
+            {t("contact.description")}
           </p>
         </motion.div>
 
@@ -150,87 +144,88 @@ export function ContactPage() {
           >
             <GlassCard className="p-8">
               <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
-                {CONTACT_PAGE.form.title}
+                {t("contact.form.title")}
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                    >
-                      {CONTACT_PAGE.form.fields.name.label}
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 ${
-                        errors.name
-                          ? "border-red-500"
-                          : "border-white/30 dark:border-slate-700/30"
-                      }`}
-                      placeholder={CONTACT_PAGE.form.fields.name.placeholder}
-                    />
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                    >
-                      {CONTACT_PAGE.form.fields.email.label}
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 ${
-                        errors.email
-                          ? "border-red-500"
-                          : "border-white/30 dark:border-slate-700/30"
-                      }`}
-                      placeholder={CONTACT_PAGE.form.fields.email.placeholder}
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
+                {/* Name Field */}
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                  >
+                    {t("contact.form.fields.name.label")}
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
+                      errors.name
+                        ? "border-red-500"
+                        : "border-white/30 dark:border-slate-700/30"
+                    }`}
+                    placeholder={t("contact.form.fields.name.placeholder")}
+                  />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                  )}
                 </div>
 
+                {/* Email Field */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                  >
+                    {t("contact.form.fields.email.label")}
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
+                      errors.email
+                        ? "border-red-500"
+                        : "border-white/30 dark:border-slate-700/30"
+                    }`}
+                    placeholder={t("contact.form.fields.email.placeholder")}
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                {/* Subject Field */}
                 <div>
                   <label
                     htmlFor="subject"
                     className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                   >
-                    {CONTACT_PAGE.form.fields.subject.label}
+                    {t("contact.form.fields.subject.label")}
                   </label>
                   <select
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 ${
+                    className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                       errors.subject
                         ? "border-red-500"
                         : "border-white/30 dark:border-slate-700/30"
                     }`}
                   >
-                    {CONTACT_PAGE.form.fields.subject.options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
+                    {t("contact.form.fields.subject.options").map(
+                      (option: any) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      )
+                    )}
                   </select>
                   {errors.subject && (
                     <p className="mt-1 text-sm text-red-500">
@@ -239,25 +234,26 @@ export function ContactPage() {
                   )}
                 </div>
 
+                {/* Message Field */}
                 <div>
                   <label
                     htmlFor="message"
                     className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                   >
-                    {CONTACT_PAGE.form.fields.message.label}
+                    {t("contact.form.fields.message.label")}
                   </label>
                   <textarea
                     id="message"
                     name="message"
-                    rows={6}
+                    rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200 resize-none ${
+                    className={`w-full px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none ${
                       errors.message
                         ? "border-red-500"
                         : "border-white/30 dark:border-slate-700/30"
                     }`}
-                    placeholder={CONTACT_PAGE.form.fields.message.placeholder}
+                    placeholder={t("contact.form.fields.message.placeholder")}
                   />
                   {errors.message && (
                     <p className="mt-1 text-sm text-red-500">
@@ -266,19 +262,20 @@ export function ContactPage() {
                   )}
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold py-4 px-8 rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
+                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 px-6 rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-                      {CONTACT_PAGE.form.submitButton.submittingText}
+                      {t("contact.form.submitButton.submittingText")}
                     </>
                   ) : (
                     <>
-                      {CONTACT_PAGE.form.submitButton.text}
+                      {t("contact.form.submitButton.text")}
                       <PaperAirplaneIcon className="w-5 h-5 ml-2" />
                     </>
                   )}
@@ -297,7 +294,7 @@ export function ContactPage() {
             {/* Social Media */}
             <GlassCard className="p-8">
               <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
-                Znajdź mnie w sieci
+                {t("contact.social.title")}
               </h2>
 
               <div className="grid grid-cols-2 gap-4">
@@ -328,20 +325,20 @@ export function ContactPage() {
             {/* Newsletter Signup */}
             <GlassCard className="p-8">
               <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
-                {CONTACT_PAGE.newsletter.title}
+                {t("contact.newsletter.title")}
               </h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                {CONTACT_PAGE.newsletter.description}
+                {t("contact.newsletter.description")}
               </p>
 
               <div className="flex gap-3">
                 <input
                   type="email"
-                  placeholder={CONTACT_PAGE.newsletter.placeholder}
+                  placeholder={t("contact.newsletter.placeholder")}
                   className="flex-1 px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
                 <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-6 py-3 rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-colors duration-200 font-medium">
-                  {CONTACT_PAGE.newsletter.buttonText}
+                  {t("contact.newsletter.buttonText")}
                 </button>
               </div>
             </GlassCard>
