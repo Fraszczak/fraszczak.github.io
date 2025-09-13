@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { GlassCard } from "../components/GlassCard";
-import { homePage } from "../../assets/config";
+import { HOME_PAGE } from "../../assets/config";
 import { SoonTag } from "../components/SoonTag";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 
 export function HomePage() {
+  useScrollToTop();
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -18,27 +20,21 @@ export function HomePage() {
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-5xl lg:text-6xl font-bold text-slate-800 dark:text-white mb-6">
-                {homePage.surname}{" "}
+                {HOME_PAGE.surname}{" "}
                 <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  {homePage.name}
+                  {HOME_PAGE.name}
                 </span>
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                {homePage.description}
+                {HOME_PAGE.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  to="/portfolio"
+                  to="/contact"
                   className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-full hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
-                  {homePage.buttonPortfolio}
+                  {HOME_PAGE.buttons.contact}
                   <ArrowRightIcon className="ml-2 w-5 h-5" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center px-8 py-4 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 text-slate-700 dark:text-slate-300 font-medium rounded-full hover:bg-white/30 dark:hover:bg-slate-700/30 transition-all duration-300"
-                >
-                  {homePage.buttonContact}
                 </Link>
               </div>
             </motion.div>
@@ -52,8 +48,8 @@ export function HomePage() {
               <div className="relative w-80 h-80 mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
                 <img
-                  src={homePage.image}
-                  alt={homePage.author}
+                  src={HOME_PAGE.image}
+                  alt={HOME_PAGE.author}
                   className="relative w-full h-full object-cover rounded-full shadow-2xl"
                 />
               </div>
@@ -66,7 +62,7 @@ export function HomePage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {homePage.stats.map((stat, index) => (
+            {HOME_PAGE.stats.map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -98,17 +94,17 @@ export function HomePage() {
             className="mb-16"
           >
             <h2 className="text-4xl font-bold text-slate-800 dark:text-white mb-4">
-              {homePage.projects.title}
+              {HOME_PAGE.projects.title}
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-300">
-              {homePage.projects.description}
+              {HOME_PAGE.projects.description}
             </p>
           </motion.div>
 
           {/* Wrap the entire projects section with SoonTag */}
           <SoonTag disabled={true} className="block">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              {homePage.projects.newestProjects.map((project, index) => (
+              {HOME_PAGE.projects.newestProjects.map((project, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
@@ -148,7 +144,7 @@ export function HomePage() {
               to="/portfolio"
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-full hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              {homePage.buttonAllProjects}
+              {HOME_PAGE.buttons.allProjects}
               <ArrowRightIcon className="ml-2 w-5 h-5" />
             </Link>
           </SoonTag>

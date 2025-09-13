@@ -7,6 +7,7 @@ import {
   CalendarDaysIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 
 const blogPosts = [
   {
@@ -87,6 +88,7 @@ Docker może znacznie uprościć proces developmentu i deploymentu aplikacji fro
 const categories = ["Wszystkie", "React", "TypeScript", "Node.js", "DevOps"];
 
 export function BlogPage() {
+  useScrollToTop();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Wszystkie");
 

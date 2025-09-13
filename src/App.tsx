@@ -12,19 +12,20 @@ import { Footer } from "./components/Footer";
 import { BackToTop } from "./components/BackToTop";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { useTheme } from "./hooks/useTheme";
+import { useScrollToTop } from "./hooks/useScrollToTop";
 
 function App() {
   const { theme } = useTheme();
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        theme === "dark"
-          ? "dark bg-slate-900"
-          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
-      }`}
-    >
-      <Router>
+    <Router>
+      <div
+        className={`min-h-screen transition-colors duration-300 ${
+          theme === "dark"
+            ? "dark bg-slate-900"
+            : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+        }`}
+      >
         <Navbar />
         <main>
           <Routes>
@@ -41,8 +42,8 @@ function App() {
         </main>
         <Footer />
         <BackToTop />
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 

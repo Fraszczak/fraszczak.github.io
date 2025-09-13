@@ -2,14 +2,21 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { GlassCard } from "../components/GlassCard";
 import {
-  EnvelopeIcon,
-  PhoneIcon,
-  MapPinIcon,
   PaperAirplaneIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
+// Add social media icons
+import {
+  EnvelopeIcon,
+  CodeBracketIcon,
+  ChatBubbleLeftRightIcon,
+  PhotoIcon,
+} from "@heroicons/react/24/solid";
+import { CONTACT_PAGE } from "../../assets/config";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 
 export function ContactPage() {
+  useScrollToTop();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,23 +43,26 @@ export function ContactPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Imię jest wymagane";
+      newErrors.name = CONTACT_PAGE.validation.messages.nameRequired;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email jest wymagany";
+      newErrors.email = CONTACT_PAGE.validation.messages.emailRequired;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email jest nieprawidłowy";
+      newErrors.email = CONTACT_PAGE.validation.messages.emailInvalid;
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = "Temat jest wymagany";
+      newErrors.subject = CONTACT_PAGE.validation.messages.subjectRequired;
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = "Wiadomość jest wymagana";
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Wiadomość musi mieć co najmniej 10 znaków";
+      newErrors.message = CONTACT_PAGE.validation.messages.messageRequired;
+    } else if (
+      formData.message.trim().length <
+      CONTACT_PAGE.form.fields.message.minLength
+    ) {
+      newErrors.message = CONTACT_PAGE.validation.messages.messageMinLength;
     }
 
     setErrors(newErrors);
@@ -81,33 +91,13 @@ export function ContactPage() {
     }, 3000);
   };
 
-  const contactInfo = [
-    {
-      icon: EnvelopeIcon,
-      title: "Email",
-      content: "john@developer.com",
-      href: "mailto:john@developer.com",
-    },
-    {
-      icon: PhoneIcon,
-      title: "Telefon",
-      content: "+48 123 456 789",
-      href: "tel:+48123456789",
-    },
-    {
-      icon: MapPinIcon,
-      title: "Lokalizacja",
-      content: "Warszawa, Polska",
-      href: "https://maps.google.com",
-    },
-  ];
-
-  const socialLinks = [
-    { name: "LinkedIn", url: "https://linkedin.com", color: "bg-blue-600" },
-    { name: "GitHub", url: "https://github.com", color: "bg-gray-800" },
-    { name: "Twitter", url: "https://twitter.com", color: "bg-blue-400" },
-    { name: "Instagram", url: "https://instagram.com", color: "bg-pink-500" },
-  ];
+  // Icon mapping for social media
+  const socialIcons = {
+    LinkedIn: EnvelopeIcon, // We'll use a different icon for LinkedIn
+    GitHub: CodeBracketIcon,
+    Twitter: ChatBubbleLeftRightIcon,
+    Instagram: PhotoIcon,
+  };
 
   if (isSubmitted) {
     return (
@@ -121,11 +111,10 @@ export function ContactPage() {
             <GlassCard className="p-12 text-center">
               <CheckCircleIcon className="w-20 h-20 text-green-500 mx-auto mb-6" />
               <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">
-                Wiadomość Wysłana!
+                {CONTACT_PAGE.form.success.title}
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-300">
-                Dziękuję za kontakt. Odpowiem na Twoją wiadomość w ciągu 24
-                godzin.
+                {CONTACT_PAGE.form.success.message}
               </p>
             </GlassCard>
           </motion.div>
@@ -145,11 +134,10 @@ export function ContactPage() {
           className="text-center mb-16"
         >
           <h1 className="text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            Skontaktuj się ze mną
+            {CONTACT_PAGE.title}
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            Masz pytania o moje usługi, chcesz współpracować lub po prostu
-            porozmawiać o technologii? Napisz do mnie - chętnie odpowiem!
+            {CONTACT_PAGE.description}
           </p>
         </motion.div>
 
@@ -162,7 +150,7 @@ export function ContactPage() {
           >
             <GlassCard className="p-8">
               <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
-                Wyślij Wiadomość
+                {CONTACT_PAGE.form.title}
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -172,7 +160,7 @@ export function ContactPage() {
                       htmlFor="name"
                       className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                     >
-                      Imię *
+                      {CONTACT_PAGE.form.fields.name.label}
                     </label>
                     <input
                       type="text"
@@ -185,7 +173,7 @@ export function ContactPage() {
                           ? "border-red-500"
                           : "border-white/30 dark:border-slate-700/30"
                       }`}
-                      placeholder="Twoje imię"
+                      placeholder={CONTACT_PAGE.form.fields.name.placeholder}
                     />
                     {errors.name && (
                       <p className="mt-1 text-sm text-red-500">{errors.name}</p>
@@ -197,7 +185,7 @@ export function ContactPage() {
                       htmlFor="email"
                       className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                     >
-                      Email *
+                      {CONTACT_PAGE.form.fields.email.label}
                     </label>
                     <input
                       type="email"
@@ -210,7 +198,7 @@ export function ContactPage() {
                           ? "border-red-500"
                           : "border-white/30 dark:border-slate-700/30"
                       }`}
-                      placeholder="twoj@email.com"
+                      placeholder={CONTACT_PAGE.form.fields.email.placeholder}
                     />
                     {errors.email && (
                       <p className="mt-1 text-sm text-red-500">
@@ -225,7 +213,7 @@ export function ContactPage() {
                     htmlFor="subject"
                     className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                   >
-                    Temat *
+                    {CONTACT_PAGE.form.fields.subject.label}
                   </label>
                   <select
                     id="subject"
@@ -238,11 +226,11 @@ export function ContactPage() {
                         : "border-white/30 dark:border-slate-700/30"
                     }`}
                   >
-                    <option value="">Wybierz temat</option>
-                    <option value="cooperation">Współpraca</option>
-                    <option value="consultation">Konsultacje</option>
-                    <option value="course">Kursy i warsztaty</option>
-                    <option value="other">Inne</option>
+                    {CONTACT_PAGE.form.fields.subject.options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </select>
                   {errors.subject && (
                     <p className="mt-1 text-sm text-red-500">
@@ -256,7 +244,7 @@ export function ContactPage() {
                     htmlFor="message"
                     className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                   >
-                    Wiadomość *
+                    {CONTACT_PAGE.form.fields.message.label}
                   </label>
                   <textarea
                     id="message"
@@ -269,7 +257,7 @@ export function ContactPage() {
                         ? "border-red-500"
                         : "border-white/30 dark:border-slate-700/30"
                     }`}
-                    placeholder="Opisz swoją wiadomość..."
+                    placeholder={CONTACT_PAGE.form.fields.message.placeholder}
                   />
                   {errors.message && (
                     <p className="mt-1 text-sm text-red-500">
@@ -286,11 +274,11 @@ export function ContactPage() {
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-                      Wysyłanie...
+                      {CONTACT_PAGE.form.submitButton.submittingText}
                     </>
                   ) : (
                     <>
-                      Wyślij Wiadomość
+                      {CONTACT_PAGE.form.submitButton.text}
                       <PaperAirplaneIcon className="w-5 h-5 ml-2" />
                     </>
                   )}
@@ -299,44 +287,13 @@ export function ContactPage() {
             </GlassCard>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Right Column - Social Media and Newsletter */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-8"
           >
-            {/* Contact Details */}
-            <GlassCard className="p-8">
-              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
-                Dane Kontaktowe
-              </h2>
-
-              <div className="space-y-6">
-                {contactInfo.map((item, index) => (
-                  <motion.a
-                    key={index}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-start p-4 bg-white/10 dark:bg-slate-800/10 rounded-xl hover:bg-white/20 dark:hover:bg-slate-700/20 transition-colors duration-200 group"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <item.icon className="w-6 h-6 text-indigo-500 mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
-                    <div>
-                      <h3 className="font-semibold text-slate-800 dark:text-white mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="text-slate-600 dark:text-slate-300">
-                        {item.content}
-                      </p>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-            </GlassCard>
-
             {/* Social Media */}
             <GlassCard className="p-8">
               <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
@@ -344,40 +301,47 @@ export function ContactPage() {
               </h2>
 
               <div className="grid grid-cols-2 gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${social.color} text-white p-4 rounded-xl text-center font-medium hover:opacity-80 transition-opacity duration-200`}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {social.name}
-                  </motion.a>
-                ))}
+                {CONTACT_PAGE.socialLinks.map((social, index) => {
+                  const IconComponent =
+                    socialIcons[social.name as keyof typeof socialIcons];
+                  return (
+                    <motion.a
+                      key={index}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${social.color} text-white p-6 rounded-xl text-center font-medium hover:opacity-80 transition-all duration-200 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2`}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                      title={social.name} // Add tooltip
+                    >
+                      <IconComponent className="w-8 h-8" />
+                      <span className="text-sm font-semibold">
+                        {social.name}
+                      </span>
+                    </motion.a>
+                  );
+                })}
               </div>
             </GlassCard>
 
             {/* Newsletter Signup */}
             <GlassCard className="p-8">
               <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
-                Newsletter
+                {CONTACT_PAGE.newsletter.title}
               </h2>
               <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Otrzymuj najnowsze artykuły i informacje o kursach prosto na
-                swój email.
+                {CONTACT_PAGE.newsletter.description}
               </p>
 
               <div className="flex gap-3">
                 <input
                   type="email"
-                  placeholder="Twój email"
+                  placeholder={CONTACT_PAGE.newsletter.placeholder}
                   className="flex-1 px-4 py-3 bg-white/20 dark:bg-slate-800/20 backdrop-blur-lg border border-white/30 dark:border-slate-700/30 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
                 <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-6 py-3 rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-colors duration-200 font-medium">
-                  Zapisz się
+                  {CONTACT_PAGE.newsletter.buttonText}
                 </button>
               </div>
             </GlassCard>

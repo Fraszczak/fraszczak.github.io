@@ -6,9 +6,11 @@ import {
   TrophyIcon,
 } from "@heroicons/react/24/outline";
 import OrbitingSkills from "../components/Skills";
-import { aboutPage } from "../../assets/config";
+import { ABOUT_PAGE } from "../../assets/config";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 
 export function AboutPage() {
+  useScrollToTop();
   return (
     <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -20,10 +22,10 @@ export function AboutPage() {
           className="text-center mb-16"
         >
           <h1 className="text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {aboutPage.title}
+            {ABOUT_PAGE.title}
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
-            {aboutPage.description}
+            {ABOUT_PAGE.description}
           </p>
         </motion.div>
 
@@ -36,10 +38,10 @@ export function AboutPage() {
         >
           <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
             <BriefcaseIcon className="w-8 h-8 mr-3 text-indigo-500" />
-            {aboutPage.experience.title}
+            {ABOUT_PAGE.experience.title}
           </h2>
           <div className="space-y-8">
-            {aboutPage.experience.experienceItems.map((exp, index) => (
+            {ABOUT_PAGE.experience.experienceItems.map((exp, index) => (
               <GlassCard key={index} className="p-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
@@ -72,7 +74,7 @@ export function AboutPage() {
               Osiągnięcia
             </h2>
             <div className="space-y-6">
-              {aboutPage.achievements.map((achievement, index) => (
+              {ABOUT_PAGE.achievements.map((achievement, index) => (
                 <GlassCard key={index} className="p-8">
                   <div className="flex items-center">
                     <span className="text-slate-800 dark:text-white font-medium">
@@ -94,10 +96,10 @@ export function AboutPage() {
             >
               <h2 className="text-3xl font-bold text-slate-800 dark:text-white flex items-center">
                 <AcademicCapIcon className="w-8 h-8 mr-3 text-indigo-500" />
-                {aboutPage.skills.title}
+                {ABOUT_PAGE.skills.title}
               </h2>
               <div className="rounded-lg">
-                <OrbitingSkills skills={aboutPage.skills.skillsConfig} />
+                <OrbitingSkills skills={ABOUT_PAGE.skills.skillsConfig} />
               </div>
             </motion.section>
           </div>
@@ -112,10 +114,10 @@ export function AboutPage() {
         >
           <GlassCard className="p-8 text-center">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">
-              {aboutPage.hobby.title}
+              {ABOUT_PAGE.hobby.title}
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              {aboutPage.hobby.description}
+              {ABOUT_PAGE.hobby.description}
             </p>
           </GlassCard>
         </motion.section>

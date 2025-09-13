@@ -71,7 +71,9 @@ export function Footer() {
           {/* Newsletter */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Newsletter</h3>
-            <p className="text-slate-400 mb-4">{footerLinks.newsletter.text}</p>
+            <p className="text-slate-400 mb-4">
+              {footerLinks.newsletter.description}
+            </p>
             <div className="flex">
               <input
                 type="email"
