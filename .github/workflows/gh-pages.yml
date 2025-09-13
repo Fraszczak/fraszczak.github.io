@@ -42,10 +42,11 @@ jobs:
       - name: Build project
         run: pnpm build
 
-      - name: Add MIME type configuration
+      - name: Add .nojekyll file
         run: |
-          echo "AddType application/javascript .js" > dist/.htaccess
-          echo "AddType text/css .css" >> dist/.htaccess
+          # Create .nojekyll file to disable Jekyll processing
+          touch dist/.nojekyll
+          echo "Created .nojekyll file to disable Jekyll processing"
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
