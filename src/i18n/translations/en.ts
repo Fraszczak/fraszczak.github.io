@@ -172,5 +172,21 @@ export const en = {
     error: 'Error',
     notFound: 'Page not found',
     backToHome: 'Back to Home',
+    comingSoon: 'Coming Soon',
+    expectedLaunch: 'Expected Launch',
+  },
+  pages: {
+    courses: {
+      title: 'Programming Courses',
+      description:
+        "My original programming courses will be available here soon. Together we'll explore the latest web technologies!",
+      expectedDate: 'Q2 2025',
+    },
+    portfolio: {
+      title: 'Portfolio',
+      description:
+        "Soon you'll find my projects here using Angular, React, Node.js and other modern technologies. There will be a lot to see!",
+      expectedDate: 'Q1 2025',
+    },
   },
 } as const;

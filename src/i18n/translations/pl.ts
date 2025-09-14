@@ -172,5 +172,21 @@ export const pl = {
     error: 'Błąd',
     notFound: 'Strona nie została znaleziona',
     backToHome: 'Powrót do strony głównej',
+    comingSoon: 'Wkrótce',
+    expectedLaunch: 'Planowane uruchomienie',
+  },
+  pages: {
+    courses: {
+      title: 'Kursy Programowania',
+      description:
+        'Już niedługo pojawią się tutaj moje autorskie kursy programowania. Będziemy razem poznawać najnowsze technologie webowe!',
+      expectedDate: 'Q2 2025',
+    },
+    portfolio: {
+      title: 'Portfolio',
+      description:
+        'Tutaj wkrótce pojawią się moje projekty wykorzystujące Angular, React, Node.js i inne nowoczesne technologie. Będzie co oglądać!',
+      expectedDate: 'Q1 2025',
+    },
   },
 } as const;
