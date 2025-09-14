@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +11,8 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { t } = useI18n();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +22,50 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        mobileMenuRef.current &&
+        menuButtonRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        !menuButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    // Add event listener when menu is open
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   const renderNavItem = (item: (typeof navItems)[0], isMobile = false) => {
     const baseClasses = `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
@@ -95,11 +141,14 @@ export function Navbar() {
             <LanguageSwitcher />
           </div>
 
-          {/* Mobile menu button - Left side */}
-          <div className="md:hidden absolute left-0">
+          {/* Mobile menu button - Right side */}
+          <div className="md:hidden absolute right-0">
             <button
+              ref={menuButtonRef}
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 p-2 rounded-md"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? (
                 <XMarkIcon className="h-6 w-6" />
@@ -114,26 +163,40 @@ export function Navbar() {
       {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            className="md:hidden bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200/20 dark:border-slate-700/20"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navItems.map((item) => (
-                <div key={item.name}>{renderNavItem(item, true)}</div>
-              ))}
+          <>
+            {/* Backdrop overlay */}
+            <motion.div
+              className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsOpen(false)}
+            />
 
-              {/* Language Switcher - Mobile */}
-              <div className="pt-4 border-t border-slate-200/20 dark:border-slate-700/20">
-                <div className="px-3 py-2">
-                  <LanguageSwitcher />
+            {/* Mobile menu */}
+            <motion.div
+              ref={mobileMenuRef}
+              className="md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200/20 dark:border-slate-700/20 relative z-50"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                {navItems.map((item) => (
+                  <div key={item.name}>{renderNavItem(item, true)}</div>
+                ))}
+
+                {/* Language Switcher - Mobile */}
+                <div className="pt-4 border-t border-slate-200/20 dark:border-slate-700/20">
+                  <div className="px-3 py-2">
+                    <LanguageSwitcher />
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>

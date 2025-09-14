@@ -105,6 +105,9 @@ export async function parseBlogPost(slug: string): Promise<BlogPost | null> {
   };
 }
 
+// Add simple caching to improve performance
+const postCache = new Map<string, BlogPost>();
+
 // Get all blog posts
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   const posts = await Promise.all(
@@ -118,5 +121,14 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 
 // Get blog post by slug
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  return await parseBlogPost(slug);
+  if (postCache.has(slug)) {
+    return postCache.get(slug)!;
+  }
+
+  const post = await parseBlogPost(slug);
+  if (post) {
+    postCache.set(slug, post);
+  }
+
+  return post;
 }
