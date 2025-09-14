@@ -1,294 +1,258 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { GlassCard } from "../components/GlassCard";
 import {
   ArrowLeftIcon,
   CalendarDaysIcon,
   ClockIcon,
-  UserIcon,
+  TagIcon,
+  ShareIcon,
 } from "@heroicons/react/24/outline";
+import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useI18n } from "../contexts/I18nContext";
+import { getBlogPost, getAllBlogPosts, BlogPost } from "../content/blogPosts";
+import { MarkdownRenderer } from "../components/MarkdownRenderer";
+import { NotFoundPage } from "./NotFoundPage";
 
-// Mock data - in real app, this would come from an API or CMS
-const blogPosts = [
-  {
-    id: 1,
-    slug: "react-18-nowe-funkcje",
-    title: "React 18 - Nowości i najważniejsze zmiany",
-    excerpt:
-      "Przegląd najważniejszych funkcji wprowadzonych w React 18, w tym Concurrent Features, Suspense i Automatic Batching.",
-    content: `# React 18 - Nowości i najważniejsze zmiany
+export function BlogPostPage() {
+  useScrollToTop();
+  const { t } = useI18n();
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
 
-React 18 to jedna z najważniejszych aktualizacji frameworka w ostatnich latach. Wprowadza wiele przełomowych funkcji, które znacznie poprawiają wydajność i doświadczenie użytkownika.
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-## Concurrent Features
+  useEffect(() => {
+    async function loadPost() {
+      if (!slug) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
 
-Nowe funkcje współbieżności to prawdopodobnie największa nowość w React 18. Umożliwiają one React przygotowywanie wielu wersji UI jednocześnie, co prowadzi do:
+      try {
+        // Load the current post
+        const currentPost = await getBlogPost(slug);
 
-- **Lepszej responsywności** - aplikacja pozostaje responsywna nawet podczas intensywnych obliczeń
-- **Inteligentnego priorytetyzowania** - React może przerwać mniej ważne aktualizacje na rzecz pilniejszych
-- **Smoother UX** - użytkownik nie doświadcza blokowania interfejsu
+        if (!currentPost) {
+          setNotFound(true);
+          setLoading(false);
+          return;
+        }
 
-### Przykład użycia startTransition
+        setPost(currentPost);
 
-\`\`\`javascript
-import { startTransition } from 'react';
+        // Load all posts to find related ones
+        const allPosts = await getAllBlogPosts();
+        const related = allPosts
+          .filter(
+            (p) =>
+              p.slug !== currentPost.slug &&
+              p.tags.some((tag) => currentPost.tags.includes(tag))
+          )
+          .slice(0, 3);
 
-function SearchBox() {
-  const [isPending, startTransition] = useTransition();
-  const [searchQuery, setSearchQuery] = useState('');
+        setRelatedPosts(related);
+      } catch (error) {
+        console.error("Failed to load blog post:", error);
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  const handleChange = (e) => {
-    startTransition(() => {
-      setSearchQuery(e.target.value);
+    loadPost();
+  }, [slug]);
+
+  useEffect(() => {
+    if (post) {
+      document.title = `${post.title} | Piotr Fraszczak`;
+
+      // Update meta description
+      const metaDescription = document.querySelector(
+        'meta[name="description"]'
+      );
+      if (metaDescription) {
+        metaDescription.setAttribute("content", post.excerpt);
+      }
+    }
+  }, [post]);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
-  return (
-    <div>
-      <input onChange={handleChange} />
-      {isPending && <Spinner />}
-    </div>
-  );
-}
-\`\`\`
+  const handleShare = async () => {
+    if (!post) return;
 
-## Ulepszone Suspense
+    const url = window.location.href;
+    const title = post.title;
 
-Suspense w React 18 został znacznie rozszerzony i teraz obsługuje więcej przypadków użycia:
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch (err) {
+        console.log("Error sharing:", err);
+      }
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(url);
+      // You could show a toast notification here
+    }
+  };
 
-- **Server-side rendering** - Suspense działa teraz również na serwerze
-- **Lepsze error boundaries** - ulepszona obsługa błędów
-- **Zagnieżdżone Suspense** - możliwość tworzenia złożonych hierarchii
-
-### Przykład z Suspense
-
-\`\`\`javascript
-function App() {
-  return (
-    <Suspense fallback={<Loading />}>
-      <ProfilePage />
-      <Suspense fallback={<PostsLoading />}>
-        <PostsList />
-      </Suspense>
-    </Suspense>
-  );
-}
-\`\`\`
-
-## Automatic Batching
-
-React 18 automatycznie grupuje wszystkie aktualizacje stanu, nie tylko te w event handlerach. To oznacza lepszą wydajność out-of-the-box.
-
-### Przed React 18
-\`\`\`javascript
-// Tylko te aktualizacje były grupowane
-function handleClick() {
-  setCount(1);
-  setFlag(true); // Jedna rerender
-}
-
-// Te NIE były grupowane
-fetch('/api').then(() => {
-  setCount(1); // Rerender
-  setFlag(true); // Rerender
-});
-\`\`\`
-
-### Po React 18
-\`\`\`javascript
-// Wszystkie aktualizacje są teraz grupowane
-fetch('/api').then(() => {
-  setCount(1);
-  setFlag(true); // Jedna rerender!
-});
-\`\`\`
-
-## Nowe Hooki
-
-React 18 wprowadza także kilka nowych hooków:
-
-### useId
-Generuje unikalne ID dla komponentów:
-
-\`\`\`javascript
-function MyComponent() {
-  const id = useId();
-  return (
-    <>
-      <label htmlFor={id}>Name:</label>
-      <input id={id} type="text" />
-    </>
-  );
-}
-\`\`\`
-
-### useDeferredValue
-Pozwala na opóźnienie aktualizacji mniej ważnych wartości:
-
-\`\`\`javascript
-function SearchResults({ query }) {
-  const deferredQuery = useDeferredValue(query);
-  const results = useMemo(() => search(deferredQuery), [deferredQuery]);
-  return <div>{results}</div>;
-}
-\`\`\`
-
-## Migracja do React 18
-
-Proces migracji jest stosunkowo prosty:
-
-1. **Zainstaluj React 18**
-\`\`\`bash
-npm install react@18 react-dom@18
-\`\`\`
-
-2. **Zaktualizuj createRoot**
-\`\`\`javascript
-// Przed
-import ReactDOM from 'react-dom';
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// Po
-import { createRoot } from 'react-dom/client';
-const root = createRoot(document.getElementById('root'));
-root.render(<App />);
-\`\`\`
-
-3. **Testuj aplikację** - większość aplikacji będzie działać bez zmian
-
-## Podsumowanie
-
-React 18 to ogromny krok naprzód dla całego ekosystemu. Concurrent Features, ulepszone Suspense i Automatic Batching to funkcje, które znacznie poprawią doświadczenie użytkowników naszych aplikacji.
-
-Jeśli jeszcze nie zacząłeś migracji, zdecydowanie warto rozważyć aktualizację. Korzyści są znaczące, a proces migracji jest stosunkowo bezbolesny.`,
-    image:
-      "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
-    category: "React",
-    author: "Fraszczak Piotr",
-    publishedAt: "2024-01-15",
-    readTime: "8 min",
-  },
-  // Add more posts as needed
-];
-
-export function BlogPostPage() {
-  const { slug } = useParams();
-  const post = blogPosts.find((p) => p.slug === slug);
-
-  if (!post) {
+  // Loading state
+  if (loading) {
     return (
-      <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-slate-800 dark:text-white mb-4">
-            Post nie znaleziony
-          </h1>
-          <Link
-            to="/blog"
-            className="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:underline"
-          >
-            <ArrowLeftIcon className="w-4 h-4 mr-2" />
-            Wróć do bloga
-          </Link>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <p className="text-slate-600 dark:text-slate-300">
+            Loading blog post...
+          </p>
         </div>
       </div>
     );
   }
 
+  // Not found state
+  if (notFound || !post) {
+    return <NotFoundPage />;
+  }
+
   return (
-    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Back to Blog */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
           className="mb-8"
         >
-          <Link
-            to="/blog"
-            className="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:underline"
+          <button
+            onClick={() => navigate("/blog")}
+            className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
           >
-            <ArrowLeftIcon className="w-4 h-4 mr-2" />
-            Wróć do bloga
-          </Link>
+            <ArrowLeftIcon className="w-5 h-5" />
+            Back to Blog
+          </button>
         </motion.div>
 
         {/* Article Header */}
         <motion.article
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <GlassCard className="overflow-hidden mb-8">
-            <img
-              src={post.image}
-              alt={post.title}
-              className="w-full h-64 md:h-80 object-cover"
-            />
-            <div className="p-8">
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 rounded-full text-sm font-medium">
-                  {post.category}
-                </span>
-                <div className="flex items-center text-sm text-slate-500">
-                  <UserIcon className="w-4 h-4 mr-1" />
-                  {post.author}
-                </div>
-                <div className="flex items-center text-sm text-slate-500">
-                  <CalendarDaysIcon className="w-4 h-4 mr-1" />
-                  {new Date(post.publishedAt).toLocaleDateString("pl-PL")}
-                </div>
-                <div className="flex items-center text-sm text-slate-500">
-                  <ClockIcon className="w-4 h-4 mr-1" />
-                  {post.readTime}
-                </div>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-                {post.title}
-              </h1>
-
-              <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
-                {post.excerpt}
-              </p>
-            </div>
-          </GlassCard>
-
-          {/* Article Content */}
-          <GlassCard className="p-8">
-            <div
-              className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-slate-800 dark:prose-headings:text-white prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-strong:text-slate-800 dark:prose-strong:text-white prose-code:text-indigo-600 dark:prose-code:text-indigo-400 prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-pre:bg-slate-100 dark:prose-pre:bg-slate-800"
-              dangerouslySetInnerHTML={{
-                __html: post.content.replace(/\n/g, "<br />"),
-              }}
-            />
-          </GlassCard>
-        </motion.article>
-
-        {/* Share and Navigation */}
-        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 text-center"
+          transition={{ duration: 0.6 }}
+          className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden"
         >
-          <GlassCard className="p-6">
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              Podobał Ci się artykuł? Podziel się nim!
-            </p>
-            <div className="flex justify-center gap-4">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">
-                Twitter
-              </button>
-              <button className="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors duration-200">
-                LinkedIn
-              </button>
-              <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200">
-                WhatsApp
+          {post.image && (
+            <div className="aspect-video bg-gradient-to-r from-indigo-500 to-purple-600">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+            </div>
+          )}
+
+          <div className="p-8 md:p-12">
+            {/* Article Meta */}
+            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+              <div className="flex items-center gap-1">
+                <CalendarDaysIcon className="w-4 h-4" />
+                <span>{formatDate(post.date)}</span>
+              </div>
+              {post.readingTime && (
+                <div className="flex items-center gap-1">
+                  <ClockIcon className="w-4 h-4" />
+                  <span>{post.readingTime} min read</span>
+                </div>
+              )}
+              <div className="flex items-center gap-1">
+                <span>By {post.author}</span>
+              </div>
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors ml-auto"
+              >
+                <ShareIcon className="w-4 h-4" />
+                Share
               </button>
             </div>
-          </GlassCard>
-        </motion.div>
+
+            {/* Article Title */}
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+              {post.title}
+            </h1>
+
+            {/* Article Excerpt */}
+            <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+              {post.excerpt}
+            </p>
+
+            {/* Tags */}
+            {post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200"
+                  >
+                    <TagIcon className="w-3 h-3 mr-1" />
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Article Content */}
+            <MarkdownRenderer content={post.content} />
+          </div>
+        </motion.article>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-16"
+          >
+            <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8">
+              Related Articles
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <Link
+                  key={relatedPost.slug}
+                  to={`/blog/${relatedPost.slug}`}
+                  className="block bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <h3 className="font-semibold text-slate-800 dark:text-white mb-2 line-clamp-2">
+                    {relatedPost.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm line-clamp-3 mb-3">
+                    {relatedPost.excerpt}
+                  </p>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">
+                    {formatDate(relatedPost.date)}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
