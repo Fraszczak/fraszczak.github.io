@@ -17,6 +17,7 @@ export const pl = {
     portfolio: 'Portfolio',
     blog: 'Blog',
     courses: 'Kursy',
+    speaking: 'Wystąpienia',
     contact: 'Kontakt',
   },
 
@@ -38,6 +39,24 @@ export const pl = {
     projects: {
       title: 'Wybrane Projekty',
       description: 'Najnowsze realizacje z mojego portfolio',
+      items: [
+        {
+          title: 'Platforma E-commerce',
+          description:
+            'Nowoczesna platforma e-commerce z zaawansowanym systemem zarządzania produktami',
+          image:
+            'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
+          tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+        },
+        {
+          title: 'Aplikacja do Zarządzania Zadaniami',
+          description:
+            'Aplikacja do zarządzania projektami z współpracą w czasie rzeczywistym',
+          image:
+            'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600',
+          tech: ['React', 'Socket.io', 'PostgreSQL'],
+        },
+      ],
     },
   },
 
@@ -75,12 +94,15 @@ export const pl = {
     skills: {
       title: 'Umiejętności',
     },
-    achievements: [
-      'Odbyte dziesiątki kursów i szkoleń 🚀',
-      'Sporo podjętych decyzji technicznych w wielu projektach 🎯',
-      'Mentoring i rekrutacja nowych talentów 🌱',
-      'Prowadzenie warsztatów programowania 💻',
-    ],
+    achievements: {
+      title: 'Osiągnięcia',
+      items: [
+        'Odbyte dziesiątki kursów i szkoleń 🚀',
+        'Sporo podjętych decyzji technicznych w wielu projektach 🎯',
+        'Mentoring i rekrutacja nowych talentów 🌱',
+        'Prowadzenie warsztatów programowania 💻',
+      ],
+    },
     hobby: {
       title: 'Poza Kodowaniem',
       description:
@@ -188,5 +210,35 @@ export const pl = {
         'Tutaj wkrótce pojawią się moje projekty wykorzystujące Angular, React, Node.js i inne nowoczesne technologie. Będzie co oglądać!',
       expectedDate: 'Q1 2025',
     },
+
+  },
+  speaking: {
+    title: 'Wystąpienia',
+    description:
+      'Moje wystąpienia na konferencjach i meetupach. Dzielę się wiedzą o programowaniu, architekturze i dobrych praktykach.',
+    upcoming: {
+      title: 'Nadchodzące Wystąpienia',
+      items: [],
+    },
+    past: {
+      title: 'Poprzednie Wystąpienia',
+      items: [],
+      empty: 'Jeszcze nie ma żadnych wystąpień, ale pracuję nad tym! 🎤',
+    },
+  },
+  skills: {
+    html: 'HTML5',
+    css: 'CSS3',
+    javascript: 'JavaScript',
+    react: 'React',
+    node: 'Node.js',
+    tailwind: 'Tailwind CSS',
+    angular: 'Angular',
+    typescript: 'TypeScript',
+    dotnet: '.NET / C#',
+    cypress: 'Cypress',
+    azure: 'Azure DevOps',
+    sql: 'SQL',
+    jest: 'Jest',
   },
 } as const;

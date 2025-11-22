@@ -110,6 +110,7 @@ export function Navbar() {
     { name: t("nav.about"), path: "/about" },
     { name: t("nav.blog"), path: "/blog" },
     { name: t("nav.contact"), path: "/contact" },
+    { name: t("nav.speaking"), path: "/speaking" },
     { name: t("nav.portfolio"), path: "/portfolio", comingSoon: true },
     { name: t("nav.courses"), path: "/courses", comingSoon: true },
   ];

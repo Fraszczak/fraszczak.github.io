@@ -9,11 +9,13 @@ import { GlassCard } from "../components/GlassCard";
 import { SoonTag } from "../components/SoonTag";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import { useI18n } from "../contexts/I18nContext";
-import { PERSONAL_INFO } from "../../public/config";
+import { PERSONAL_INFO } from "../config";
 
 export function HomePage() {
   useScrollToTop();
   const { t } = useI18n();
+
+  const projects = (t("home.projects.items") as unknown) as any[];
 
   return (
     <div className="min-h-screen">
@@ -123,70 +125,41 @@ export function HomePage() {
           {/* Wrap the entire projects section with SoonTag */}
           <SoonTag disabled={true} className="block">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0 }}
-              >
-                <GlassCard className="overflow-hidden">
-                  <img
-                    src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="E-commerce Platform"
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
-                      E-commerce Platform
-                    </h3>
-                    <p className="text-slate-600 dark:text-slate-300 mb-4">
-                      Modern e-commerce platform with advanced product
-                      management system
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "Node.js", "MongoDB", "Stripe"].map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              >
-                <GlassCard className="overflow-hidden">
-                  <img
-                    src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Task Management App"
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
-                      Task Management App
-                    </h3>
-                    <p className="text-slate-600 dark:text-slate-300 mb-4">
-                      Project management application with real-time
-                      collaboration
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "Socket.io", "PostgreSQL"].map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
+              {Array.isArray(projects) &&
+                projects.map((project, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                  >
+                    <GlassCard className="overflow-hidden h-full flex flex-col">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6 flex-1 flex flex-col">
+                        <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
+                          {project.title}
+                        </h3>
+                        <p className="text-slate-600 dark:text-slate-300 mb-4 flex-1">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tech.map((tech: string) => (
+                            <span
+                              key={tech}
+                              className="px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 rounded-full"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </GlassCard>
+                  </motion.div>
+                ))}
             </div>
 
             <Link

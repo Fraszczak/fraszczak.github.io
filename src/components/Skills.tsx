@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, memo } from "react";
 
+
 // --- Type Definitions ---
 type IconType =
   | "html"
@@ -39,7 +40,7 @@ interface SkillConfig {
   iconType: IconType;
   phaseShift: number;
   glowColor: GlowColor;
-  label: string;
+  labelKey: string;
 }
 
 interface OrbitingSkillProps {
@@ -189,9 +190,12 @@ const SkillIcon = memo(({ type }: SkillIconProps) => {
 SkillIcon.displayName = "SkillIcon";
 
 // --- Memoized Orbiting Skill Component ---
+import { useI18n } from "../contexts/I18nContext";
+
 const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { orbitRadius, size, iconType, label } = config;
+  const { orbitRadius, size, iconType, labelKey } = config;
+  const { t } = useI18n();
 
   const x = Math.cos(angle) * orbitRadius;
   const y = Math.sin(angle) * orbitRadius;
@@ -224,7 +228,7 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
         <SkillIcon type={iconType} />
         {isHovered && (
           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900/95 backdrop-blur-sm rounded text-xs text-white whitespace-nowrap pointer-events-none">
-            {label}
+            {t(labelKey)}
           </div>
         )}
       </div>

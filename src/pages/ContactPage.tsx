@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import { useI18n } from "../contexts/I18nContext";
-import { CONTACT_PAGE } from "../../public/config";
+import { SOCIAL_LINKS } from "../config";
 
 export function ContactPage() {
   useScrollToTop();
@@ -92,6 +92,31 @@ export function ContactPage() {
     Twitter: ChatBubbleLeftRightIcon,
     Instagram: PhotoIcon,
   };
+
+  const socialLinks = [
+    {
+      name: "LinkedIn",
+      url: SOCIAL_LINKS.linkedin,
+      color: "bg-blue-600",
+    },
+    {
+      name: "GitHub",
+      url: SOCIAL_LINKS.github,
+      color: "bg-gray-800",
+    },
+    {
+      name: "Twitter",
+      url: SOCIAL_LINKS.twitter,
+      color: "bg-blue-400",
+    },
+    {
+      name: "Instagram",
+      url: SOCIAL_LINKS.instagram,
+      color: "bg-pink-500",
+    },
+  ];
+
+  const subjectOptions = (t("contact.form.fields.subject.options") as unknown) as any[];
 
   if (isSubmitted) {
     return (
@@ -219,7 +244,7 @@ export function ContactPage() {
                         : "border-white/30 dark:border-slate-700/30"
                     }`}
                   >
-                    {t("contact.form.fields.subject.options").map(
+                    {Array.isArray(subjectOptions) && subjectOptions.map(
                       (option: any) => (
                         <option key={option.value} value={option.value}>
                           {option.label}
@@ -298,7 +323,7 @@ export function ContactPage() {
               </h2>
 
               <div className="grid grid-cols-2 gap-4">
-                {CONTACT_PAGE.socialLinks.map((social, index) => {
+                {socialLinks.map((social, index) => {
                   const IconComponent =
                     socialIcons[social.name as keyof typeof socialIcons];
                   return (
@@ -307,13 +332,13 @@ export function ContactPage() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`${social.color} text-white p-6 rounded-xl text-center font-medium hover:opacity-80 transition-all duration-200 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2`}
+                      className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-lg border border-white/20 dark:border-slate-700/20 p-6 rounded-xl text-center font-medium hover:bg-white/20 dark:hover:bg-slate-800/30 transition-all duration-200 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.2 }}
-                      title={social.name} // Add tooltip
+                      title={social.name}
                     >
-                      <IconComponent className="w-8 h-8" />
-                      <span className="text-sm font-semibold">
+                      <IconComponent className="w-8 h-8 text-slate-700 dark:text-slate-300" />
+                      <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                         {social.name}
                       </span>
                     </motion.a>

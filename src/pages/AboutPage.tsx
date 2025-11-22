@@ -8,11 +8,14 @@ import {
 import OrbitingSkills from "../components/Skills";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import { useI18n } from "../contexts/I18nContext";
-import { SKILLS_CONFIG } from "../../public/config";
+import { SKILLS_CONFIG } from "../config";
 
 export function AboutPage() {
   useScrollToTop();
   const { t } = useI18n();
+
+  const experience = (t("about.experience.items") as unknown) as any[];
+  const achievements = (t("about.achievements.items") as unknown) as string[];
 
   return (
     <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
@@ -44,24 +47,25 @@ export function AboutPage() {
             {t("about.experience.title")}
           </h2>
           <div className="space-y-8">
-            {t("about.experience.items").map((exp: any, index: number) => (
-              <GlassCard key={index} className="p-6">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                    {exp.title}
-                  </h3>
-                  <span className="text-indigo-500 font-medium">
-                    {exp.year}
-                  </span>
-                </div>
-                <h4 className="text-lg text-slate-600 dark:text-slate-300 mb-2">
-                  {exp.company}
-                </h4>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {exp.description}
-                </p>
-              </GlassCard>
-            ))}
+            {Array.isArray(experience) &&
+              experience.map((exp: any, index: number) => (
+                <GlassCard key={index} className="p-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
+                      {exp.title}
+                    </h3>
+                    <span className="text-indigo-500 font-medium">
+                      {exp.year}
+                    </span>
+                  </div>
+                  <h4 className="text-lg text-slate-600 dark:text-slate-300 mb-2">
+                    {exp.company}
+                  </h4>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {exp.description}
+                  </p>
+                </GlassCard>
+              ))}
           </div>
         </motion.section>
 
@@ -75,11 +79,11 @@ export function AboutPage() {
           >
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 lg:mb-16 flex items-center">
               <TrophyIcon className="w-8 h-8 mr-3 text-indigo-500" />
-              Osiągnięcia
+              {t("about.achievements.title")}
             </h2>
             <div className="space-y-6">
-              {t("about.achievements").map(
-                (achievement: string, index: number) => (
+              {Array.isArray(achievements) &&
+                achievements.map((achievement: string, index: number) => (
                   <GlassCard key={index} className="p-8">
                     <div className="flex items-center">
                       <span className="text-slate-800 dark:text-white font-medium">
@@ -87,8 +91,7 @@ export function AboutPage() {
                       </span>
                     </div>
                   </GlassCard>
-                )
-              )}
+                ))}
             </div>
           </motion.section>
 
@@ -105,7 +108,7 @@ export function AboutPage() {
                 {t("about.skills.title")}
               </h2>
               <div className="rounded-lg">
-                <OrbitingSkills skills={SKILLS_CONFIG} />
+                <OrbitingSkills skills={[...SKILLS_CONFIG]} />
               </div>
             </motion.section>
           </div>

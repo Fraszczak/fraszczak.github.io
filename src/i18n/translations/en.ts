@@ -17,6 +17,7 @@ export const en = {
     portfolio: 'Portfolio',
     blog: 'Blog',
     courses: 'Courses',
+    speaking: 'Speaking',
     contact: 'Contact',
   },
 
@@ -38,6 +39,24 @@ export const en = {
     projects: {
       title: 'Featured Projects',
       description: 'Latest projects from my portfolio',
+      items: [
+        {
+          title: 'E-commerce Platform',
+          description:
+            'Modern e-commerce platform with advanced product management system',
+          image:
+            'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
+          tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+        },
+        {
+          title: 'Task Management App',
+          description:
+            'Project management application with real-time collaboration',
+          image:
+            'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600',
+          tech: ['React', 'Socket.io', 'PostgreSQL'],
+        },
+      ],
     },
   },
 
@@ -75,12 +94,15 @@ export const en = {
     skills: {
       title: 'Skills',
     },
-    achievements: [
-      'Completed dozens of courses and training 🚀',
-      'Many technical decisions made in various projects 🎯',
-      'Mentoring and recruiting new talents 🌱',
-      'Leading programming workshops 💻',
-    ],
+    achievements: {
+      title: 'Achievements',
+      items: [
+        'Completed dozens of courses and training 🚀',
+        'Many technical decisions made in various projects 🎯',
+        'Mentoring and recruiting new talents 🌱',
+        'Leading programming workshops 💻',
+      ],
+    },
     hobby: {
       title: 'Beyond Coding',
       description:
@@ -188,5 +210,35 @@ export const en = {
         "Soon you'll find my projects here using Angular, React, Node.js and other modern technologies. There will be a lot to see!",
       expectedDate: 'Q1 2025',
     },
+
+  },
+  speaking: {
+    title: 'Speaking',
+    description:
+      'My talks at conferences and meetups. I share knowledge about programming, architecture, and best practices.',
+    upcoming: {
+      title: 'Upcoming Talks',
+      items: [],
+    },
+    past: {
+      title: 'Past Talks',
+      items: [],
+      empty: 'No talks yet, but I am working on it! 🎤',
+    },
+  },
+  skills: {
+    html: 'HTML5',
+    css: 'CSS3',
+    javascript: 'JavaScript',
+    react: 'React',
+    node: 'Node.js',
+    tailwind: 'Tailwind CSS',
+    angular: 'Angular',
+    typescript: 'TypeScript',
+    dotnet: '.NET / C#',
+    cypress: 'Cypress',
+    azure: 'Azure DevOps',
+    sql: 'SQL',
+    jest: 'Jest',
   },
 } as const;

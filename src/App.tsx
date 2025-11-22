@@ -5,6 +5,7 @@ import { AboutPage } from "./pages/AboutPage";
 import { BlogPage } from "./pages/BlogPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
 import { ContactPage } from "./pages/ContactPage";
+import { SpeakingPage } from "./pages/SpeakingPage";
 import { ComingSoonPage } from "./pages/ComingSoonPage";
 import { Footer } from "./components/Footer";
 import { BackToTop } from "./components/BackToTop";
@@ -73,6 +74,7 @@ function App() {
               {/* Active routes */}
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="/speaking" element={<SpeakingPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
